@@ -48,19 +48,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onClose,
   readChapterIds
 }) => {
-  // Find which volume the current chapter belongs to and keep it expanded by default
-  const activeVolumeId = useMemo(() => {
-    for (const vol of allVolumes) {
-      if (vol.chapters.some(c => c.id === currentChapterId)) {
-        return vol.id;
-      }
-    }
-    return 1;
-  }, [currentChapterId]);
-
-  const [expandedVolumes, setExpandedVolumes] = useState<Record<number, boolean>>({
-    [activeVolumeId]: true
-  });
+  const [expandedVolumes, setExpandedVolumes] = useState<Record<number, boolean>>({});
 
   const [searchQuery, setSearchQuery] = useState('');
 
