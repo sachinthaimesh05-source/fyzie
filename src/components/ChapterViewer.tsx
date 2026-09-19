@@ -260,7 +260,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
               <div className="my-6 rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/90 p-4 shadow-xl">
                 <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs font-mono text-cyan-400">
                   <span>පද්ධති ආකෘතිය (Architectural Flow Diagram)</span>
-                  <span className="text-[10px] text-slate-500 font-mono">ASCII Schema</span>
+                  <span className="text-[10px] text-slate-400 font-mono">ASCII Schema</span>
                 </div>
                 <pre className="font-mono text-xs sm:text-sm text-cyan-300/90 overflow-x-auto p-2 leading-relaxed whitespace-pre">
                   {section.asciiDiagram}
@@ -334,7 +334,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
                     >
                       <span>{isAnswerRevealed ? 'පිළිතුර සඟවන්න' : 'පිළිතුරු ඉඟිය බලන්න'}</span>
                     </button>
-                    <span className="text-[10px] text-slate-500 font-mono">Chapter Assessment</span>
+                    <span className="text-[10px] text-slate-400 font-mono">Chapter Assessment</span>
                   </div>
 
                   {isAnswerRevealed && (
@@ -426,11 +426,11 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
       </nav>
 
       {/* Anti-Scraping / Copyright Watermark Footer */}
-      <footer className="mt-16 pt-8 border-t border-white/5 text-center text-[11px] text-slate-500 space-y-1">
+      <footer className="mt-16 pt-8 border-t border-white/5 text-center text-[11px] text-slate-400 space-y-1">
         <p>
           Full Stack Web Development © {new Date().getFullYear()} T. Sachintha Imesh [FYZIE]. All Rights Reserved.
         </p>
-        <p className="text-[10px] text-slate-600">
+        <p className="text-[10px] text-slate-500">
           කර්තෘගේ අවසරයකින් තොරව මෙම අන්තර්ගතය පිටපත් කිරීම, නැවත විකිණීම හෝ අනිසි ලෙස ප්‍රචාරය කිරීම බුද්ධිමය දේපළ පනත යටතේ නීතිවිරෝධී වේ.
         </p>
       </footer>

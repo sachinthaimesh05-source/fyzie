@@ -119,7 +119,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/80 border border-white/10 text-xs text-slate-300">
             <BookmarkCheck className="w-3.5 h-3.5 text-cyan-400" />
             <span className="font-mono">{readCount}/{totalChapters}</span>
-            <span className="text-slate-500 text-[10px]">කියවා ඇත</span>
+            <span className="text-slate-400 text-[10px]">කියවා ඇත</span>
           </div>
 
           {/* Font Size Adjuster */}

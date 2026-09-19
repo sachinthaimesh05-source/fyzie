@@ -81,13 +81,13 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         {/* Results List */}
         <div className="mt-4 max-h-[60vh] overflow-y-auto space-y-2 custom-scrollbar">
           {query.trim() === '' ? (
-            <div className="py-12 text-center text-xs text-slate-500 space-y-2">
+            <div className="py-12 text-center text-xs text-slate-400 space-y-2">
               <BookOpen className="w-8 h-8 mx-auto text-slate-600 mb-2" />
               <p>පරිච්ඡේද 107න් ඕනෑම එකක් සෙවීමට අකුරු ටයිප් කරන්න.</p>
-              <p className="text-[11px] text-slate-600">උදා: Flexbox, useState, Git, DOM, TypeScript, SEO</p>
+              <p className="text-[11px] text-slate-400">උදා: Flexbox, useState, Git, DOM, TypeScript, SEO</p>
             </div>
           ) : results.length === 0 ? (
-            <div className="py-12 text-center text-xs text-slate-500">
+            <div className="py-12 text-center text-xs text-slate-400">
               "{query}" සඳහා ප්‍රතිඵල හමු නොවීය.
             </div>
           ) : (
@@ -127,7 +127,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Footer info */}
-        <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+        <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
           <span>ප්‍රතිඵල {results.length} ක් හමු විය</span>
           <span>Enter ඔබා පිවිසෙන්න</span>
         </div>
