@@ -23,7 +23,7 @@ export function App() {
     return saved ? parseInt(saved, 10) : 1;
   });
 
-  const [viewMode, setViewMode] = useState<'overview' | 'chapter'>('chapter');
+  const [viewMode, setViewMode] = useState<'overview' | 'chapter'>('overview');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>(() => {
     const saved = localStorage.getItem('fyzie_font_size');
@@ -117,9 +117,9 @@ export function App() {
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased relative selection:bg-cyan-500/30">
       {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/3 w-[600px] h-[600px] bg-cyan-600/10 rounded-full blur-[140px]" />
-        <div className="absolute top-1/2 -right-40 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[140px]" />
-        <div className="absolute -bottom-40 left-10 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[140px]" />
+        <div className="absolute -top-64 left-1/4 w-[500px] h-[500px] bg-cyan-600/8 rounded-full blur-[160px]" />
+        <div className="absolute top-1/3 -right-56 w-[500px] h-[500px] bg-indigo-600/8 rounded-full blur-[160px]" />
+        <div className="absolute -bottom-56 left-0 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[160px]" />
       </div>
 
       {/* Security Toast Notification */}

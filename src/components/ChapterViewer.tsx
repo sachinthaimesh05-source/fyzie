@@ -161,7 +161,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
       </div>
 
       {/* Chapter Title & Header Block */}
-      <header className="mt-8 mb-10">
+      <header className="mt-8 mb-10 p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-white/10 shadow-xl">
         <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2">
           <span>CHAPTER {chapter.chapterNumber}</span>
           <span>•</span>
@@ -181,7 +181,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
         </p>
 
         {/* Chapter Summary Card with Glassmorphism */}
-        <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-slate-900/80 via-indigo-950/30 to-slate-900/80 backdrop-blur-xl border border-white/10 shadow-xl">
+        <div className="mt-6 p-5 rounded-2xl bg-slate-950/60 border border-white/10 shadow-inner">
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
             {chapter.description}
           </p>
