@@ -141,7 +141,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Main Sidebar Container */}
       <aside 
-        className={`fixed lg:sticky top-0 lg:top-16 z-50 lg:z-30 h-screen lg:h-[calc(100vh-4rem)] w-80 sm:w-88 flex-shrink-0 bg-slate-950/95 lg:bg-slate-950/95 backdrop-blur-2xl border-r border-white/10 flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:sticky top-0 lg:top-16 z-50 lg:z-30 h-screen lg:h-[calc(100vh-4rem)] w-80 sm:w-88 flex-shrink-0 fz-glass border-r flex flex-col transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
@@ -149,7 +149,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="p-4 border-b border-white/10 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-violet-400">
+              <span className="text-base font-black fz-gold-text">
                 FyZie
               </span>
               <span className="text-slate-600 text-xs">/</span>
@@ -325,14 +325,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                 }}
                                 className={`flex-1 text-left px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 transition-all duration-200 ${
                                   isCurrent
-                                    ? 'bg-sky-500/20 text-sky-200 border border-sky-500/40 shadow-sm font-semibold'
+                                    ? 'bg-amber-500/15 text-amber-100 border border-amber-500/40 shadow-sm font-semibold'
                                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
                                 }`}
                               >
                                 <div className="flex items-center gap-2 min-w-0">
                                   <span className={`w-5 h-5 rounded-md text-[10px] font-mono flex items-center justify-center flex-shrink-0 ${
                                     isCurrent 
-                                      ? 'bg-sky-500 text-slate-950 font-bold' 
+                                      ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-slate-950 font-bold' 
                                       : 'bg-slate-800 text-slate-400'
                                   }`}>
                                     {chapter.chapterNumber}

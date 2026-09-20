@@ -103,7 +103,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
   };
 
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 selection:bg-sky-500/30 selection:text-white">
+    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 selection:bg-sky-500/30 selection:text-white fz-fade-up fz-prose">
       {/* Volume & Chapter Navigation Breadcrumb */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-white/10">
         <div className="flex items-center gap-2 text-xs">
@@ -320,6 +320,42 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
                 );
               })}
             </div>
+
+            {/* Callout box (tip / warning / info / pro) */}
+            {section.callout && (() => {
+              const calloutStyles: Record<string, { wrap: string; icon: string; iconEl: React.ReactNode }> = {
+                tip: {
+                  wrap: 'bg-emerald-950/40 border-emerald-500/30 text-emerald-100',
+                  icon: 'text-emerald-400',
+                  iconEl: <Lightbulb className="w-4 h-4" />
+                },
+                warning: {
+                  wrap: 'bg-rose-950/40 border-rose-500/30 text-rose-100',
+                  icon: 'text-rose-400',
+                  iconEl: <ShieldCheck className="w-4 h-4" />
+                },
+                info: {
+                  wrap: 'bg-sky-950/40 border-sky-500/30 text-sky-100',
+                  icon: 'text-sky-400',
+                  iconEl: <Sparkles className="w-4 h-4" />
+                },
+                pro: {
+                  wrap: 'bg-amber-950/40 border-amber-500/30 text-amber-100',
+                  icon: 'text-amber-400',
+                  iconEl: <Award className="w-4 h-4" />
+                }
+              };
+              const style = calloutStyles[section.callout.type] || calloutStyles.info;
+              return (
+                <div className={`my-6 relative overflow-hidden rounded-2xl border p-4 sm:p-5 shadow-lg fz-lift ${style.wrap}`}>
+                  <div className={`flex items-center gap-2 font-bold text-sm mb-1.5 ${style.icon}`}>
+                    {style.iconEl}
+                    <span>{section.callout.title}</span>
+                  </div>
+                  <p className="text-sm leading-relaxed text-current/90">{section.callout.text}</p>
+                </div>
+              );
+            })()}
 
             {/* Ascii Architectural Diagram if present */}
             {section.asciiDiagram && (

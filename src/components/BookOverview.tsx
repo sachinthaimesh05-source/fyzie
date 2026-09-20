@@ -42,25 +42,27 @@ export const BookOverview: React.FC<BookOverviewProps> = ({
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Hero Section with Solid 95% Opacity Background */}
-      <section className="relative overflow-hidden rounded-3xl p-8 sm:p-12 bg-slate-900/95 backdrop-blur-2xl border border-white/10 shadow-2xl">
-        {/* Glow circles behind - Sky Blue & Violet */}
+      <section className="relative overflow-hidden rounded-3xl p-8 sm:p-12 fz-glass shadow-2xl fz-fade-up">
+        {/* Glow circles behind - Gold, Sky Blue & Violet */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 fz-noise opacity-30 pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Text & CTAs */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/30 text-xs font-mono font-bold tracking-wide shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-              <span className="text-sky-300 font-black">FyZie</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs font-mono font-bold tracking-wide shadow-sm fz-pulse">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span className="fz-gold-text font-black">FyZie</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               <span>OFFICIAL MASTERCLASS E-BOOK</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               <span>{bookMeta.edition}</span>
             </div>
 
             <div>
-              <span className="block text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-300 to-violet-400 tracking-tight">
+              <span className="block text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-sky-300 to-violet-400 tracking-tight">
                 FyZie Presents
               </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight mt-1">
@@ -103,7 +105,7 @@ export const BookOverview: React.FC<BookOverviewProps> = ({
               <button
                 type="button"
                 onClick={onStartReading}
-                className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-slate-950 font-black text-sm shadow-xl shadow-sky-500/20 hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/25 hover:scale-105 transition-all duration-300 flex items-center gap-2"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>කියවීම ආරම්භ කරන්න</span>
@@ -133,13 +135,14 @@ export const BookOverview: React.FC<BookOverviewProps> = ({
 
           {/* Right: 3D Holographic Book Card Visual */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative group perspective-1000">
-              <div className="w-64 sm:w-72 rounded-3xl p-6 bg-gradient-to-br from-slate-900/95 via-violet-950/50 to-slate-950/95 border-2 border-sky-500/40 shadow-2xl shadow-sky-500/20 transform group-hover:rotate-y-6 group-hover:-rotate-x-2 transition-transform duration-500 relative overflow-hidden">
+            <div className="relative group perspective-1000 fz-float">
+              <div className="fz-ring rounded-3xl w-64 sm:w-72">
+              <div className="w-64 sm:w-72 rounded-3xl p-6 bg-gradient-to-br from-slate-900/95 via-violet-950/50 to-slate-950/95 shadow-2xl shadow-amber-500/10 transform group-hover:rotate-y-6 group-hover:-rotate-x-2 transition-transform duration-500 relative overflow-hidden">
                 {/* Hologram lines */}
-                <div className="absolute inset-0 bg-gradient-to-b from-sky-500/5 via-transparent to-violet-500/5 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-violet-500/5 pointer-events-none" />
                 
                 {/* Book Spine accent */}
-                <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-sky-500 to-violet-600 rounded-l-3xl" />
+                <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-b from-amber-400 via-sky-500 to-violet-600 rounded-l-3xl" />
 
                 <div className="space-y-4 pl-2">
                   <div className="flex items-center justify-between">
@@ -189,25 +192,26 @@ export const BookOverview: React.FC<BookOverviewProps> = ({
                   </div>
                 </div>
               </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Quick Stats Grid with Solid Opacity Cards */}
-        <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10">
-            <span className="text-2xl sm:text-3xl font-black text-sky-400 font-mono">09</span>
+        <div className="relative mt-10 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10 fz-lift">
+            <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono">09</span>
             <p className="text-xs text-slate-400 mt-1">ප්‍රධාන පරිමාවන්</p>
           </div>
-          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10">
+          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10 fz-lift">
             <span className="text-2xl sm:text-3xl font-black text-violet-400 font-mono">107</span>
             <p className="text-xs text-slate-400 mt-1">සවිස්තරාත්මක පරිච්ඡේද</p>
           </div>
-          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10">
+          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10 fz-lift">
             <span className="text-2xl sm:text-3xl font-black text-sky-300 font-mono">315</span>
             <p className="text-xs text-slate-400 mt-1">සම්පූර්ණ පිටු සංඛ්‍යාව</p>
           </div>
-          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10">
+          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10 fz-lift">
             <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">100%</span>
             <p className="text-xs text-slate-400 mt-1">ප්‍රායෝගික කේත උදාහරණ</p>
           </div>
@@ -260,9 +264,10 @@ export const BookOverview: React.FC<BookOverviewProps> = ({
             <div
               key={vol.id}
               onClick={() => onSelectVolume(vol.id)}
-              className="p-6 rounded-3xl bg-slate-900/95 hover:bg-slate-900 border border-white/10 hover:border-sky-500/40 shadow-xl transition-all duration-300 cursor-pointer group flex flex-col justify-between"
+              className="relative overflow-hidden rounded-3xl bg-slate-900/95 hover:bg-slate-900 border border-white/10 hover:border-amber-500/30 shadow-xl fz-lift transition-colors duration-300 cursor-pointer group flex flex-col justify-between"
             >
-              <div className="space-y-4">
+              <div className="fz-accent-bar" />
+              <div className="p-6 space-y-4">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-xs font-mono font-bold text-sky-400 px-2.5 py-1 rounded-full bg-sky-500/10 border border-sky-500/20">
                     VOLUME 0{vol.volumeNumber}
@@ -290,11 +295,11 @@ export const BookOverview: React.FC<BookOverviewProps> = ({
                 </p>
               </div>
 
-              <div className="pt-6 mt-4 border-t border-white/5 flex items-center justify-between text-xs">
+              <div className="px-6 pb-6 pt-6 mt-4 border-t border-white/5 flex items-center justify-between text-xs">
                 <span className="text-slate-400 font-mono">
                   {vol.chapterCount} පරිච්ඡේද
                 </span>
-                <span className="text-sky-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                <span className="text-amber-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
                   කියවන්න <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>

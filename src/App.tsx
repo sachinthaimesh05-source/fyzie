@@ -115,11 +115,14 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased relative selection:bg-sky-500/30 selection:text-white">
-      {/* Background Ambient Glows: Sky Blue + Violet Decorative */}
+      {/* Background Ambient Glows: Gold + Sky Blue + Violet Decorative */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-40 left-1/3 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[140px]" />
         <div className="absolute top-1/2 -right-40 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[140px]" />
         <div className="absolute -bottom-40 left-10 w-[600px] h-[600px] bg-violet-900/10 rounded-full blur-[140px]" />
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[160px]" />
+        <div className="absolute inset-0 fz-noise opacity-40" />
+        <div className="absolute inset-0 fz-vignette" />
       </div>
 
       {/* Security Toast Notification */}

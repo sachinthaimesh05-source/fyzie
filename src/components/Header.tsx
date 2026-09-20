@@ -40,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
   totalChapters
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full bg-slate-950/95 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20">
+    <header className="sticky top-0 z-40 w-full fz-glass border-b shadow-lg shadow-black/30">
       {/* Top Reading Progress Bar */}
       <div className="w-full h-1 bg-slate-900 overflow-hidden">
         <div 
@@ -62,15 +62,17 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <div className="flex items-center gap-3 group cursor-pointer" onClick={onOpenAuthorModal}>
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 border border-sky-500/30 flex items-center justify-center p-1 shadow-inner shadow-sky-500/10 group-hover:border-sky-400 transition-all duration-300">
-              <BookOpen className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
-              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
-              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400" />
+            <div className="fz-ring rounded-xl">
+              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 border border-white/10 flex items-center justify-center p-1 shadow-inner shadow-sky-500/10 group-hover:scale-105 transition-all duration-300">
+                <BookOpen className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              </div>
             </div>
 
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-300 to-violet-400 tracking-tight group-hover:from-sky-300 group-hover:to-violet-300 transition-colors">
+                <span className="text-lg sm:text-xl font-black fz-gold-text tracking-tight transition-colors">
                   FyZie
                 </span>
                 <span className="hidden sm:inline-flex text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 font-bold">
@@ -182,9 +184,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onOpenPdfModal}
-            className="relative group overflow-hidden flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl font-medium text-xs sm:text-sm bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-200 shadow-lg shadow-amber-500/10 transition-all duration-300"
+            className="relative group overflow-hidden flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl font-medium text-xs sm:text-sm bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-200 shadow-lg shadow-amber-500/20 fz-pulse hover:scale-[1.03] transition-all duration-300"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <span className="fz-shimmer-sweep" />
             <Download className="w-4 h-4 text-amber-300 group-hover:translate-y-0.5 transition-transform" />
             <span className="font-semibold tracking-wide">සම්පූර්ණ PDF</span>
             <span className="hidden md:inline text-[10px] px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 font-mono font-bold">
