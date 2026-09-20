@@ -62,6 +62,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
     [activeVolumeId]: true
   });
 
+  // Automatically expand volume when navigating across volume boundaries
+  React.useEffect(() => {
+    setExpandedVolumes(prev => ({
+      ...prev,
+      [activeVolumeId]: true
+    }));
+  }, [activeVolumeId]);
+
+  const areAllExpanded = useMemo(() => {
+    return allVolumes.every(vol => !!expandedVolumes[vol.id]);
+  }, [expandedVolumes]);
+
+  const toggleExpandAll = () => {
+    if (areAllExpanded) {
+      setExpandedVolumes({ [activeVolumeId]: true });
+    } else {
+      const all: Record<number, boolean> = {};
+      allVolumes.forEach(v => { all[v.id] = true; });
+      setExpandedVolumes(all);
+    }
+  };
+
   const [searchQuery, setSearchQuery] = useState('');
 
   const toggleVolume = (volumeId: number) => {
@@ -151,6 +173,47 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <X className="w-3 h-3" />
               </button>
             )}
+          </div>
+
+          {/* Quick Controls: Expand All & Volume Jump Pills */}
+          <div className="flex items-center justify-between gap-2 pt-1">
+            <button
+              type="button"
+              onClick={toggleExpandAll}
+              className="text-[11px] font-medium text-sky-400 hover:text-sky-300 flex items-center gap-1 transition-colors px-1 py-0.5 rounded"
+            >
+              {areAllExpanded ? 'සියල්ල හකුළන්න' : 'සියලු Chapters පෙන්වන්න (1-107)'}
+            </button>
+            <span className="text-[10px] text-slate-500 font-mono">
+              {allVolumes.length} Volumes
+            </span>
+          </div>
+
+          {/* Quick Volume Navigator Pills */}
+          <div className="flex items-center gap-1 overflow-x-auto pb-1 no-scrollbar text-[10px] font-mono">
+            {allVolumes.map(v => {
+              const isCurrentVol = v.chapters.some(c => c.id === currentChapterId);
+              return (
+                <button
+                  key={v.id}
+                  type="button"
+                  onClick={() => {
+                    setExpandedVolumes(prev => ({ ...prev, [v.id]: true }));
+                    if (v.chapters.length > 0) {
+                      onSelectChapter(v.chapters[0].id);
+                    }
+                  }}
+                  title={`Volume ${v.volumeNumber}: ${v.title} (Chapters ${v.chapters[0]?.chapterNumber} - ${v.chapters[v.chapters.length - 1]?.chapterNumber})`}
+                  className={`px-2 py-0.5 rounded-md flex-shrink-0 transition-all ${
+                    isCurrentVol
+                      ? 'bg-sky-500 text-slate-950 font-bold'
+                      : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-white/5'
+                  }`}
+                >
+                  V{v.volumeNumber} ({v.chapters[0]?.chapterNumber}-{v.chapters[v.chapters.length - 1]?.chapterNumber})
+                </button>
+              );
+            })}
           </div>
         </div>
 

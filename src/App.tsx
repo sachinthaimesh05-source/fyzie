@@ -221,6 +221,8 @@ export function App() {
               onNext={() => nextChapter && handleSelectChapter(nextChapter.id)}
               hasPrevious={!!prevChapter}
               hasNext={!!nextChapter}
+              previousChapter={prevChapter}
+              nextChapter={nextChapter}
               onOpenPdfModal={() => setIsPdfModalOpen(true)}
             />
           )}

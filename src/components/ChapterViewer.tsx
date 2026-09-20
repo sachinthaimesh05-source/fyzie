@@ -32,6 +32,8 @@ interface ChapterViewerProps {
   onNext: () => void;
   hasPrevious: boolean;
   hasNext: boolean;
+  previousChapter?: Chapter;
+  nextChapter?: Chapter;
   onOpenPdfModal: () => void;
 }
 
@@ -45,6 +47,8 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
   onNext,
   hasPrevious,
   hasNext,
+  previousChapter,
+  nextChapter,
   onOpenPdfModal
 }) => {
   const [revealedAnswers, setRevealedAnswers] = useState<Record<number, boolean>>({});
@@ -394,12 +398,16 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
           <button
             type="button"
             onClick={onPrevious}
-            className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-slate-900/95 hover:bg-slate-900 text-slate-200 border border-white/10 hover:border-sky-500/30 text-xs sm:text-sm transition-all group"
+            className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-900/95 hover:bg-slate-900 text-slate-200 border border-white/10 hover:border-sky-500/30 text-xs sm:text-sm transition-all group max-w-[48%]"
           >
-            <ChevronLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 transition-transform" />
-            <div className="text-left">
-              <span className="block text-[10px] text-slate-400 font-mono">පෙර පරිච්ඡේදය</span>
-              <span className="font-semibold text-white">Previous Chapter</span>
+            <ChevronLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1 transition-transform flex-shrink-0" />
+            <div className="text-left min-w-0">
+              <span className="block text-[10px] text-slate-400 font-mono">
+                {previousChapter ? `Ch ${previousChapter.chapterNumber} • පෙර පරිච්ඡේදය` : 'පෙර පරිච්ඡේදය'}
+              </span>
+              <span className="font-semibold text-white truncate block">
+                {previousChapter?.title || 'Previous Chapter'}
+              </span>
             </div>
           </button>
         ) : (
@@ -410,13 +418,17 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
           <button
             type="button"
             onClick={onNext}
-            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-sky-500/20 hover:scale-105 transition-all group"
+            className="flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-sky-500/20 hover:scale-105 transition-all group max-w-[48%]"
           >
-            <div className="text-right">
-              <span className="block text-[10px] text-slate-900/80 font-mono font-bold">මීළඟ පරිච්ඡේදය</span>
-              <span className="font-black text-slate-950">Next Chapter</span>
+            <div className="text-right min-w-0">
+              <span className="block text-[10px] text-slate-900/80 font-mono font-bold">
+                {nextChapter ? `Ch ${nextChapter.chapterNumber} • මීළඟ පරිච්ඡේදය` : 'මීළඟ පරිච්ඡේදය'}
+              </span>
+              <span className="font-black text-slate-950 truncate block">
+                {nextChapter?.title || 'Next Chapter'}
+              </span>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform flex-shrink-0" />
           </button>
         ) : (
           <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
