@@ -420,17 +420,109 @@ export const config = {
       ],
       sections: [
         {
-          title: "101.1 InsightBlog ගෘහ නිර්මාණ ශිල්පය",
+          title: "101.1 InsightBlog ගෘහ නිර්මාණ ශිල්පය සහ Route Groups",
           content: [
-            "අප නිර්මාණය කරන්නේ නවීන තාක්ෂණයෙන් සන්නද්ධ බ්ලොග් අඩවියකි. මෙහි ලිපි ලැයිස්තුව, තනි ලිපියක විස්තරය (Dynamic Route), අලුත් ලිපියක් එකතු කිරීම (Server Action) සහ Skeletons අඩංගු වේ."
+            "InsightBlog යනු App Router, Server Components, Server Actions, සහ ISR මූලධර්ම මත පදනම්ව ගොඩනැගූ නවීන Full-stack බ්ලොග් පද්ධතියකි. මෙහි පරිපාලක (Admin) සහ පොදු පරිශීලක (Public) කොටස් Route Groups මඟින් වෙන් කර ඇත:"
+          ],
+          asciiDiagram: `src/app/
+├── (public)/
+│   ├── layout.tsx         <── Public Navbar & Footer
+│   ├── page.tsx           <── Hero & Recent Posts (ISR: 60s)
+│   └── blog/
+│       ├── page.tsx       <── All Articles List with Search
+│       └── [slug]/
+│           ├── page.tsx   <── Dynamic Blog Post + SEO Metadata
+│           └── loading.tsx<── Article Skeleton Loader
+├── (admin)/
+│   └── dashboard/
+│       ├── layout.tsx     <── Admin Sidebar & Protected Route
+│       └── new-post/
+│           └── page.tsx   <── Server Action Post Editor Form
+└── actions/
+    └── postActions.ts     <── 'use server' Database Mutators`
+        },
+        {
+          title: "101.2 Server Actions මඟින් දත්ත සුරැකීම සහ Revalidation",
+          content: [
+            "නව ලිපියක් ඇතුළත් කළ විට Database එක යාවත්කාලීන කර, බ්ලොග් ලැයිස්තුවේ Cache එක ක්ෂණිකව Revalidate කරන Server Action කේතය:"
+          ],
+          codeSnippets: [
+            {
+              language: "typescript",
+              title: "src/app/actions/postActions.ts",
+              code: `'use server';
+
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
+export async function createPostAction(formData: FormData) {
+  const title = formData.get('title') as string;
+  const content = formData.get('content') as string;
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+  // සැබෑ Database එකකට (Prisma / Supabase) දත්ත ඇතුළත් කිරීම
+  console.log("Database එකට එකතු කරයි:", { title, slug, content });
+
+  // 1. මුල් පිටුව සහ බ්ලොග් ලැයිස්තුව Revalidate කිරීම
+  revalidatePath('/');
+  revalidatePath('/blog');
+
+  // 2. අලුත් ලිපිය වෙත පරිශීලකයා යොමු කිරීම
+  redirect(\`/blog/\${slug}\`);
+}`
+            }
+          ]
+        },
+        {
+          title: "101.3 Dynamic Route, Dynamic Metadata සහ Skeleton Loader",
+          content: [
+            "සෑම බ්ලොග් ලිපියකටම ගැලපෙන අද්විතීය Open Graph & Twitter Card SEO ලබා දෙන generateMetadata සහ Suspense Loader සංරචකය:"
+          ],
+          codeSnippets: [
+            {
+              language: "typescript",
+              title: "src/app/(public)/blog/[slug]/page.tsx",
+              code: `import { Suspense } from 'react';
+import type { Metadata } from 'next';
+
+// Dynamic SEO Tags
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  return {
+    title: \`\${params.slug} | InsightBlog\`,
+    description: "Read the latest insights and professional web development articles.",
+    openGraph: {
+      title: \`\${params.slug} | InsightBlog\`,
+      type: "article",
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  return (
+    <article className="max-w-3xl mx-auto py-12 px-4">
+      <h1 className="text-4xl font-extrabold text-white tracking-tight capitalize mb-4">
+        {params.slug.replace(/-/g, ' ')}
+      </h1>
+      <p className="text-slate-400 text-sm mb-8">පළ කළ දිනය: 2026 සැප්තැම්බර් 20 • කියවීමේ කාලය: විනාඩි 5යි</p>
+      
+      <div className="prose prose-invert max-w-none text-slate-300 leading-relaxed space-y-4">
+        <p>Next.js App Router මඟින් Server-Side Rendering සහ Streaming තාක්ෂණයන් ඒකාබද්ධ කර ක්ෂණික වෙබ් අත්දැකීමක් ලබා දෙයි...</p>
+      </div>
+    </article>
+  );
+}`
+            }
           ]
         }
       ],
       keyPoints: [
-        "සුභ පැතුම්! ඔබ දැන් පරිච්ඡේද 1 සිට 100 දක්වා වූ අති දැවැන්ත ගමනක් සාර්ථකව අවසන් කර ඇත!"
+        "Server Actions මඟින් REST API Routes ලිවීමේ අවශ්‍යතාවය 100% ක් ඉවත් කර Frontend සහ Backend කේත සෘජුව සම්බන්ධ කරයි.",
+        "Incremental Static Regeneration (ISR) මඟින් සර්වර් බරකින් තොරව මිලියන සංඛ්‍යාත පරිශීලකයන්ට අකුණු වේගයෙන් පිටු ලබා දේ.",
+        "සුභ පැතුම්! ඔබ දැන් පරිච්ඡේද 1 සිට 101 දක්වා වූ අති දැවැන්ත ගමනක් සාර්ථකව අවසන් කර ඇත!"
       ],
       exercises: [
-        { id: 1, question: "Incremental Static Regeneration (ISR) යන්නෙන් අදහස් වන්නේ කුමක්ද?" }
+        { id: 1, question: "Incremental Static Regeneration (ISR) යන්නෙන් අදහස් වන්නේ කුමක්ද?" },
+        { id: 2, question: "Next.js හි Route Groups මඟින් URL ව්‍යුහය වෙනස් නොවී තබා ගන්නේ කෙසේද?" }
       ]
     }
   ]

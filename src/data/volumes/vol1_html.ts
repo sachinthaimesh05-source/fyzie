@@ -214,25 +214,81 @@ export const volume1: Volume = {
       ],
       sections: [
         {
-          title: "4.1 VS Code අතුරුමුහුණත සහ Extensions",
+          title: "4.1 VS Code අතුරුමුහුණත සහ ප්‍රධාන කොටස්",
           content: [
-            "Microsoft සමාගම විසින් නිර්මාණය කරන ලද VS Code යනු අද ලොව ජනප්‍රියතම කේත සංස්කාරකයයි.",
-            "අත්‍යවශ්‍ය Extensions දෙකක්:",
-            "1. Live Server: කේතයේ යමක් වෙනස් කර Save කළ සැණින් බ්‍රවුසරය reload වී ප්‍රතිඵලය පෙන්වයි.",
-            "2. Prettier - Code Formatter: ඔබගේ කේතය පිළිවෙලකට සහ පිරිසිදුව ස්වයංක්‍රීයව සකස් කර දෙයි."
+            "Microsoft සමාගම විසින් නිර්මාණය කරන ලද Visual Studio Code (VS Code) යනු වර්තමාන මෘදුකාංග ඉංජිනේරුවන් සහ වෙබ් සංවර්ධකයන් අතර ලොව ජනප්‍රියතම කේත සංස්කාරකයයි (Code Editor).",
+            "සරල පැහැදිලි කිරීම: සාමාන්‍යයෙන් පරිගණකයක ලියුමක් ලිවීමට Microsoft Word හෝ Notepad භාවිතා කරනවාක් මෙන්, පරිගණක කේත (Codes) ලිවීම සඳහා විශේෂයෙන් සැකසූ මෙවලම කේත සංස්කාරකයකි.",
+            "VS Code හි ප්‍රධාන කවුළු 4ක් ඇත:",
+            "1. Activity Bar (වම්පස කෙළවර තීරුව): File Explorer, Search, Source Control (Git), Run & Debug, සහ Extensions වෙත ප්‍රවේශය ලබා දෙයි.",
+            "2. Side Bar (පැති පුවරුව): ඔබේ ව්‍යාපෘතියේ ඇති සියලුම ගොනු සහ ෆෝල්ඩර (Project Directory) පෙන්වයි.",
+            "3. Editor Area (ප්‍රධාන ලියන ප්‍රදේශය): ඔබ HTML, CSS, JavaScript කේත ලියන ප්‍රධාන වැඩබිමයි.",
+            "4. Status Bar (පහළ තීරුව): විවෘත කර ඇති ගොනුවේ තොරතුරු, UTF-8 encoding, සහ Errors/Warnings තත්ත්වය පෙන්වයි."
+          ],
+          asciiDiagram: `+-----------------------------------------------------------+
+| [Menu Bar: File  Edit  Selection  View  Go  Run  Terminal] |
++---+---------------+---------------------------------------+
+| A | Side Bar      | Editor Area (කේත ලියන ප්‍රදේශය)       |
+| c | (ගොනු පටුන)   |                                       |
+| t | • index.html  |   <!DOCTYPE html>                     |
+| i | • style.css   |   <html>                              |
+| v | • app.js      |     <h1>Hello World!</h1>             |
+| i |               |   </html>                             |
+| t |               +---------------------------------------+
+| y |               | Integrated Terminal (Ctrl + \`)       |
++---+---------------+---------------------------------------+
+| Status Bar: Ln 1, Col 1  Spaces: 2  UTF-8  Port: 5500 Go Live |
++-----------------------------------------------------------+`
+        },
+        {
+          title: "4.2 අත්‍යවශ්‍ය Extensions (Live Server & Prettier)",
+          content: [
+            "VS Code හි ඇති විශාලතම වාසිය නම් අපට අවශ්‍ය පරිදි අලුත් හැකියාවන් එක් කර ගැනීමට (Extensions) ඇති හැකියාවයි.",
+            "ආරම්භක වෙබ් සංවර්ධකයෙකුට අත්‍යවශ්‍යම Extensions 3:",
+            "• Live Server (by Ritwick Dey): ඔබ කේතය ලියා Save (Ctrl + S) කළ සැණින් බ්‍රවුසරය ස්වයංක්‍රීයව refresh වී ප්‍රතිඵලය සජීවීව පෙන්වයි. නැවත නැවත බ්‍රවුසරය Reload කිරීම අවශ්‍ය නොවේ.",
+            "• Prettier - Code Formatter: ඔබගේ කේතයේ හිස්තැන්, පේළි ගැළපීම් සහ Indentation ස්වයංක්‍රීයව පිළිවෙලකට සකස් කර දෙන ලොව සම්මත මෙවලමයි.",
+            "• Auto Rename Tag: Opening HTML tag එකක් වෙනස් කරන විට Closing tag එකද ස්වයංක්‍රීයව වෙනස් කරයි."
+          ],
+          callout: {
+            type: "tip",
+            title: "Prettier සැකසුම (Auto Format on Save)",
+            text: "VS Code Settings (Ctrl + ,) විවෘත කර 'Format On Save' ටික් (check) කරන්න. එවිට Save කරන සෑම මොහොතකම කේතය සුපිරිසිදු ලෙස පෙළගැසේ."
+          }
+        },
+        {
+          title: "4.3 ප්‍රධාන Keyboard Shortcuts සහ Emmet කෙටිමං",
+          content: [
+            "වෘත්තීය වෙබ් සංවර්ධකයෙකුගේ වේගය (Productivity) රඳා පවතින්නේ Keyboard Shortcuts භාවිතය මතය.",
+            "අත්‍යවශ්‍ය කෙටිමං (Shortcuts):",
+            "• Ctrl + S (Mac: Cmd + S): ගොනුව Save කිරීම.",
+            "• Ctrl + B (Mac: Cmd + B): වම්පස Side Bar එක සඟවා තිරයේ ඉඩ වැඩි කර ගැනීම.",
+            "• Ctrl + / (Mac: Cmd + /): කේත පේළියක් Comment කිරීම.",
+            "• Ctrl + ` (Tilde key): Terminal එක විවෘත කිරීම.",
+            "Emmet Magic: VS Code හි HTML ලිවීමට සම්පූර්ණ ටැග් අකුරෙන් අකුර ලිවීම අවශ්‍ය නැත.",
+            "උදාහරණයක් ලෙස හිස් HTML ගොනුවක ! ලකුණ ගසා Tab හෝ Enter එබූ සැණින් සම්පූර්ණ HTML5 සැකිල්ලම තත්පරයකින් ජනනය වේ!"
+          ]
+        },
+        {
+          title: "4.4 ඔබේ පළමු Folder එක සහ index.html නිර්මාණය",
+          content: [
+            "පියවර 1: පරිගණකයේ Desktop මත 'MyFirstWeb' නමින් නව Folder එකක් සාදන්න.",
+            "පියවර 2: VS Code විවෘත කර File ➔ Open Folder වෙත ගොස් එම Folder එක තෝරන්න.",
+            "පියවර 3: New File අයිකනය ක්ලික් කර 'index.html' ලෙස නම් කරන්න. (වෙබ් අඩවියක ආරම්භක පිටුව සැමවිටම index.html ලෙස නම් කිරීම වෙබ් සම්මතයකි).",
+            "පියවර 4: පහත කේතය ලියා පහළ දකුණු කෙළවරේ ඇති 'Go Live' බටනය ඔබන්න."
           ],
           codeSnippets: [
             {
               language: "html",
               title: "පළමු පරීක්ෂණ ගොනුව (index.html)",
               code: `<!DOCTYPE html>
-<html>
+<html lang="si">
   <head>
-    <title>My First Web Page</title>
+    <meta charset="UTF-8" />
+    <title>මගේ පළමු වෙබ් පිටුව</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <p>මම VS Code සමඟ වෙබ් සංවර්ධනය ආරම්භ කළෙමි.</p>
+    <h1>ආයුබෝවන් ලෝකය!</h1>
+    <p>මම සාර්ථකව VS Code සහ Live Server සකස් කරගතිමි.</p>
+    <p>කේතය වෙනස් කර Save කළ සැණින් බ්‍රවුසරය මෙය යාවත්කාලීන කරයි.</p>
   </body>
 </html>`
             }
@@ -264,11 +320,20 @@ export const volume1: Volume = {
       ],
       sections: [
         {
-          title: "5.1 HTML මූලික සැකිල්ල සහ ටැග් ව්‍යුහය",
+          title: "5.1 HTML හැඳින්වීම සහ Document Structure",
           content: [
-            "අප නිවසක් තනන විට මුලින්ම ගඩොල් සහ සිමෙන්ති යොදා සැකිල්ල (Structure) සාදා ගනිමු. වෙබ් අඩවියක 'ගඩොල් සහ සිමෙන්ති' හෙවත් සැකිල්ල වන්නේ HTML ය.",
-            "ටැග් එකක ව්‍යුහය: <h1>මෙය මාතෘකාවකි</h1> (Opening Tag, Content, Closing Tag).",
-            "HTML මූලික සැකිල්ල:"
+            "HTML යනු HyperText Markup Language යන්නෙහි කෙටි යෙදුමයි. එය Programming Language එකක් නොව Markup භාෂාවකි.",
+            "සරල පැහැදිලි කිරීම: අප නිවසක් තනන විට මුලින්ම ගඩොල්, වැලි සහ සිමෙන්ති යොදා නිවසේ සැකිල්ල (Structure) සාදා ගනිමු. වෙබ් අඩවියක 'ගඩොල් සහ සිමෙන්ති' හෙවත් මූලික සැකිල්ල වන්නේ HTML ය.",
+            "ටැග් එකක (Tag) සහ එලිමන්ට් එකක (Element) ව්‍යුහය:",
+            "• Opening Tag: <tagname>",
+            "• Content: අපට පෙන්වීමට අවශ්‍ය පාඨය හෝ දත්ත",
+            "• Closing Tag: </tagname>",
+            "සම්පූර්ණ ඒකකය (Opening tag + Content + Closing tag) හඳුන්වන්නේ 'HTML Element' එකක් ලෙසයි.",
+            "HTML5 ලේඛනයක අත්‍යවශ්‍ය මූලික ටැග් 4:",
+            "1. <!DOCTYPE html>: බ්‍රවුසරයට මෙය නූතන HTML5 ලේඛනයක් බව පවසයි.",
+            "2. <html lang='si'>: සමස්ත ලේඛනයේ මව් ටැගය (Root element).",
+            "3. <head>: පිටුවේ සැකසුම්, මාතෘකාව (Title), UTF-8 කේතනය සහ පිටුවට අදාළ අමතර තොරතුරු (Metadata) අඩංගු වේ. මෙහි ඇති දෑ සෘජුව පිටුවේ නොපෙනේ.",
+            "4. <body>: වෙබ් පිටුව මත පරිශීලකයාගේ ඇසට පෙනෙන සියලුම දෑ (Headings, Paragraphs, Images, Videos) අඩංගු වන්නේ මෙහිය."
           ],
           codeSnippets: [
             {
@@ -278,21 +343,105 @@ export const volume1: Volume = {
 <html lang="si">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>මගේ පළමු වෙබ් පිටුව</title>
 </head>
 <body>
   <h1>ආයුබෝවන්!</h1>
-  <h2>Frontend Development</h2>
   <p>HTML යනු වෙබ් අඩවියක අත්තිවාරමයි.</p>
-  
-  <h3>මගේ ප්‍රියතම විෂයයන්:</h3>
-  <ul>
-    <li>HTML5</li>
-    <li>CSS3</li>
-    <li>JavaScript</li>
-  </ul>
 </body>
 </html>`
+            }
+          ]
+        },
+        {
+          title: "5.2 Headings (h1 සිට h6) සහ Paragraphs (<p>, <br>, <hr>)",
+          content: [
+            "වෙබ් පිටුවක තොරතුරු පාඨකයාට පහසුවෙන් කියවිය හැකි පරිදි මාතෘකා සහ ඡේද වලට වෙන් කිරීම අත්‍යවශ්‍ය වේ.",
+            "Headings (මාතෘකා): HTML හි <h1> සිට <h6> දක්වා මාතෘකා මට්ටම් 6ක් ඇත.",
+            "• <h1>: පිටුවේ ප්‍රධානතම මාතෘකාවයි. (එක් වෙබ් පිටුවකට එක් <h1> ටැගයක් පමණක් භාවිතා කිරීම SEO සඳහා ස්වර්ණමය නීතියකි).",
+            "• <h2>: ප්‍රධාන අනු මාතෘකා (Sub-headings).",
+            "• <h3> සිට <h6>: තවදුරටත් කුඩා මාතෘකා.",
+            "Paragraphs (ඡේද): ඡේද ලිවීම සඳහා <p> ටැගය භාවිතා කරයි. බ්‍රවුසරය ස්වයංක්‍රීයව එක් ඡේදයකට පසු පහළින් ඉඩක් (Margin) තබයි.",
+            "පේළි කැඩීම සහ සිරස් ඉරි:",
+            "• <br>: ඡේදය අවසන් නොකර ඊළඟ පේළියට යාමට (Line Break). මෙය closing tag එකක් නැති Empty/Self-closing ටැගයකි.",
+            "• <hr>: මාතෘකා අතර තිරස් බෙදුම් ඉරක් (Horizontal Rule) ඇඳීමට යොදයි."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "Headings & Paragraphs Example",
+              code: `<h1>පරිගණක ඉතිහාසය</h1>
+<p>පරිගණකය මිනිස් ශිෂ්ටාචාරයේ විශිෂ්ටතම සොයාගැනීමකි.<br>එය මිනිසාගේ කාර්යයන් පහසු කළේය.</p>
+
+<hr>
+
+<h2>පළමු පරම්පරාවේ පරිගණක</h2>
+<p>මෙම පරිගණක සඳහා රික්තක නල (Vacuum Tubes) භාවිතා කරන ලදී.</p>`
+            }
+          ]
+        },
+        {
+          title: "5.3 Text Formatting Tags (අකුරු හැඩගැන්වීම)",
+          content: [
+            "පාඨයක් තුළ වැදගත් වචන ඉස්මතු කිරීමට පහත ටැග් භාවිතා වේ:",
+            "• <strong>: අතිශය වැදගත් වචනයක් තද කළු අකුරෙන් පෙන්වීමට (Bold + Semantic meaning).",
+            "• <em>: වචනයක් අවධාරණය කිරීමට (Italics + Emphasis).",
+            "• <mark>: පාඨකයෙකු කහ පැහැති Highlighter පෑනකින් ලකුණු කළාක් මෙන් පෙන්වීමට.",
+            "• <small>: නීතිමය කොන්දේසි (Copyright/Terms) වැනි කුඩා අකුරු සඳහා.",
+            "• <code>: පරිගණක කේතයක් හෝ command එකක් පාඨය තුළ පෙන්වීමට.",
+            "• <blockquote>: වෙනත් අයෙකුගේ ප්‍රකාශයක් උපුටා දැක්වීමට (Quote)."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "Formatting Elements Example",
+              code: `<p>මෙම පාඨමාලාව <strong>නොමිලේ</strong> ලබා දේ.</p>
+<p>කරුණාකර <em>අවධානයෙන්</em> කියවන්න.</p>
+<p>අපගේ පිරිනැමීම <mark>අදින් අවසන්</mark> වේ.</p>
+<p>Terminal එකේ <code>git status</code> ලෙස ටයිප් කරන්න.</p>
+<blockquote cite="https://example.com">
+  "දැනුම යනු බලයයි." - සර් ෆ්‍රැන්සිස් බේකන්
+</blockquote>`
+            }
+          ]
+        },
+        {
+          title: "5.4 Lists: Ordered (<ol>), Unordered (<ul>), සහ Description (<dl>)",
+          content: [
+            "තොරතුරු ලැයිස්තුවක් ලෙස ඉදිරිපත් කිරීමට HTML හි ලැයිස්තු වර්ග 3ක් ඇත:",
+            "1. Unordered List (<ul>): පිළිවෙලක් වැදගත් නොවන ලැයිස්තු සඳහා බුලට් පොයින්ට්ස් (Bullet points) මඟින් පෙන්වයි.",
+            "2. Ordered List (<ol>): පියවරෙන් පියවර අනුපිළිවෙලක් වැදගත් වන දෑ සඳහා අංක (1, 2, 3) හෝ අකුරු (A, B, C) මඟින් පෙන්වයි.",
+            "සෑම ලැයිස්තු අයිතමයක්ම <li> (List Item) ටැගය තුළ ලියයි.",
+            "3. Description List (<dl>): ශබ්දකෝෂයක් මෙන් වචනය සහ එහි අර්ථ දැක්වීම පෙන්වීමට (<dt> = Term, <dd> = Definition)."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "HTML Lists in Action",
+              code: `<!-- Unordered List -->
+<h3>කැමතිම ක්‍රීඩා:</h3>
+<ul>
+  <li>ක්‍රිකට්</li>
+  <li>පාපන්දු</li>
+  <li>බැඩ්මින්ටන්</li>
+</ul>
+
+<!-- Ordered List -->
+<h3>තේ එකක් සාදන පියවර:</h3>
+<ol>
+  <li>වතුර උණු කරන්න.</li>
+  <li>තේ කොළ දමන්න.</li>
+  <li>සීනි සහ කිරි එකතු කරන්න.</li>
+</ol>
+
+<!-- Description List -->
+<dl>
+  <dt>HTML</dt>
+  <dd>වෙබ් අඩවියක සැකිල්ල සාදන භාෂාව.</dd>
+  <dt>CSS</dt>
+  <dd>වෙබ් අඩවිය අලංකාර කරන භාෂාව.</dd>
+</dl>`
             }
           ]
         }
@@ -314,57 +463,136 @@ export const volume1: Volume = {
       title: "HTML උසස් මට්ටම - පින්තූර, සබැඳි සහ වගු",
       englishTitle: "HTML Advanced - Images, Links & Tables",
       pageRange: "පිටු 22 - 24",
-      description: "Attributes (href, src, alt, target), Hyperlinks (<a>), Images (<img>), Self-closing tags, සහ Tables (table, tr, th, td).",
+      description: "Attributes (href, src, alt, target), Hyperlinks (<a>), Images (<img>), Self-closing tags, සහ Tables (table, tr, th, td, rowspan, colspan).",
       learningObjectives: [
-        "ගුණාංග (Attributes) යනු මොනවාදැයි තේරුම් ගැනීම",
-        "<a> ටැගය සහ href, target='_blank' මඟින් පිටු සම්බන්ධ කිරීම",
+        "ගුණාංග (Attributes) යනු මොනවාදැයි සහ ඒවා ලියන syntax එක තේරුම් ගැනීම",
+        "<a> ටැගය සහ href, target='_blank', internal page anchors මඟින් පිටු සම්බන්ධ කිරීම",
         "<img> ටැගය, src සහ alt attribute වල වැදගත්කම අවබෝධ කර ගැනීම",
-        "<table>, <tr>, <th>, <td> මඟින් දත්ත වගු නිර්මාණය කිරීම"
+        "<table>, <tr>, <th>, <td>, thead, tbody, rowspan සහ colspan මඟින් දත්ත වගු නිර්මාණය කිරීම"
       ],
       sections: [
         {
-          title: "6.1 සබැඳි (Links), පින්තූර (Images) සහ වගු (Tables)",
+          title: "6.1 Attributes යනු මොනවාද? (ටැග් වල ගුණාංග)",
           content: [
-            "Attributes යනු ටැග් එකකට ලබා දෙන අමතර විස්තරයි. ඒවා සැමවිටම opening tag එක තුළ ලියයි.",
-            "පින්තූර සඳහා alt attribute එක අනිවාර්ය වන්නේ ඇස් පෙනීම දුර්වල අයට Screen Reader එකෙන් පින්තූරය කියවා දීමට සහ SEO සඳහායි."
+            "Attributes (ගුණාංග) යනු HTML ටැග් එකකට අමතර බලයක් හෝ අමතර තොරතුරු ලබා දීම සඳහා භාවිතා කරන විශේෂ වචන වේ.",
+            "නිරීක්ෂණ නීති:",
+            "1. Attributes සැමවිටම ලියනු ලබන්නේ ආරම්භක ටැගය (Opening Tag) තුළ පමණි.",
+            "2. ඒවා නම සහ අගය (name='value') ලෙස යුගල වශයෙන් ලියයි.",
+            "උදාහරණයක් ලෙස <a href='https://google.com'> හි 'href' යනු Attribute නම වන අතර 'https://google.com' යනු එහි අගයයි.",
+            "පොදු Attributes: id (තනි අනන්‍යතාවය), class (කණ්ඩායම් හැඩගැන්වීම්), title (Mouse hover කළ විට පෙන්වන tooltip එක), style (inline styling)."
+          ]
+        },
+        {
+          title: "6.2 සබැඳි හෙවත් Hyperlinks (<a> ටැගය)",
+          content: [
+            "අන්තර්ජාලය (World Wide Web) එකිනෙකට බැඳී පවතින්නේ සබැඳි හෙවත් Hyperlinks මඟිනි. මේ සඳහා <a> (Anchor tag) භාවිතා කරයි.",
+            "ප්‍රධාන Attributes:",
+            "• href (Hypertext Reference): පරිශීලකයා ක්ලික් කළ විට යා යුතු වෙබ් ලිපිනය.",
+            "• target='_blank': සබැඳිය දැනට ඇති ටැබ් එක වෙනුවට අලුත් browser tab එකක විවෘත කිරීමට.",
+            "• Internal Anchors (පිටුව ඇතුළත පිවිසුම්): <a href='#section2'> මඟින් එකම පිටුවේ පහළ කොටසකට ක්ෂණිකව යා හැක.",
+            "• Email & Phone Links: mailto:info@example.com සහ tel:+94743491866 මඟින් සෘජුව Email හෝ Call ලබා ගැනීමට හැකියාව ලැබේ."
           ],
           codeSnippets: [
             {
               language: "html",
-              title: "Links, Images & Tables Example",
-              code: `<!-- සබැඳියක් -->
-<a href="https://google.com" target="_blank">ගූගල් වෙත යන්න</a>
+              title: "Hyperlinks Example",
+              code: `<!-- බාහිර වෙබ් අඩවියකට සබැඳියක් -->
+<a href="https://google.com" target="_blank" rel="noopener noreferrer">ගූගල් වෙත පිවිසෙන්න</a>
 
-<!-- පින්තූරයක් (Self-closing) -->
-<img src="photo.jpg" alt="සුන්දර වෙරළ තීරයක්" width="400" height="250">
+<!-- එකම වෙබ් අඩවියේ වෙනත් පිටුවකට (Relative URL) -->
+<a href="about.html">අප ගැන පිටුව</a>
 
-<!-- වගුවක් -->
-<table border="1">
-  <tr>
-    <th>විෂයය</th>
-    <th>ලකුණු</th>
-  </tr>
-  <tr>
-    <td>ගණිතය</td>
-    <td>85</td>
-  </tr>
-  <tr>
-    <td>විද්‍යාව</td>
-    <td>90</td>
-  </tr>
+<!-- සෘජු ඊමේල් සහ දුරකථන සබැඳි -->
+<a href="mailto:support@example.com">ඊමේල් පණිවිඩයක් එවන්න</a>
+<a href="tel:+94743491866">අප අමතන්න</a>`
+            }
+          ]
+        },
+        {
+          title: "6.3 පින්තූර එකතු කිරීම (<img> ටැගය)",
+          content: [
+            "වෙබ් පිටුවකට ඡායාරූප හෝ නිදර්ශන ඇතුළත් කිරීමට <img> ටැගය යොදයි. මෙහි වැදගත්ම කරුණ වන්නේ <img> ටැගයට closing tag එකක් නොමැති වීමයි (Self-closing / Void tag).",
+            "අත්‍යවශ්‍ය Attributes 2:",
+            "1. src (Source): පින්තූරය ඇති පරිගණක ගොනු ලිපිනය හෝ අන්තර්ජාල URL එක.",
+            "2. alt (Alternative Text): අන්තර්ජාලය බිඳවැටීම නිසා පින්තූරය ලෝඩ් නොවූවහොත් ඒ වෙනුවට පෙන්වන විස්තරයයි.",
+            "ඇයි alt අත්‍යවශ්‍ය වන්නේ? ඇස් පෙනීම දුර්වල පුද්ගලයන් Screen Reader මෘදුකාංග මඟින් වෙබ් අඩවි කියවන විට, මෙම alt text එක ඔවුන්ට හඬ නඟා කියවයි. එමෙන්ම Google SEO සඳහාද මෙය ප්‍රමුඛ වේ.",
+            "width සහ height මඟින් පින්තූරයේ ප්‍රමාණය පික්සල් (px) වලින් පාලනය කළ හැක."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "Image Insertion Example",
+              code: `<!-- ප්‍රාදේශීය ගොනුවකින් පින්තූරයක් -->
+<img src="images/logo.png" alt="වෙබ් අඩවියේ නිල ලාංඡනය" width="200" height="80">
+
+<!-- අන්තර්ජාලයෙන් පින්තූරයක් -->
+<img 
+  src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" 
+  alt="ලැප්ටොප් පරිගණකයක කේත ලියන මෘදුකාංග ඉංජිනේරුවෙක්" 
+  width="600" 
+  height="400"
+>`
+            }
+          ]
+        },
+        {
+          title: "6.4 දත්ත වගු (HTML Tables - <table>, <tr>, <th>, <td>)",
+          content: [
+            "ලකුණු ලේඛන, මිල ගණන් ලැයිස්තු හෝ කාලසටහන් වැනි දත්ත පේළි සහ තීරු ලෙස ඉදිරිපත් කිරීමට HTML Tables භාවිතා කරයි.",
+            "වගුවක ප්‍රධාන ටැග්:",
+            "• <table>: සම්පූර්ණ වගුවේ මව් ටැගය.",
+            "• <tr> (Table Row): වගුවේ තිරස් පේළියක්.",
+            "• <th> (Table Header): ශීර්ෂ තීරුව (අකුරු තද කළුවෙන් සහ මධ්‍යගතව දිස්වේ).",
+            "• <td> (Table Data): සාමාන්‍ය දත්ත කොටුවක්.",
+            "උසස් ගුණාංග:",
+            "• colspan='2': කොටු දෙකක් තිරස්ව එකතු කිරීමට (Merge Columns).",
+            "• rowspan='2': කොටු දෙකක් සිරස්ව එකතු කිරීමට (Merge Rows).",
+            "• <thead>, <tbody>, <tfoot>: වගුව වඩාත් වෘත්තීය ලෙස කොටස් 3කට වෙන් කිරීම."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "Comprehensive HTML Table with Colspan & Rowspan",
+              code: `<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>අංකය</th>
+      <th>නම</th>
+      <th>විෂයය</th>
+      <th>ලකුණු</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>01</td>
+      <td rowspan="2">කසුන් පෙරේරා</td>
+      <td>HTML5</td>
+      <td>95</td>
+    </tr>
+    <tr>
+      <td>02</td>
+      <td>CSS3</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <td colspan="3"><strong>සාමාන්‍ය ලකුණු එකතුව</strong></td>
+      <td><strong>183</strong></td>
+    </tr>
+  </tbody>
 </table>`
             }
           ]
         }
       ],
       keyPoints: [
+        "Attributes සැමවිටම opening tag එක තුළ name='value' ලෙස ලියයි.",
         "<a> ටැගය href සමඟ සබැඳි සාදයි; target='_blank' අලුත් ටැබ් එකක විවෘත කරයි.",
-        "<img> ටැගය self-closing වන අතර alt attribute එක accessibility සඳහා අත්‍යවශ්‍ය වේ.",
+        "<img> ටැගය self-closing වන අතර alt attribute එක accessibility සහ SEO සඳහා අත්‍යවශ්‍ය වේ.",
         "වගුවක් සෑදීමට <table>, පේළි සඳහා <tr>, ශීර්ෂ සඳහා <th> සහ දත්ත සඳහා <td> යොදයි."
       ],
       exercises: [
         { id: 1, question: "පින්තූරයක් සඳහා alt Attribute එක වැදගත් වන්නේ ඇයි?" },
-        { id: 2, question: "පේළි දෙකක නම සහ වයස අඩංගු සරල HTML වගුවක් ලියන්න." }
+        { id: 2, question: "colspan සහ rowspan අතර ඇති වෙනස උදාහරණයක් සහිතව පැහැදිලි කරන්න." }
       ]
     },
     {
@@ -374,70 +602,128 @@ export const volume1: Volume = {
       title: "ෆෝම් - පරිශීලක දත්ත ලබා ගැනීම (HTML Forms)",
       englishTitle: "HTML Forms & User Input",
       pageRange: "පිටු 24 - 27",
-      description: "<form> ටැගය, action & method, input types (text, password, email, checkbox, radio), <label> (for/id), textarea, select, සහ validation.",
+      description: "<form> ටැගය, action & method (GET vs POST), input types (text, password, email, checkbox, radio), <label> (for/id), textarea, select, සහ validation.",
       learningObjectives: [
-        "HTML ෆෝම් (Forms) වල වැදගත්කම සහ <form> ටැගය",
-        "විවිධ Input වර්ග (text, password, email, checkbox, radio) හඳුනා ගැනීම",
+        "HTML ෆෝම් (Forms) වල වැදගත්කම සහ <form> ටැගයේ කාර්යභාරය",
+        "GET සහ POST methods අතර ඇති ආරක්ෂක සහ තාක්ෂණික වෙනස්කම්",
+        "විවිධ Input වර්ග (text, password, email, number, date, file) නිවැරදිව භාවිතය",
         "<label> ටැගයේ for ගුණාංගය සහ input එකේ id අතර සම්බන්ධය",
-        "Dropdown (select) සහ Textarea භාවිතය",
-        "සම්පූර්ණ ලියාපදිංචි වීමේ ෆෝරමයක් නිර්මාණය කිරීම"
+        "Dropdown (<select>) සහ බහුවිධ පෙළ (<textarea>) භාවිතය",
+        "HTML5 Validation (required, minlength, pattern) මඟින් නිවැරදි දත්ත තහවුරු කිරීම"
       ],
       sections: [
         {
-          title: "7.1 ෆෝරමයක මූලික ව්‍යුහය සහ Inputs",
+          title: "7.1 ෆෝරමයක මූලික ව්‍යුහය සහ <form> ටැගය",
           content: [
-            "සැබෑ වෙබ් අඩවියකදී අපට පරිශීලකයාගෙන් තොරතුරු ලබා ගැනීමට සිදුවේ (Login, Search, Checkout).",
-            "ප්‍රධාන ගුණාංග: action (දත්ත යැවිය යුතු ලිපිනය), method (GET හෝ POST).",
-            "ලියාපදිංචි වීමේ සම්පූර්ණ උදාහරණයක්:"
+            "සැබෑ ලෝකයේ වෙබ් අඩවියකදී පරිශීලකයාගෙන් තොරතුරු ලබා ගැනීම අතිශය සුලභ කාර්යයකි (Login, Register, Contact, Search, Online Shopping Checkout).",
+            "මේ සියල්ල සඳහා පදනම වන්නේ <form> ටැගයයි.",
+            "<form> ටැගයේ ප්‍රධාන ගුණාංග 2:",
+            "1. action: ෆෝරමය Submit කළ විට එහි දත්ත යැවිය යුතු Backend Server එකේ ලිපිනය (උදා: /api/login හෝ process.php).",
+            "2. method: දත්ත යවන ක්‍රමය (HTTP Method). ප්‍රධාන ක්‍රම 2කි:",
+            "• GET: දත්ත URL එක හරහා ප්‍රසිද්ධියේ යවයි (උදා: search.html?q=shoes). Search boxes සඳහා සුදුසුය. මුරපද (Passwords) සඳහා කිසිවිටෙකත් සුදුසු නොවේ.",
+            "• POST: දත්ත HTTP Request Body එක තුළ සඟවා ආරක්ෂිතව යවයි. Passwords, Credit card තොරතුරු සහ Personal data සඳහා සැමවිටම POST භාවිතා කළ යුතුය."
+          ]
+        },
+        {
+          title: "7.2 ප්‍රධාන Input වර්ග සහ Labels (<label for='...'>)",
+          content: [
+            "<input> යනු ෆෝරමයක වඩාත්ම බහුකාර්ය ටැගයයි. එහි 'type' attribute එක මඟින් එය ක්‍රියා කරන ආකාරය තීරණය වේ:",
+            "• type='text': සාමාන්‍ය නම හෝ පාඨ ලබා ගැනීමට.",
+            "• type='password': ටයිප් කරන අකුරු තිත් (Dots/Bullets) ලෙස සඟවා පෙන්වීමට.",
+            "• type='email': විද්‍යුත් තැපැල් ලිපිනයක් දැයි බ්‍රවුසරය මඟින්ම (@ ලකුණ) පරීක්ෂා කිරීමට.",
+            "• type='number': ඉලක්කම් පමණක් ලබා ගැනීමට (min සහ max අගයන් සහිතව).",
+            "• type='date': Calendar එකකින් දිනයක් තෝරා ගැනීමට.",
+            "• type='file': පරිගණකයෙන් PDF හෝ පින්තූරයක් Upload කිරීමට.",
+            "<label> ටැගයේ රහස: <label for='user-name'> හි 'for' අගය සහ <input id='user-name'> හි 'id' අගය සමාන කළ යුතුය. එවිට පරිශීලකයා අදාළ අකුරු මත ක්ලික් කළ විටද input කොටුව Active වේ. Accessibility සඳහා මෙය අනිවාර්ය වේ."
+          ]
+        },
+        {
+          title: "7.3 Radio Buttons, Checkboxes සහ Selection Elements",
+          content: [
+            "විකල්ප තෝරා ගැනීම සඳහා:",
+            "• Radio Buttons (type='radio'): විකල්ප කිහිපයකින් එකක් පමණක් තෝරා ගැනීමට (උදා: ස්ත්‍රී/පුරුෂ භාවය). සියලුම Radio බොත්තම් වල name attribute එක සමාන විය යුතුය. එවිට එකක් තෝරන විට අනෙක deselect වේ.",
+            "• Checkboxes (type='checkbox'): එකකට වඩා වැඩි විකල්ප කිහිපයක් තෝරා ගැනීමට (උදා: කැමති විෂයයන්, Terms & Conditions එකඟ වීම).",
+            "• Dropdown List (<select> සහ <option>): ඉඩ ඉතිරි කරමින් පහළට විවෘත වන ලැයිස්තුවකින් එකක් තෝරා ගැනීමට (උදා: රට හෝ දිස්ත්‍රික්කය තෝරා ගැනීම).",
+            "• Textarea (<textarea>): ඡේද හෝ දිගු පණිවිඩ ලබා ගැනීමට (rows සහ cols ප්‍රමාණය තීරණය කරයි)."
+          ]
+        },
+        {
+          title: "7.4 Form Validation සහ සම්පූර්ණ ලියාපදිංචි වීමේ ෆෝරමය",
+          content: [
+            "HTML5 මඟින් JavaScript නොමැතිවම සරල දත්ත නිවැරදිදැයි පරීක්ෂා කිරීම (Client-side Validation) සිදු කළ හැක:",
+            "• required: මෙම කොටුව හිස්ව තබා submit කළ නොහැක.",
+            "• minlength / maxlength: අකුරු අවම සහ උපරිම ප්‍රමාණය සීමා කිරීමට.",
+            "• placeholder: කොටුව තුළ ලා අළු පැහැයෙන් පෙන්වන ඉඟිය (Hint).",
+            "පහත දැක්වෙන්නේ සියලු අංග සහිත වෘත්තීය ලියාපදිංචි වීමේ ආකෘතියකි:"
           ],
           codeSnippets: [
             {
               language: "html",
-              title: "Complete Registration Form",
-              code: `<form action="/submit" method="POST">
-  <p>
-    <label for="username">නම:</label><br>
-    <input type="text" id="username" name="username" placeholder="ඔබගේ නම" required>
-  </p>
-  <p>
-    <label for="email">විද්‍යුත් තැපෑල:</label><br>
-    <input type="email" id="email" name="email" required>
-  </p>
-  <p>
-    <label for="password">මුරපදය:</label><br>
-    <input type="password" id="password" name="password" required>
-  </p>
-  <p>
-    <label>ස්ත්‍රී/පුරුෂ භාවය:</label><br>
-    <input type="radio" name="gender" id="m" value="male"><label for="m">පිරිමි</label>
-    <input type="radio" name="gender" id="f" value="female"><label for="f">ගැහැණු</label>
-  </p>
-  <p>
-    <label for="city">නගරය තෝරන්න:</label>
-    <select id="city" name="city">
-      <option value="colombo">කොළඹ</option>
-      <option value="kandy">මහනුවර</option>
-      <option value="galle">ගාල්ල</option>
-    </select>
-  </p>
-  <p>
-    <label for="bio">ඔබ ගැන කෙටි විස්තරයක්:</label><br>
-    <textarea id="bio" name="bio" rows="4" cols="40"></textarea>
-  </p>
-  <input type="submit" value="ලියාපදිංචි වන්න">
+              title: "Complete Professional Registration Form",
+              code: `<form action="/register" method="POST">
+  <fieldset>
+    <legend>පරිශීලක ගිණුම් විස්තර</legend>
+    
+    <p>
+      <label for="fullname">සම්පූර්ණ නම:</label><br>
+      <input type="text" id="fullname" name="fullname" placeholder="කසුන් පෙරේරා" required minlength="3">
+    </p>
+
+    <p>
+      <label for="useremail">විද්‍යුත් තැපෑල:</label><br>
+      <input type="email" id="useremail" name="email" placeholder="kasun@example.com" required>
+    </p>
+
+    <p>
+      <label for="pass">මුරපදය:</label><br>
+      <input type="password" id="pass" name="password" required minlength="8" placeholder="අවම අකුරු 8ක්">
+    </p>
+
+    <p>
+      <label>ස්ත්‍රී/පුරුෂ භාවය:</label><br>
+      <input type="radio" name="gender" id="male" value="male" checked>
+      <label for="male">පිරිමි</label>
+      <input type="radio" name="gender" id="female" value="female">
+      <label for="female">ගැහැණු</label>
+    </p>
+
+    <p>
+      <label for="province">පළාත තෝරන්න:</label><br>
+      <select id="province" name="province">
+        <option value="western">බස්නාහිර</option>
+        <option value="central">මධ්‍යම</option>
+        <option value="southern">දකුණ</option>
+      </select>
+    </p>
+
+    <p>
+      <label for="bio">ඔබ ගැන හැඳින්වීමක්:</label><br>
+      <textarea id="bio" name="bio" rows="4" cols="40" placeholder="කෙටි විස්තරයක්..."></textarea>
+    </p>
+
+    <p>
+      <input type="checkbox" id="terms" name="terms" required>
+      <label for="terms">මම සියලුම නීති හා කොන්දේසි වලට එකඟ වෙමි.</label>
+    </p>
+
+    <button type="submit">ගිණුම සාදන්න</button>
+    <button type="reset">නැවත සකසන්න</button>
+  </fieldset>
 </form>`
             }
           ]
         }
       ],
       keyPoints: [
-        "name attribute එක සර්වර් එකට දත්ත හඳුනා ගැනීමට අත්‍යවශ්‍ය වේ.",
-        "Radio buttons වල name එක සමාන විය යුතුය.",
+        "name attribute එක Backend Server එකට දත්ත හඳුනා ගැනීමට අත්‍යවශ්‍ය වේ.",
+        "Passwords සහ වැදගත් තොරතුරු සඳහා සැමවිටම method='POST' භාවිතා කරන්න.",
+        "Radio buttons වල name එක සමාන විය යුතු අතර Labels වල for සහ Input වල id සමාන විය යුතුය.",
         "required attribute මඟින් හිස්ව submit කිරීම වළක්වයි."
       ],
       exercises: [
-        { id: 1, question: "type='text' සහ type='password' අතර ඇති වෙනස කුමක්ද?" },
-        { id: 2, question: "<label> හි for සහ <input> හි id එක සමාන කිරීමෙන් ලැබෙන වාසිය කුමක්ද?" }
+        { id: 1, question: "GET සහ POST ක්‍රම අතර ඇති ප්‍රධාන වෙනස්කම් 2ක් ලියන්න." },
+        { id: 2, question: "<label> හි for සහ <input> හි id එක සමාන කිරීමෙන් ලැබෙන ප්‍රධාන වාසි 2 කුමක්ද?" },
+        { id: 3, question: "Radio Buttons වල එකක් පමණක් තෝරා ගැනීමට ඉඩ සලසන්නේ කෙසේද?" }
       ]
     },
     {
@@ -451,20 +737,35 @@ export const volume1: Volume = {
       learningObjectives: [
         "සෙමැන්ටික් (Semantic) යන්නෙහි තේරුම සහ අර්ථවත් ටැග් හඳුනා ගැනීම",
         "<div> සහ <span> වැනි non-semantic ටැග් වෙනුවට අර්ථවත් ටැග් භාවිතය",
-        "SEO (Search Engine Optimization) සඳහා සෙමැන්ටික් ටැග් උපකාරී වන අයුරු",
-        "වෙබ් පිටුවක සම්මත සැකිල්ල (Standard Web Layout) නිර්මාණය කිරීම"
+        "Layout Elements: header, nav, main, section, article, aside, footer සම්මත භාවිතය",
+        "SEO (Search Engine Optimization) සහ Screen Readers සඳහා සෙමැන්ටික් ටැග් වල දැවැන්ත බලපෑම"
       ],
       sections: [
         {
-          title: "8.1 සෙමැන්ටික් ටැග් සහ සම්මත වෙබ් සැකිල්ල",
+          title: "8.1 සෙමැන්ටික් ටැග් යනු කුමක්ද සහ ඇයි එය වැදගත්?",
           content: [
-            "සෙමැන්ටික් ටැග් යනු එම ටැගය තුළ ඇති අන්තර්ගතය කුමක්දැයි බ්‍රවුසරයට සහ සෙවුම් යන්ත්‍ර (Google) වලට පැහැදිලිව පවසන ටැග් වේ.",
-            "නිවසක කාමර වලට කාමර 1, 2, 3 කියනවා වෙනුවට 'කුස්සිය', 'නිදන කාමරය', 'සාලය' ලෙස නම් කිරීම වැනිය."
+            "සෙමැන්ටික් (Semantic) යනු 'අර්ථවත්' යන්නයි. සෙමැන්ටික් HTML ටැගයක් දුටු සැණින් එම ටැගය තුළ ඇත්තේ කුමන ආකාරයේ අන්තර්ගතයක්දැයි බ්‍රවුසරයට, සෙවුම් යන්ත්‍ර (Googlebot) වලට මෙන්ම කේතය කියවන වෙනත් සංවර්ධකයෙකුටද පැහැදිලිව තේරුම් ගත හැක.",
+            "සැබෑ ලෝකයේ උපමාව: නිවසක් සැලසුම් කිරීමේදී කාමර වලට 'කාමරය 1', 'කාමරය 2', 'කාමරය 3' කියනවා වෙනුවට 'කුස්සිය', 'නිදන කාමරය', 'නාන කාමරය' සහ 'සාලය' ලෙස අර්ථවත්ව නම් කිරීම වැනි දෙයකි.",
+            "පැරණි ක්‍රමය (Non-semantic): සෑම දෙයකටම <div class='header'>, <div class='nav'>, <div class='footer'> ලිවීම.",
+            "නූතන ක්‍රමය (Semantic HTML5): <header>, <nav>, <footer> වැනි සෘජු ටැග් භාවිතය."
+          ]
+        },
+        {
+          title: "8.2 සම්මත වෙබ් සැකිල්ල සහ ප්‍රධාන Layout Elements",
+          content: [
+            "සම්මත වෙබ් පිටුවක ප්‍රධාන කොටස් 7:",
+            "1. <header>: පිටුවේ හෝ ලිපියක ඉහළම කොටස (ලාංඡනය, ආදර්ශ පාඨය ආදිය).",
+            "2. <nav>: ප්‍රධාන සංචාලන මෙනුව (Navigation Links).",
+            "3. <main>: පිටුවේ මූලික සහ අද්විතීය ප්‍රධාන අන්තර්ගතය. (එක් පිටුවකට ඇත්තේ එක් <main> ටැගයක් පමණි).",
+            "4. <article>: තනිව සම්පූර්ණ අර්ථයක් දෙන ಸ್ವයංක්‍රීය අන්තර්ගතයක් (උදා: බ්ලොග් ලිපියක්, පුවත්පත් වාර්තාවක් හෝ පරිශීලක Review එකක්). වෙනත් වෙබ් අඩවියක නැවත පළ කළද අර්ථය නොවෙනස් වන දෑ.",
+            "5. <section>: එකම තේමාවකට අයත් අන්තර්ගත කණ්ඩයක් (උදා: 'අපගේ සේවාවන්', 'මිල ගණන්', 'ප්‍රශ්නෝත්තර').",
+            "6. <aside>: ප්‍රධාන අන්තර්ගතයට අදාළ නමුත් අතුරු තොරතුරු (Sidebar, දැන්වීම්, අදාළ ලිපි).",
+            "7. <footer>: පිටුවේ පහළම කොටස (Copyright, Terms, Contact links)."
           ],
           asciiDiagram: `__________________________________________________________
 |                  <header> (හිස)                         |
 |________________________________________________________|
-|                  <nav> (මෙනුව)                          |
+|                  <nav> (සංචාලන මෙනුව)                   |
 |________________________________________________________|
 |           |                 <main>                 |   |
 |  <aside>  |  _________________   ________________  | <aside>
@@ -472,11 +773,27 @@ export const volume1: Volume = {
 |   පුවරුව) | |_________________| |________________| |  පුවරුව)
 |___________|________________________________________|___|
 |                  <footer> (පාදය)                       |
-|________________________________________________________|`,
+|________________________________________________________|`
+        },
+        {
+          title: "8.3 Semantic vs Non-Semantic (div සහ span වල නියම තැන)",
+          content: [
+            "<div> සහ <span> යනු කිසිදු සහජ අර්ථයක් (No semantic meaning) නැති ටැග් වේ.",
+            "• <div>: Block-level container එකකි. එය භාවිතා කළ යුත්තේ පිරිසිදු CSS Layout හැඩගැන්වීම් (Styling hooks) සහ Flexbox/Grid wrappers සඳහා පමණි.",
+            "• <span>: Inline container එකකි. ඡේදයක් මැද ඇති තනි වචනයක පාට හෝ අකුරු හැඩය වෙනස් කිරීමට යොදයි.",
+            "රන් නීතිය: යම් කොටසකට අදාළ සෙමැන්ටික් ටැගයක් (nav, header, article ආදිය) පවතී නම්, ඒ වෙනුවට <div> භාවිතා නොකරන්න!"
+          ]
+        },
+        {
+          title: "8.4 SEO සහ Accessibility සඳහා Semantic HTML හි බලපෑම",
+          content: [
+            "1. Google Search Ranking (SEO): Google සෙවුම් යන්ත්‍රයේ Web Crawler එක පැමිණි විට, පිටුවේ <main> සහ <article> තුළ ඇති වචන වලට වැඩි ප්‍රමුඛතාවයක් ලබා දී ශ්‍රේණිගත කරයි.",
+            "2. Screen Readers (Accessibility): ඇස් පෙනීම දුර්වල පුද්ගලයන් Screen Reader මෘදුකාංග මඟින් පිටුව කියවන විට, ඔවුන්ට පහසුවෙන් 'Jump to Navigation' හෝ 'Jump to Main Content' ලෙස එක් ක්ලික් එකකින් අදාළ කොටසට යා හැක්කේ සෙමැන්ටික් ටැග් තිබුණහොත් පමණි."
+          ],
           codeSnippets: [
             {
               language: "html",
-              title: "Semantic HTML Layout",
+              title: "Complete Semantic HTML5 Page Architecture",
               code: `<!DOCTYPE html>
 <html lang="si">
 <head>
@@ -485,24 +802,33 @@ export const volume1: Volume = {
 </head>
 <body>
   <header>
-    <h1>මගේ තාක්ෂණික බ්ලොග් අඩවිය</h1>
+    <h1>තාක්ෂණික දැක්ම</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">මුල් පිටුව</a></li>
+        <li><a href="#articles">ලිපි</a></li>
+        <li><a href="#contact">අප අමතන්න</a></li>
+      </ul>
+    </nav>
   </header>
-  <nav>
-    <ul>
-      <li><a href="#home">මුල් පිටුව</a></li>
-      <li><a href="#articles">ලිපි</a></li>
-    </ul>
-  </nav>
+
   <main>
-    <article>
-      <h2>HTML5 යනු කුමක්ද?</h2>
-      <p>HTML5 යනු නූතන වෙබ් පිටු සඳහා ප්‍රමිතියයි.</p>
+    <article id="articles">
+      <header>
+        <h2>HTML5 සෙමැන්ටික් ටැග් වල වටිනාකම</h2>
+        <p>කර්තෘ: සචින්ත ඉමේෂ | දිනය: 2026-03-20</p>
+      </header>
+      <section>
+        <p>සෙමැන්ටික් ටැග් මඟින් වෙබ් අඩවියක ව්‍යුහය අතිශය පැහැදිලි වේ.</p>
+      </section>
     </article>
   </main>
+
   <aside>
-    <h3>දැන්වීම්</h3>
-    <p>අපගේ අලුත්ම පොත මිලදී ගන්න.</p>
+    <h3>අනුග්‍රාහක දැන්වීම්</h3>
+    <p>නවතම Full Stack සංවර්ධන කට්ටලය දැන් ලබාගන්න.</p>
   </aside>
+
   <footer>
     <p>&copy; 2026 T. Sachintha Imesh [FYZIE]. සියලුම හිමිකම් ඇවිරිණි.</p>
   </footer>
@@ -513,11 +839,13 @@ export const volume1: Volume = {
         }
       ],
       keyPoints: [
-        "Semantic HTML මඟින් SEO ශ්‍රේණිගත කිරීම සහ Screen Readers වලට පහසුව ලැබේ.",
-        "පිටුවක ප්‍රධාන අන්තර්ගතය සඳහා ඇත්තේ එක් <main> ටැගයක් පමණි."
+        "Semantic HTML මඟින් SEO ශ්‍රේණිගත කිරීම සහ Screen Readers වලට උපරිම සහය ලැබේ.",
+        "පිටුවක ප්‍රධාන අන්තර්ගතය සඳහා ඇත්තේ එක් <main> ටැගයක් පමණි.",
+        "<div> සහ <span> යෙදිය යුත්තේ අර්ථයක් රහිත පිරිසිදු Styling සඳහා පමණි."
       ],
       exercises: [
-        { id: 1, question: "<div> වෙනුවට <article> හෝ <section> භාවිතා කිරීමේ වාසිය කුමක්ද?" }
+        { id: 1, question: "<div> වෙනුවට <article> හෝ <section> භාවිතා කිරීමේ වාසි 2ක් ලියන්න." },
+        { id: 2, question: "පිටුවක <main> ටැගය තුළ තැබිය යුත්තේ කුමන ආකාරයේ අන්තර්ගතයක්ද?" }
       ]
     },
     {
@@ -529,86 +857,190 @@ export const volume1: Volume = {
       pageRange: "පිටු 29 - 31",
       description: "Accessibility (a11y), Screen Readers (NVDA/JAWS), Alt text නීති, Color contrast, Buttons vs Links, සහ ARIA මූලික කරුණු.",
       learningObjectives: [
-        "වෙබ් ප්‍රවේශ්‍යතාව (a11y) යනු කුමක්දැයි වටහා ගැනීම",
-        "ආබාධ සහිත පුද්ගලයන් වෙබ් අඩවි පරිශීලනය කරන අයුරු (Screen Readers, Magnifiers)",
-        "Alt text, Labels, Heading hierarchy සහ Keyboard Navigation මූලධර්ම",
-        "ARIA (Accessible Rich Internet Applications) මූලික සංකල්ප"
+        "වෙබ් ප්‍රවේශ්‍යතාව (a11y) යනු කුමක්දැයි සහ WCAG මාර්ගෝපදේශ වටහා ගැනීම",
+        "ආබාධ සහිත පුද්ගලයන් වෙබ් අඩවි පරිශීලනය කරන අයුරු (Screen Readers, Voice Control)",
+        "Alt text නීති, Form Labels, Heading Hierarchy සහ Color Contrast මූලධර්ම",
+        "Keyboard Navigation (Tab Index) සහ ARIA Attributes (aria-label, role) භාවිතය"
       ],
       sections: [
         {
-          title: "9.1 ප්‍රවේශ්‍යතාවය සහ ARIA මූලධර්ම",
+          title: "9.1 ප්‍රවේශ්‍යතාවය (a11y) යනු කුමක්ද සහ WCAG මූලධර්ම",
           content: [
-            "ලෝක ජනගහනයෙන් 15% ක් පමණ ආබාධ සහිත අය වෙති. ඔවුන්ටද තොරතුරු දැනගැනීමේ අයිතිය ඇත. පොදු ගොඩනැගිල්ලකට පඩිපෙළට අමතරව බෑවුමක් (Ramp) හෝ විදුලි සෝපානයක් (Lift) සවි කිරීම වැනි දෙයකි වෙබ් ප්‍රවේශ්‍යතාව.",
-            "වැරදි Alt Text: <img src='dog.jpg' alt='රූපය 1'>",
-            "නිවැරදි Alt Text: <img src='dog.jpg' alt='බෝලයක් සමඟ සෙල්ලම් කරන දුඹුරු පැහැති බල්ලෙක්'>"
+            "Accessibility යනු ලෝකයේ ඕනෑම අයෙකුට - විශේෂයෙන් ශාරීරික, දෘශ්‍යාබාධ හෝ ශ්‍රවණාබාධ ඇති පුද්ගලයන්ටද - කිසිදු බාධාවකින් තොරව වෙබ් අඩවියක් භාවිතා කිරීමට ඇති හැකියාවයි.",
+            "තාක්ෂණික ලෝකයේ Accessibility යන්න 'a11y' ලෙස හඳුන්වයි (A සහ Y අතර අකුරු 11ක් ඇති බැවින්).",
+            "සැබෑ ලෝකයේ උපමාව: පොදු රෝහලකට හෝ බැංකුවකට පඩිපෙළට අමතරව රෝද පුටු සඳහා බෑවුම් මාර්ගයක් (Wheelchair Ramp) හෝ විදුලි සෝපානයක් (Elevator) සවි කිරීම වැනි දෙයකි වෙබ් ප්‍රවේශ්‍යතාව.",
+            "WCAG (Web Content Accessibility Guidelines) යනු ලෝක සම්මත ප්‍රවේශ්‍යතා නීති පද්ධතියයි (POUR මූලධර්ම: Perceivable, Operable, Understandable, Robust)."
+          ]
+        },
+        {
+          title: "9.2 Alt Text, Heading Hierarchy සහ Color Contrast නීති",
+          content: [
+            "අත්‍යවශ්‍ය a11y රීති 3:",
+            "1. අර්ථවත් Alt Text: පින්තූර සඳහා alt='image1' ලිවීම සම්පූර්ණයෙන්ම වැරදිය. පින්තූරයෙන් කියවෙන සැබෑ අදහස ලිවිය යුතුය.",
+            "වැරදි: <img src='dog.jpg' alt='බල්ලාගේ පින්තූරය'>",
+            "නිවැරදි: <img src='dog.jpg' alt='තණකොළ පිට්ටනියක කහ පැහැති බෝලයක් අල්ලා ගන්නා රිට්‍රීවර් වර්ගයේ බල්ලෙක්'>",
+            "2. Headings පිළිවෙල (Hierarchy): <h1> න් පසු කෙළින්ම <h3> ට නොපනින්න. සැමවිටම <h1> ➔ <h2> ➔ <h3> අනුපිළිවෙල රකින්න.",
+            "3. වර්ණ වෙනස (Color Contrast): පසුබිම සහ අකුරු අතර ප්‍රමාණවත් වෙනසක් (අවම Contrast Ratio 4.5:1) තිබිය යුතුය. ලා අළු පසුබිමක සුදු අකුරු ලිවීම දෘශ්‍යාබාධිත අයට කියවීමට නොහැකිය."
+          ]
+        },
+        {
+          title: "9.3 Keyboard Navigation සහ ARIA මූලික කරුණු",
+          content: [
+            "බොහෝ ආබාධ සහිත පුද්ගලයන් Mouse එක භාවිතා නොකරයි; ඔවුන් මුළු වෙබ් අඩවියම පාලනය කරන්නේ Keyboard එකේ Tab, Enter, සහ Space බොත්තම් මඟිනි.",
+            "• Buttons vs Links: පරිශීලකයා වෙනත් පිටුවකට ගෙන යන්නේ නම් <a> යොදන්න. පිටුව ඇතුළත ක්‍රියාවක් (Modal විවෘත කිරීම, Submit කිරීම) කරන්නේ නම් <button> යොදන්න. <div> එකකට click event දැමීමෙන් Keyboard Navigation බිඳවැටේ.",
+            "• ARIA (Accessible Rich Internet Applications): HTML ටැග් වලින් පමණක් ප්‍රකාශ කළ නොහැකි අවස්ථාවලදී Screen Readers වලට උපකාර කිරීමට ARIA attributes භාවිතා වේ.",
+            "උදා: <button aria-label='මෙනුව විවෘත කරන්න'>☰</button>"
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "Accessible HTML Components Example",
+              code: `<!-- Accessible Icon Button with aria-label -->
+<button type="button" aria-label="ගිණුමෙන් ඉවත් වන්න" class="logout-btn">
+  <svg width="24" height="24" aria-hidden="true">
+    <!-- Icon Graphic -->
+  </svg>
+</button>
+
+<!-- Accessible Input with Explicit Label -->
+<div class="form-group">
+  <label for="search-box">වෙබ් අඩවිය තුළ සොයන්න:</label>
+  <input type="search" id="search-box" name="query" placeholder="උදා: HTML පාඩම්">
+</div>`
+            }
           ]
         }
       ],
       keyPoints: [
-        "Accessibility යනු විශේෂ අවශ්‍යතා ඇති අයටද බාධාවකින් තොරව වෙබ් අඩවිය භාවිතා කිරීමට ඉඩ සැලසීමයි.",
-        "Keyboard එකෙන් පමණක් වෙබ් අඩවිය භාවිතා කළ හැකි විය යුතුය (Tab Navigation)."
+        "Accessibility යනු සැමට සම අයිතිය ලබා දෙන සදාචාරාත්මක සහ වෘත්තීය වගකීමකි.",
+        "Keyboard එකෙන් පමණක් වෙබ් අඩවිය භාවිතා කළ හැකි විය යුතුය (Tab Navigation).",
+        "Screen Readers සඳහා අර්ථවත් alt attributes සහ Form Labels අනිවාර්ය වේ."
       ],
       exercises: [
-        { id: 1, question: "<button> සහ <a> අතර ප්‍රවේශ්‍යතාවට අදාළ වෙනස කුමක්ද?" }
+        { id: 1, question: "<button> සහ <a> අතර ප්‍රවේශ්‍යතාවට (a11y) අදාළ මූලික වෙනස කුමක්ද?" },
+        { id: 2, question: "aria-label attribute එක භාවිතා කරන්නේ කුමන අවස්ථාවලදීද?" }
       ]
     },
     {
       id: 10,
       volumeId: 1,
       chapterNumber: 10,
-      title: "පළමු පූර්ණ HTML ව්‍යාපෘතිය (The Final HTML Project)",
+      title: "පළමු පූර්ණ HTML ව්‍යාපෘතිය (The Final HTML Capstone Project)",
       englishTitle: "The Final HTML Capstone Project",
       pageRange: "පිටු 32 - 36",
       description: "My Tech Journal බහු-පිටු වෙබ් අඩවිය, වෘත්තීය Folder Structure (index, about, contact, images), සහ Testing & Debugging.",
       learningObjectives: [
         "මෙතෙක් උගත් සියලුම HTML පාඩම් එකතු කර පූර්ණ බහු-පිටු වෙබ් අඩවියක් නිර්මාණය කිරීම",
-        "වෘත්තීය මට්ටමේ ගොනු ව්‍යුහයක් (Folder Structure) සැකසීම",
-        "Testing & Debugging: කැඩුණු ලින්ක්ස් (Broken links) සහ වැරදි පරීක්ෂා කිරීම",
-        "පළමු පරිමාවේ සම්පූර්ණ සාරාංශය සහ සම්මුඛ පරීක්ෂණ ප්‍රශ්න"
+        "වෘත්තීය මට්ටමේ ගොනු ව්‍යුහයක් (Folder Structure) සහ Cross-linking සැකසීම",
+        "Testing & Debugging: කැඩුණු ලින්ක්ස් (Broken links) සහ Validation පරීක්ෂා කිරීම",
+        "පළමු පරිමාවේ සම්පූර්ණ සාරාංශය සහ සම්මුඛ පරීක්ෂණ (Interview) ප්‍රශ්න"
       ],
       sections: [
         {
-          title: "10.1 ව්‍යාපෘති සැකැස්ම: My Tech Journal",
+          title: "10.1 ව්‍යාපෘති සැකැස්ම සහ Folder Structure",
           content: [
-            "අප නිර්මාණය කරන්නේ පිටු 3කින් සමන්විත 'මගේ තාක්ෂණික සටහන් පොත' (My Tech Journal) වෙබ් අඩවියයි:",
-            "• index.html (මුල් පිටුව)",
-            "• about.html (මා ගැන පිටුව)",
-            "• contact.html (සම්බන්ධ වන්න පිටුව)",
-            "• images/ (පින්තූර ගබඩා කරන ෆෝල්ඩරය)"
+            "වෘත්තීය වෙබ් සංවර්ධකයෙකුගේ ගමනේ වැදගත්ම සන්ධිස්ථානය වන්නේ තනිවම බහු-පිටු වෙබ් අඩවියක් (Multi-page Website) බිංදුවේ සිට ගොඩනැගීමයි.",
+            "අප නිර්මාණය කරන්නේ 'My Tech Journal' (මගේ තාක්ෂණික දිනපොත) වෙබ් අඩවියයි.",
+            "ව්‍යාපෘති ගොනු ව්‍යුහය (Folder Architecture):",
+            "• my-tech-journal/ (ප්‍රධාන ෆෝල්ඩරය)",
+            "  ├── index.html (මුල් පිටුව / Homepage)",
+            "  ├── about.html (මා ගැන සහ අත්දැකීම්)",
+            "  ├── contact.html (සම්බන්ධතා ෆෝරමය)",
+            "  └── assets/",
+            "      └── images/ (logo.png, profile.jpg)"
+          ],
+          asciiDiagram: `my-tech-journal/
+│
+├── index.html        <-- මුල් පිටුව (Home, Articles list, Intro)
+├── about.html        <-- කර්තෘ ගැන විස්තර සහ දක්ෂතා වගුව
+├── contact.html      <-- Feedback & Contact Form
+└── assets/
+    └── images/
+        ├── avatar.jpg
+        └── banner.png`
+        },
+        {
+          title: "10.2 Navigation Bar සහ අන්තර්-සම්බන්ධතා (Cross-linking)",
+          content: [
+            "සියලුම පිටු එකිනෙකට සම්බන්ධ කිරීමට සෑම පිටුවකම එකම ආකාරයේ Navigation Bar එකක් තිබිය යුතුය.",
+            "සාපේක්ෂ ලිපින (Relative Paths):",
+            "• index.html හි සිට about.html වෙත: <a href='about.html'>",
+            "• පින්තූරයකට: <img src='assets/images/avatar.jpg'>",
+            "පරිශීලකයා කුමන පිටුවේ සිටියද වෙනත් ඕනෑම පිටුවකට එක් ක්ලික් එකකින් යා හැකි විය යුතුය."
+          ]
+        },
+        {
+          title: "10.3 Testing, Debugging සහ W3C Validator",
+          content: [
+            "වෙබ් අඩවියක් Live කිරීමට පෙර සිදු කළ යුතු පරීක්ෂණ:",
+            "1. Broken Links Check: පිටුවේ ඇති සියලුම ලින්ක්ස් ක්ලික් කර බලන්න. කිසිදු සබැඳියකින් 404 Not Found error නොපැමිණිය යුතුය.",
+            "2. Form Submission Check: Contact Form එකේ required fields හිස්ව submit කළ නොහැකි බවත්, නිවැරදි email එකක් ඉල්ලා සිටින බවත් පරීක්ෂා කරන්න.",
+            "3. W3C HTML Validator (validator.w3.org): ඔබේ HTML කේතය W3C නිල වෙබ් අඩවියට ඇතුළත් කර කිසිදු Syntax Errors හෝ Unclosed Tags නොමැති බව තහවුරු කරගන්න."
           ],
           codeSnippets: [
             {
               language: "html",
-              title: "Contact Page Form Example",
-              code: `<main>
-  <h2>සම්බන්ධ වන්න</h2>
-  <form action="#" method="GET">
-    <p>
-      <label for="name">ඔබේ නම:</label><br>
-      <input type="text" id="name" name="user_name" required>
-    </p>
-    <p>
-      <label for="email">විද්‍යුත් තැපෑල:</label><br>
-      <input type="email" id="email" name="user_email" required>
-    </p>
-    <p>
-      <label for="msg">පණිවිඩය:</label><br>
-      <textarea id="msg" name="user_message" rows="5"></textarea>
-    </p>
-    <button type="submit">පණිවිඩය යවන්න</button>
-  </form>
-</main>`
+              title: "Capstone Project: contact.html Complete Code",
+              code: `<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>සම්බන්ධ වන්න - My Tech Journal</title>
+</head>
+<body>
+  <header>
+    <h1>My Tech Journal</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">මුල් පිටුව</a></li>
+        <li><a href="about.html">මා ගැන</a></li>
+        <li><a href="contact.html"><strong>සම්බන්ධ වන්න</strong></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>අප හා සම්බන්ධ වන්න</h2>
+    <p>ඔබට කිසියම් ගැටළුවක් හෝ සහයෝගීතා යෝජනාවක් ඇත්නම් පහත පෝරමය පුරවන්න.</p>
+
+    <form action="/submit-contact" method="POST">
+      <fieldset>
+        <legend>පණිවිඩය එවන්න</legend>
+        <p>
+          <label for="name">ඔබේ සම්පූර්ණ නම:</label><br>
+          <input type="text" id="name" name="sender_name" required placeholder="කසුන් පෙරේරා">
+        </p>
+        <p>
+          <label for="email">විද්‍යුත් තැපෑල:</label><br>
+          <input type="email" id="email" name="sender_email" required placeholder="kasun@example.com">
+        </p>
+        <p>
+          <label for="msg">ඔබගේ පණිවිඩය:</label><br>
+          <textarea id="msg" name="message" rows="5" cols="45" required placeholder="ඔබගේ අදහස මෙහි ලියන්න..."></textarea>
+        </p>
+        <button type="submit">පණිවිඩය එවන්න</button>
+      </fieldset>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 T. Sachintha Imesh [FYZIE]. සියලුම හිමිකම් ඇවිරිණි.</p>
+  </footer>
+</body>
+</html>`
             }
           ]
         }
       ],
       keyPoints: [
         "වෘත්තීය මට්ටමේදී වෙබ් අඩවියක අලංකාරයට වඩා එහි ව්‍යුහය (Structure) නිවැරදිව තිබීම අතිශය වැදගත් වේ.",
-        "සැකිල්ල ශක්තිමත් නම්, ඕනෑම කාලයකදී CSS මඟින් ලස්සන කිරීම පහසුය."
+        "සැකිල්ල ශක්තිමත් නම්, ඕනෑම මොහොතක CSS මඟින් ලස්සන කිරීම ඉතා පහසුය.",
+        "W3C Validator මඟින් කේතය පරීක්ෂා කිරීම ලොව පිළිගත් සම්මතයකි."
       ],
       exercises: [
-        { id: 1, question: "Form එකක POST සහ GET අතර වෙනස කුමක්ද?" },
-        { id: 2, question: "වෙබ් අඩවියක SEO වැඩි කිරීමට HTML මඟින් කළ හැකි ක්‍රම 2ක් කියන්න." }
+        { id: 1, question: "බහු-පිටු වෙබ් අඩවියක Navigation Bar එකක් අත්‍යවශ්‍ය වන්නේ ඇයි?" },
+        { id: 2, question: "W3C Validator භාවිතයේ ප්‍රධාන වාසිය කුමක්ද?" }
       ]
     },
     {
@@ -620,47 +1052,75 @@ export const volume1: Volume = {
       pageRange: "පිටු 36 - 38",
       description: "HTTP/HTTPS Request-Response, Headers, Status Codes (2xx, 3xx, 4xx, 5xx), Schema.org JSON-LD Structured Data, Core Web Vitals, සහ XSS ආරක්‍ෂාව.",
       learningObjectives: [
-        "HTTP Headers (User-Agent, Content-Type) සහ Status Codes (200, 301, 404, 500) තේරුම් ගැනීම",
+        "HTTP/HTTPS Headers සහ Status Codes (200, 301, 404, 500) වල අර්ථයන්",
         "Schema.org සහ JSON-LD මඟින් Google සෙවුම් ප්‍රතිඵලවල Rich Snippets ලබා ගැනීම",
-        "Core Web Vitals (LCP, FID, CLS) මැනීම සහ Layout Shift වැළැක්වීම",
-        "HTML මට්ටමින් සිදුවන XSS (Cross-Site Scripting) ප්‍රහාර වැළැක්වීම"
+        "Core Web Vitals (LCP, FID/INP, CLS) මැනීම සහ Layout Shift වැළැක්වීම",
+        "HTML මට්ටමින් සිදුවන XSS (Cross-Site Scripting) ප්‍රහාර සහ Sanitization"
       ],
       sections: [
         {
-          title: "11.1 JSON-LD Structured Data & Core Web Vitals",
+          title: "11.1 HTTP Headers සහ Status Codes (2xx, 3xx, 4xx, 5xx)",
           content: [
-            "Google සෙවුම් යන්ත්‍රයට 'කසුන්' යනු නමක් බවත්, 'රු. 500' යනු මිලක් බවත් තේරුම් කර දීමට Schema.org ප්‍රමිතිය භාවිතා කරයි.",
-            "LCP (Largest Contentful Paint - <2.5s), FID (First Input Delay - <100ms), CLS (Cumulative Layout Shift - <0.1).",
-            "CLS වැළැක්වීමට සෑමවිටම පින්තූර වලට width සහ height ලබා දෙන්න!"
+            "බ්‍රවුසරයක් සහ වෙබ් සර්වර් එකක් අතර සන්නිවේදනය සිදුවන්නේ HTTP (Hypertext Transfer Protocol) හරහාය.",
+            "සෑම ඉල්ලීමකටම (Request) සර්වර් එක ලබා දෙන පිළිතුරේ (Response) තත්ත්වය Status Code එකකින් දැක්වේ:",
+            "• 2xx (Success): 200 OK - ඉල්ලීම සාර්ථකව ඉටු විය.",
+            "• 3xx (Redirection): 301 Moved Permanently - පිටුව ස්ථිරවම අලුත් ලිපිනයකට මාරු කර ඇත (SEO ආරක්ෂා වේ).",
+            "• 4xx (Client Error): 404 Not Found - ඔබ සොයන පිටුව සර්වර් එකේ නැත. 403 Forbidden - පිවිසීමට අවසර නැත.",
+            "• 5xx (Server Error): 500 Internal Server Error - සර්වර් එකේ කේත දෝෂයක් නිසා අඩපණ වී ඇත. 503 Service Unavailable."
+          ]
+        },
+        {
+          title: "11.2 Schema.org සහ JSON-LD Structured Data",
+          content: [
+            "සාමාන්‍යයෙන් Google සෙවුම් යන්ත්‍රයට වෙබ් පිටුවක ඇති අකුරු කියවිය හැකි වුවද, 'රු. 5,000' යනු මිලක් බවත්, 'තරු 5' යනු Rating එකක් බවත් තේරුම් ගැනීමට අපහසුය.",
+            "Schema.org Structured Data මඟින් සෙවුම් යන්ත්‍ර වලට මෙම අර්ථය ලබා දේ. මේ සඳහා වර්තමානයේ ලොව ප්‍රමුඛතම ආකෘතිය වන්නේ JSON-LD (JavaScript Object Notation for Linked Data) ය.",
+            "වාසිය: Google Search වල ඔබේ පිටුව ඉදිරියෙන් තරු ලකුණු, මිල ගණන් සහ පින්තූර සහිත Rich Snippets ලෙස දිස්වීමෙන් Click-Through Rate (CTR) ඉහළ යයි."
           ],
           codeSnippets: [
             {
-              language: "json",
-              title: "JSON-LD Microdata (Product Schema)",
+              language: "html",
+              title: "JSON-LD Structured Data Example",
               code: `<script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "අත් ඔරලෝසුව",
-  "image": "watch.jpg",
-  "description": "ඉතා උසස් තත්ත්වයේ අත් ඔරලෝසුවකි.",
+  "@type": "Course",
+  "name": "Full Stack Web Development in Sinhala",
+  "description": "ශ්‍රී ලංකාවේ ප්‍රමුඛතම පූර්ණ වෙබ් සංවර්ධන පාඨමාලාව.",
+  "provider": {
+    "@type": "Person",
+    "name": "T. Sachintha Imesh [FYZIE]"
+  },
   "offers": {
     "@type": "Offer",
-    "price": "2500.00",
-    "priceCurrency": "LKR"
+    "price": "0",
+    "priceCurrency": "LKR",
+    "availability": "https://schema.org/InStock"
   }
 }
 </script>`
             }
           ]
+        },
+        {
+          title: "11.3 Core Web Vitals (LCP, INP, CLS) සහ XSS ආරක්ෂාව",
+          content: [
+            "Google විසින් වෙබ් අඩවියක වේගය සහ පරිශීලක අත්දැකීම මනින ප්‍රධාන මිතික (Core Web Vitals) 3:",
+            "1. LCP (Largest Contentful Paint): පිටුවේ විශාලතම පින්තූරය හෝ අකුරු කොටස පෙනීමට ගතවන කාලය (තත්පර 2.5 ට වඩා අඩු විය යුතුය).",
+            "2. INP (Interaction to Next Paint): පරිශීලකයා බොත්තමක් එබූ විට ප්‍රතිචාර දැක්වීමට ගතවන කාලය (200ms ට අඩු විය යුතුය).",
+            "3. CLS (Cumulative Layout Shift): පිටුව ලෝඩ් වන විට කොටස් එහා මෙහා සෙලවීමේ ප්‍රමාණය (0.1 ට අඩු විය යුතුය). පින්තූර සඳහා width සහ height ලබා දීමෙන් CLS බිංදුවට අඩු කළ හැක!",
+            "XSS (Cross-Site Scripting) ආරක්‍ෂාව: පරිශීලකයන් ෆෝරම් හරහා ඇතුළත් කරන අකුරු සෘජුව HTML ලෙස render නොකරන්න. විශේෂ ලකුණු HTML Entities (&lt;, &gt;, &quot;) බවට පරිවර්තනය (Sanitize) කරන්න."
+          ]
         }
       ],
       keyPoints: [
-        "JSON-LD මඟින් සෙවුම් යන්ත්‍ර සඳහා Structured Data සපයයි.",
-        "XSS ප්‍රහාර වැළැක්වීමට විශේෂ ලකුණු වෙනුවට HTML Entities (&lt;, &gt;, &quot;) යොදන්න."
+        "HTTP Status Codes (200, 301, 404, 500) මඟින් සර්වර් සහ බ්‍රවුසර සන්නිවේදනයේ තත්ත්වය කියවයි.",
+        "JSON-LD මඟින් Google සෙවුම් ප්‍රතිඵලවල Rich Results ලබා ගැනීමට ඉඩ සලසයි.",
+        "CLS වැළැක්වීමට සෑමවිටම පින්තූර වලට width සහ height ලබා දෙන්න.",
+        "XSS ප්‍රහාර වැළැක්වීමට විශේෂ ලකුණු වෙනුවට HTML Entities යොදන්න."
       ],
       exercises: [
-        { id: 1, question: "LCP, FID සහ CLS යනු මොනවාදැයි කෙටියෙන් විස්තර කරන්න." }
+        { id: 1, question: "HTTP 301 සහ 404 අතර වෙනස කුමක්ද?" },
+        { id: 2, question: "CLS (Cumulative Layout Shift) යනු කුමක්ද? එය වළක්වා ගන්නේ කෙසේද?" }
       ]
     },
     {
@@ -672,48 +1132,101 @@ export const volume1: Volume = {
       pageRange: "පිටු 39 - 41",
       description: "<video> සහ <audio>, <iframe> (YouTube, Maps), SVG (Scalable Vector Graphics), Favicon, HTML Entities සහ data-* attributes.",
       learningObjectives: [
-        "<video> සහ <audio> ටැග් නිවැරදිව පාලනය කිරීම (controls, poster, autoplay)",
-        "<iframe> භාවිතයෙන් Google Maps සහ YouTube වීඩියෝ ඇතුළත් කිරීම",
-        "SVG (Scalable Vector Graphics) සහ පික්සල් පින්තූර අතර වෙනස",
-        "data-* attributes මඟින් JavaScript සඳහා රහස් දත්ත ගබඩා කිරීම"
+        "<video> සහ <audio> ටැග් නිවැරදිව පාලනය කිරීම (controls, poster, autoplay, loop)",
+        "<iframe> භාවිතයෙන් Google Maps සහ YouTube වීඩියෝ වෙබ් පිටුවට ඇතුළත් කිරීම",
+        "SVG (Scalable Vector Graphics) සහ සාමාන්‍ය පික්සල් පින්තූර අතර වෙනස",
+        "Favicons සැකසීම සහ data-* attributes මඟින් JavaScript සඳහා රහස් දත්ත ගබඩා කිරීම"
       ],
       sections: [
         {
-          title: "12.1 Multimedia & SVG Graphics",
+          title: "12.1 <video> සහ <audio> මල්ටිමීඩියා ටැග්",
           content: [
-            "HTML5 සමඟ Flash වැනි බාහිර මෘදුකාංග නොමැතිව සෘජුවම වීඩියෝ සහ හඬ පට ඇතුළත් කළ හැක.",
-            "SVG සාමාන්‍ය පින්තූර (JPG/PNG) මෙන් නොව ගණිතමය සූත්‍ර (Vectors) මඟින් සෑදෙන බැවින් 4K හෝ කුඩා තිරයකදී කිසිදා නොකැඩී පැහැදිලිව පෙනේ."
+            "HTML5 පැමිණීමට පෙර වෙබ් පිටුවක වීඩියෝවක් පෙන්වීමට Adobe Flash වැනි බාහිර ප්ලගීන අවශ්‍ය විය. එහෙත් HTML5 සමඟ බ්‍රවුසරයටම ස්වදේශීයව (Natively) වීඩියෝ සහ හඬ පට ධාවනය කළ හැක.",
+            "ප්‍රධාන Attributes:",
+            "• controls: Play, Pause, Volume සහ Fullscreen බොත්තම් පෙන්වීමට.",
+            "• poster: වීඩියෝව Play කිරීමට පෙර පෙන්වන Preview thumbnail පින්තූරය.",
+            "• autoplay: පිටුව විවෘත වූ සැණින් වීඩියෝව ධාවනය වීමට. (නූතන බ්‍රවුසර වල autoplay වැඩ කරන්නේ 'muted' attribute එක සමඟ පමණි).",
+            "• loop: වීඩියෝව අවසන් වූ පසු නැවත මුල සිට ධාවනය වීමට."
           ],
           codeSnippets: [
             {
               language: "html",
-              title: "HTML5 Video & SVG Example",
-              code: `<!-- වීඩියෝවක් ඇතුළත් කිරීම -->
-<video width="640" height="360" controls poster="preview.jpg">
-  <source src="movie.mp4" type="video/mp4">
-  ඔබේ බ්‍රවුසරය මෙම වීඩියෝවට සහය නොදක්වයි.
+              title: "HTML5 Native Video & Audio",
+              code: `<!-- HTML5 Video Player -->
+<video width="640" height="360" controls poster="images/preview.jpg">
+  <source src="media/intro.mp4" type="video/mp4">
+  <source src="media/intro.webm" type="video/webm">
+  ඔබේ බ්‍රවුසරය HTML5 වීඩියෝ සඳහා සහය නොදක්වයි.
 </video>
 
-<!-- SVG රවුමක් නිර්මාණය කිරීම -->
-<svg width="100" height="100">
-  <circle cx="50" cy="50" r="40" stroke="#38bdf8" stroke-width="4" fill="#0f172a" />
+<!-- HTML5 Audio Player -->
+<audio controls>
+  <source src="media/podcast.mp3" type="audio/mpeg">
+  ඔබේ බ්‍රවුසරය හඬ පට සඳහා සහය නොදක්වයි.
+</audio>`
+            }
+          ]
+        },
+        {
+          title: "12.2 Iframes (Inline Frames - YouTube & Google Maps)",
+          content: [
+            "<iframe> (Inline Frame) යනු ඔබේ වෙබ් පිටුව ඇතුළත තවත් සම්පූර්ණ බාහිර වෙබ් පිටුවක් හෝ සේවාවක් කවුළුවක් ලෙස පෙන්වීමයි.",
+            "ප්‍රධාන ප්‍රායෝගික භාවිතයන්:",
+            "1. YouTube වීඩියෝ Embed කිරීම: වීඩියෝව අපගේ සර්වර් එකේ තබා නොගෙන YouTube එකෙන් ධාවනය කරවීමෙන් සර්වර් bandwidth විශාල වශයෙන් ඉතිරි වේ.",
+            "2. Google Maps Embed කිරීම: Contact පිටුවක ඔබේ කාර්යාලය හෝ ව්‍යාපාරික ස්ථානය පෙන්වීමට සජීවී සිතියමක් ඇතුළත් කිරීම."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "YouTube & Google Maps Iframes",
+              code: `<!-- YouTube Video Embed -->
+<iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" 
+  title="YouTube වීඩියෝ ධාවකය" 
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen>
+</iframe>`
+            }
+          ]
+        },
+        {
+          title: "12.3 SVG Graphics, Favicon සහ data-* Attributes",
+          content: [
+            "1. SVG (Scalable Vector Graphics): සාමාන්‍ය පින්තූර (JPG/PNG) පික්සල් වලින් හැදෙන බැවින් Zoom කරන විට බොඳ වී කැඩී යයි. නමුත් SVG සෑදෙන්නේ ගණිතමය දෛශික (XML කේත) මඟිනි. එම නිසා 4K හෝ Retina තිරයකදී පවා කිසිදා නොකැඩී අතිශය තියුණුව දිස්වේ. Logos සහ Icons සඳහා අංක 1 තේරීම SVG ය.",
+            "2. Favicon: බ්‍රවුසර් ටැබ් එකේ පිටුවේ මාතෘකාව අසල පෙන්වන කුඩා ලාංඡනයයි (<link rel='icon' type='image/x-icon' href='favicon.ico'>).",
+            "3. Custom Data Attributes (data-*): HTML ටැග් එකක් තුළ JavaScript මඟින් කියවිය හැකි අමතර රහස් දත්ත ගබඩා කිරීමට යොදයි (උදා: data-user-id='1024', data-role='admin')."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "SVG & Data Attributes in HTML",
+              code: `<!-- Scalable Vector Graphic (SVG) Circle & Star -->
+<svg width="120" height="120" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="45" stroke="#38bdf8" stroke-width="4" fill="#0f172a" />
+  <polygon points="50,15 61,38 85,42 68,59 72,83 50,72 28,83 32,59 15,42 39,38" fill="#f59e0b" />
 </svg>
 
-<!-- data-* attribute -->
-<div class="user-card" data-user-id="501" data-role="admin">
-  කසුන් කල්හාර
+<!-- data-* Custom Data Storage -->
+<div class="product-item" data-product-id="9481" data-price="2500" data-category="books">
+  <h4>HTML5 සම්පූර්ණ අත්පොත</h4>
+  <p>මිල: රු. 2,500.00</p>
 </div>`
             }
           ]
         }
       ],
       keyPoints: [
+        "HTML5 native <video> සහ <audio> මඟින් බාහිර ප්ලගීන නොමැතිව මාධ්‍ය ධාවනය කළ හැක.",
         "SVG යනු කිසිදා නොකැඩෙන, සැහැල්ලු දෛශික රූප ආකෘතියකි.",
         "data-* attributes මඟින් අමතර දත්ත ගබඩා කර JavaScript මඟින් කියවිය හැක."
       ],
       exercises: [
-        { id: 1, question: "JPG සහ SVG අතර ඇති ප්‍රධාන වෙනස කුමක්ද?" },
-        { id: 2, question: "&copy; &amp; &lt; &gt; යන HTML Entities වල තේරුම් ලියන්න." }
+        { id: 1, question: "JPG/PNG සහ SVG අතර ඇති ප්‍රධාන වෙනස කුමක්ද?" },
+        { id: 2, question: "වීඩියෝවක් සඳහා poster attribute එක වැදගත් වන්නේ ඇයි?" },
+        { id: 3, question: "&copy; &amp; &lt; &gt; යන HTML Entities වල අර්ථයන් ලියන්න." }
       ]
     }
   ]

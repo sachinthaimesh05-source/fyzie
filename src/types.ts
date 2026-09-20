@@ -6,7 +6,7 @@ export interface Exercise {
 }
 
 export interface CodeSnippet {
-  language: 'html' | 'css' | 'javascript' | 'typescript' | 'bash' | 'json';
+  language: 'html' | 'css' | 'javascript' | 'typescript' | 'bash' | 'json' | 'yaml';
   title: string;
   code: string;
   outputDescription?: string;

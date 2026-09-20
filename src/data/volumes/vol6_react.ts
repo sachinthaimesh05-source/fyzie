@@ -769,16 +769,116 @@ export default function UserDirectory() {
         {
           title: "76.1 TaskMaster Pro ගෘහ නිර්මාණ ශිල්පය",
           content: [
-            "src/context/TaskContext.jsx තුළ tasks අරාව, addTask, toggleTask, deleteTask සහ LocalStorage persistence තබා ගනී.",
-            "src/pages තුළ Home, Active, Completed වෙන වෙනම පෙරහන් (Filters) සහිතව පෙන්වයි."
+            "වෘත්තීය React යෙදුමක් ගොඩනැගීමේදී සියලු දත්ත සහ ක්‍රමවේද Context තුළද, දෘශ්‍ය සංරචක Components තුළද, තිර පිරිසැලසුම් Pages තුළද වෙන්ව පවතී:"
+          ],
+          asciiDiagram: `src/
+├── context/TaskContext.jsx   <── [ Global State & LocalStorage ]
+├── components/
+│   ├── TaskForm.jsx          <── [ Add New Task ]
+│   ├── TaskItem.jsx          <── [ Toggle & Delete ]
+│   └── TaskList.jsx          <── [ Render Filtered List ]
+└── pages/
+    ├── AllTasks.jsx          <── [ / Route ]
+    ├── ActiveTasks.jsx       <── [ /active Route ]
+    └── CompletedTasks.jsx    <── [ /completed Route ]`
+        },
+        {
+          title: "76.2 TaskContext සහ LocalStorage Persistence",
+          content: [
+            "පරිශීලකයා ඇතුළත් කරන කාර්යයන් (tasks) බ්‍රවුසරය වැසුවද හෝ Refresh කළද නොමැකී සුරැකීමට useEffect සහ LocalStorage එකතු කළ TaskContext ගොනුව:"
+          ],
+          codeSnippets: [
+            {
+              language: "javascript",
+              title: "src/context/TaskContext.jsx",
+              code: `import { createContext, useContext, useState, useEffect } from 'react';
+
+const TaskContext = createContext();
+
+export function TaskProvider({ children }) {
+  // 1. Initial State එක LocalStorage වෙතින් ලබා ගැනීම
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem('taskmaster_pro_data');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // 2. tasks වෙනස් වන සෑම විටම LocalStorage එකට save කිරීම
+  useEffect(() => {
+    localStorage.setItem('taskmaster_pro_data', JSON.stringify(tasks));
+  }, [tasks]);
+
+  // Actions
+  const addTask = (title) => {
+    const newTask = { id: Date.now(), title, completed: false };
+    setTasks(prev => [newTask, ...prev]);
+  };
+
+  const toggleTask = (id) => {
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  };
+
+  const deleteTask = (id) => {
+    setTasks(prev => prev.filter(t => t.id !== id));
+  };
+
+  return (
+    <TaskContext.Provider value={{ tasks, addTask, toggleTask, deleteTask }}>
+      {children}
+    </TaskContext.Provider>
+  );
+}
+
+export const useTasks = () => useContext(TaskContext);`
+            }
+          ]
+        },
+        {
+          title: "76.3 TaskItem සහ Filtering සංරචකය",
+          content: [
+            "සෑම Task එකක්ම නිරූපණය කරන TaskItem සංරචකය සහ කාර්යයන් පෙරහන් කිරීමේ තර්කනය:"
+          ],
+          codeSnippets: [
+            {
+              language: "javascript",
+              title: "src/components/TaskItem.jsx",
+              code: `import { useTasks } from '../context/TaskContext';
+
+export default function TaskItem({ task }) {
+  const { toggleTask, deleteTask } = useTasks();
+
+  return (
+    <div className="flex items-center justify-between p-3 bg-slate-900/60 rounded-xl border border-white/10 hover:border-cyan-500/40 transition-all">
+      <div className="flex items-center gap-3">
+        <input 
+          type="checkbox" 
+          checked={task.completed} 
+          onChange={() => toggleTask(task.id)}
+          className="w-5 h-5 accent-cyan-500 rounded cursor-pointer"
+        />
+        <span className={task.completed ? "line-through text-slate-500" : "text-white font-medium"}>
+          {task.title}
+        </span>
+      </div>
+      <button 
+        onClick={() => deleteTask(task.id)}
+        className="text-rose-400 hover:text-rose-300 text-sm px-2 py-1"
+      >
+        ඉවත් කරන්න
+      </button>
+    </div>
+  );
+}`
+            }
           ]
         }
       ],
       keyPoints: [
-        "වෘත්තීය මට්ටමේ React ඇප් එකක තර්කනය සහ දත්ත Context එක තුළ ද, පෙනුම Components තුළ ද වෙන්ව පවතී."
+        "Lazy Initial State: useState(() => JSON.parse(...)) මඟින් සෑම render වාරයකදීම LocalStorage කියවීම වැළකී කාර්යක්ෂමතාව ඉහළ යයි.",
+        "වෘත්තීය මට්ටමේ React ඇප් එකක තර්කනය Context තුළ ද, පෙනුම Components තුළ ද වෙන්ව පවතී."
       ],
       exercises: [
-        { id: 1, question: "TaskMaster Pro හි LocalStorage persistence ක්‍රියාත්මක කරන useEffect එක ලියන්න." }
+        { id: 1, question: "TaskMaster Pro හි LocalStorage persistence ක්‍රියාත්මක කරන useEffect එක ලියන්න." },
+        { id: 2, question: "Lazy initial state ක්‍රමය මඟින් කාර්යක්ෂමතාව වැඩි වන්නේ කෙසේද?" }
       ]
     },
     {
@@ -850,13 +950,41 @@ export function useOnlineStatus() {
         "Children Prop මඟින් නම්‍යශීලී Shell/Layout සංරචක සෑදීම",
         "CSS Modules (.module.css) මඟින් පන්ති නාම ගැටුම් (Class collisions) සම්පූර්ණයෙන්ම වැළැක්වීම",
         "useReducer: සංකීර්ණ ස්ටේට් පාලනයට Action & Reducer ක්‍රමවේදය (බැංකු සේවකයා උපමාව)",
-        "React DevTools Profiler මඟින් සංරචක පරීක්ෂා කිරීම"
+        "React DevTools Profiler මඟින් සංරචක විගණනය සහ Debugging"
       ],
       sections: [
         {
-          title: "78.1 useReducer සංකල්පය",
+          title: "78.1 Children Props සහ Component Composition",
           content: [
-            "බැංකු සේවකයා උපමාව: ඔබ සේවකයාට පවසනවා ඔබ කළ යුතු දේ (Action: 'Deposit $100'). සේවකයා ඔහුගේ පොතේ (Reducer) නීති රීති බලා ඔබේ ගිණුම (State) යාවත්කාලීන කරයි."
+            "රියැක්ට් වලදී Modal හෝ Card එකක් සාදන විට එහි ඇතුළත ඕනෑම අන්තර්ගතයක් (HTML හෝ වෙනත් Components) එබීමට {children} prop එක යොදයි. මෙය Composition රටාවයි."
+          ],
+          codeSnippets: [
+            {
+              language: "javascript",
+              title: "CardWrapper.jsx (Composition)",
+              code: `export function CardWrapper({ title, children }) {
+  return (
+    <div className="border border-white/10 rounded-2xl p-6 bg-slate-900/60">
+      <h3 className="text-lg font-bold text-cyan-400 mb-4">{title}</h3>
+      <div className="card-body">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// Usage in another component:
+<CardWrapper title="පරිශීලක තොරතුරු">
+  <p>නම: කසුන් පෙරේරා</p>
+  <button className="btn">සංස්කරණය</button>
+</CardWrapper>`
+            }
+          ]
+        },
+        {
+          title: "78.2 useReducer සංකල්පය සහ බැංකු සේවකයා උපමාව",
+          content: [
+            "බැංකු සේවකයා උපමාව: ඔබ බැංකුවට ගොස් මුදල් තැන්පත් කරන්නේ ඔබම සේප්පුව විවෘත කර නොවේ. ඔබ සේවකයාට පවසනවා ඔබ කළ යුතු දේ (Action: { type: 'DEPOSIT', amount: 1000 }). සේවකයා ඔහුගේ පොතේ (Reducer) නීති රීති බලා ඔබේ ගිණුම (State) යාවත්කාලීන කරයි."
           ],
           codeSnippets: [
             {
@@ -880,6 +1008,7 @@ export default function ReducerCounter() {
       <h3>{state.count}</h3>
       <button onClick={() => dispatch({ type: 'increment' })}>+</button>
       <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>
     </div>
   );
 }`
@@ -888,10 +1017,12 @@ export default function ReducerCounter() {
         }
       ],
       keyPoints: [
-        "CSS Modules මඟින් බ්‍රවුසරය ස්වයංක්‍රීයව අද්විතීය Class hash අංකයක් එකතු කරයි (button_btn__x1y2)."
+        "CSS Modules මඟින් බ්‍රවුසරය ස්වයංක්‍රීයව අද්විතීය Class hash අංකයක් එකතු කරයි (button_btn__x1y2).",
+        "useState වෙනුවට useReducer භාවිතා කරන්නේ එකිනෙකට සම්බන්ධ ස්ටේට් කිහිපයක් එකවර වෙනස් වන විටය."
       ],
       exercises: [
-        { id: 1, question: "useState වෙනුවට useReducer භාවිතා කරන්නේ කුමන අවස්ථාවලදීද?" }
+        { id: 1, question: "useState වෙනුවට useReducer භාවිතා කරන්නේ කුමන අවස්ථාවලදීද?" },
+        { id: 2, question: "Children prop එකක් මඟින් Component Composition සිදු වන්නේ කෙසේද?" }
       ]
     },
     {
@@ -997,17 +1128,64 @@ export function cn(...inputs) {
       ],
       sections: [
         {
-          title: "81.1 Class Variance Authority (CVA)",
+          title: "81.1 Class Variance Authority (CVA) සහ Type-Safe Component Variants",
           content: [
-            "බොත්තම් වර්ග කිහිපයක් ඇති විට if/else සිය ගණනක් ලියනවා වෙනුවට CVA භාවිතා කරයි. ලෝකයේ ප්‍රධාන පෙළේ මෘදුකාංග පද්ධති (Design Systems) සාදන්නේ මෙලෙසයි."
+            "බොත්තම් වර්ග කිහිපයක් ඇති විට (Primary, Secondary, Danger) if/else සිය ගණනක් ලියනවා වෙනුවට CVA භාවිතා කරයි. Shadcn UI ඇතුළු ලෝකයේ ප්‍රධාන පෙළේ මෘදුකාංග පද්ධති (Design Systems) සාදන්නේ මෙලෙසයි:"
+          ],
+          codeSnippets: [
+            {
+              language: "javascript",
+              title: "Button Component with CVA",
+              code: `import { cva } from "class-variance-authority";
+import { cn } from "../lib/utils";
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center font-medium rounded-xl transition-all focus:outline-none",
+  {
+    variants: {
+      variant: {
+        primary: "bg-cyan-500 text-white hover:bg-cyan-600 shadow-md shadow-cyan-500/20",
+        secondary: "bg-slate-800 text-slate-200 hover:bg-slate-700 border border-white/10",
+        danger: "bg-rose-500 text-white hover:bg-rose-600",
+        ghost: "hover:bg-white/5 text-slate-300"
+      },
+      size: {
+        sm: "h-8 px-3 text-xs",
+        md: "h-10 px-4 text-sm",
+        lg: "h-12 px-6 text-base"
+      }
+    },
+    defaultVariants: {
+      variant: "primary",
+      size: "md"
+    }
+  }
+);
+
+export function Button({ className, variant, size, ...props }) {
+  return (
+    <button className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  );
+}`
+            }
+          ]
+        },
+        {
+          title: "81.2 @layer base සහ Custom Utilities",
+          content: [
+            "@layer මඟින් Tailwind හි නිශ්චිත ප්‍රමුඛතා ස්ථර (Specificity layers) තුළට ඔබේම CSS ඇතුළත් කළ හැක:",
+            "• @layer base: h1, body වැනි මූලික HTML ටැග් වල පෙරනිමි විලාසිතා සැකසීමට.",
+            "• @layer components: .glass-card වැනි නැවත නැවත යොදන පන්ති සැකසීමට."
           ]
         }
       ],
       keyPoints: [
-        "CVA මඟින් Type-safe සංරචක Variants ඉතා පහසුවෙන් නිර්මාණය කළ හැක."
+        "CVA මඟින් Type-safe සංරචක Variants ඉතා පහසුවෙන් නිර්මාණය කළ හැක.",
+        "@apply පමණට වඩා භාවිතා නොකරන්න; Tailwind හි සැබෑ බලය ඇත්තේ JSX තුළ කෙලින්ම utility classes ලිවීම තුළය."
       ],
       exercises: [
-        { id: 1, question: "CVA භාවිතා කිරීමේ ප්‍රධාන වාසිය කුමක්ද?" }
+        { id: 1, question: "CVA භාවිතා කිරීමේ ප්‍රධාන වාසිය කුමක්ද?" },
+        { id: 2, question: "@layer base සහ @layer components අතර වෙනස කුමක්ද?" }
       ]
     },
     {
@@ -1027,20 +1205,34 @@ export function cn(...inputs) {
       ],
       sections: [
         {
-          title: "82.1 Design to Code පියවර 3",
+          title: "82.1 Design to Code පියවර 3 සහ Component Decomposition",
           content: [
-            "1. Design (Figma): UI/UX නිර්මාණකරු පෙනුම අඳියි.",
-            "2. Handoff: වර්ණ, පරතරයන්, අකුරු වර්ග සංවර්ධකයාට ලබා දෙයි.",
-            "3. Engineering: Frontend Developer එම රූපසටහන බලා HTML, CSS, React මඟින් සැබෑ මෘදුකාංගයක් බවට පත් කරයි."
+            "1. Design (Figma): UI/UX නිර්මාණකරු අතුරුමුහුණතේ පික්සල් සහ වර්ණ නිර්මාණය කරයි.",
+            "2. Decomposition: නිර්මාණය කොටස් වලට කඩා (Header, Sidebar, Feed, Card) නැවත භාවිතා කළ හැකි සංරචක ලැයිස්තුගත කිරීම.",
+            "3. Engineering: Frontend Developer එම රූපසටහන බලා React සහ Tailwind මඟින් සැබෑ අන්තර්ක්‍රියාකාරී මෘදුකාංගයක් බවට පත් කරයි."
+          ],
+          asciiDiagram: `[ Figma Mockup ] ──(Decomposition)──► [ Component Hierarchy Tree ]
+                                              ├── Header
+                                              │    └── SearchBar
+                                              └── Feed
+                                                   └── FeedItem (Reusable)`
+        },
+        {
+          title: "82.2 package-lock.json සහ Code Quality Tools",
+          content: [
+            "• package-lock.json: ඔබගේ කණ්ඩායමේ ඕනෑම සාමාජිකයෙකු හෝ සර්වර් එකක් npm install කළ විට, ඒ සෑම තැනකදීම ස්ථාපනය වන්නේ එකම නිශ්චිත Sub-dependency අනුවාද බව සහතික කරයි ('It works on my machine' ගැටලුව විසඳයි).",
+            "• Prettier: කේතයේ ඉඩ තැබීම් සහ විරාම ලකුණු ස්වයංක්‍රීයව අලංකාර කරයි.",
+            "• ESLint: කේතයේ ඇති දෝෂ (භාවිතා නොකළ විචල්‍ය, අමතක වූ dependencies) කල්තියා හඳුනා ගනී."
           ]
         }
       ],
       keyPoints: [
-        "සංරචක ව්‍යුහය කලින් සැලසුම් කිරීමෙන් දෝෂ (Bugs) අවම වේ.",
+        "සංරචක ව්‍යුහය කලින් සැලසුම් කිරීමෙන් දෝෂ (Bugs) 80% ක් පමණ අවම වේ.",
         "ඔබ දැන් React.js තාක්ෂණය පිළිබඳ වෘත්තීය මට්ටමේ (Pro-level) දැනුමක් සහිත 'React Developer' කෙනෙකි!"
       ],
       exercises: [
-        { id: 1, question: "package-lock.json ගොනුවේ ප්‍රධාන කාර්යය කුමක්ද?" }
+        { id: 1, question: "package-lock.json ගොනුවේ ප්‍රධාන කාර්යය කුමක්ද?" },
+        { id: 2, question: "Prettier සහ ESLint අතර ඇති ප්‍රධාන වෙනස කුමක්ද?" }
       ]
     }
   ]
