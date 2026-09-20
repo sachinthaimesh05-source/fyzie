@@ -95,12 +95,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const [expandedChapterSections, setExpandedChapterSections] = useState<Record<number, boolean>>({});
+  const [areAllSectionsExpanded, setAreAllSectionsExpanded] = useState(false);
+
+  const toggleAllSections = () => {
+    setAreAllSectionsExpanded(prev => !prev);
+  };
 
   const toggleChapterSections = (e: React.MouseEvent, chapterId: number) => {
     e.stopPropagation();
     setExpandedChapterSections(prev => ({
       ...prev,
-      [chapterId]: !prev[chapterId]
+      [chapterId]: prev[chapterId] !== undefined ? !prev[chapterId] : false
     }));
   };
 
@@ -194,11 +199,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={toggleExpandAll}
               className="text-[11px] font-medium text-sky-400 hover:text-sky-300 flex items-center gap-1 transition-colors px-1 py-0.5 rounded"
             >
-              {areAllExpanded ? 'සියල්ල හකුළන්න' : 'සියලු Chapters පෙන්වන්න (1-107)'}
+              {areAllExpanded ? 'පරිමාවන් හකුළන්න' : 'පරිමාවන් සියල්ල (1-9)'}
             </button>
-            <span className="text-[10px] text-slate-500 font-mono">
-              {allVolumes.length} Volumes
-            </span>
+            <button
+              type="button"
+              onClick={toggleAllSections}
+              className={`text-[11px] font-medium px-2 py-0.5 rounded-lg border transition-colors flex items-center gap-1 ${
+                areAllSectionsExpanded
+                  ? 'bg-sky-500/20 text-sky-300 border-sky-500/40 font-bold'
+                  : 'text-slate-400 hover:text-sky-300 border-white/10 hover:border-sky-500/20'
+              }`}
+            >
+              <ListTree className="w-3 h-3" />
+              <span>{areAllSectionsExpanded ? 'අනු කොටස් හකුළන්න' : 'අනු කොටස් සියල්ල (12.1...)'}</span>
+            </button>
           </div>
 
           {/* Quick Volume Navigator Pills */}
@@ -296,7 +310,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       {volume.chapters.map((chapter) => {
                         const isCurrent = chapter.id === currentChapterId;
                         const isRead = readChapterIds.includes(chapter.id);
-                        const isSectionsExpanded = expandedChapterSections[chapter.id] || (isCurrent && searchQuery.length > 0);
+                        const isSectionsExpanded = areAllSectionsExpanded || (expandedChapterSections[chapter.id] !== undefined ? expandedChapterSections[chapter.id] : isCurrent);
 
                         return (
                           <div key={chapter.id} className="space-y-0.5">
@@ -323,9 +337,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                   }`}>
                                     {chapter.chapterNumber}
                                   </span>
-                                  <span className="truncate leading-relaxed">
-                                    {chapter.title}
-                                  </span>
+                                  <div className="min-w-0 flex-1">
+                                    <span className="truncate leading-relaxed block font-medium">
+                                      {chapter.title}
+                                    </span>
+                                    {chapter.sections && chapter.sections.length > 0 && (
+                                      <span className="text-[10px] font-mono text-sky-400/90 block">
+                                        {chapter.sections.length} අනු කොටස් ({chapter.chapterNumber}.1 - {chapter.chapterNumber}.{chapter.sections.length})
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
 
                                 <div className="flex items-center gap-1 flex-shrink-0">

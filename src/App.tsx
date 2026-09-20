@@ -158,31 +158,51 @@ export function App() {
         {/* Right Main Content Area */}
         <main className="flex-1 min-w-0 pb-20">
           {/* Subheader Toolbar: Solid 95% opacity to guarantee contrast */}
-          <div className="sticky top-16 z-20 px-4 sm:px-8 py-2.5 bg-slate-950/95 backdrop-blur-xl border-b border-white/5 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2">
+          <div className="sticky top-16 z-20 px-3 sm:px-6 py-2.5 bg-slate-950/95 backdrop-blur-xl border-b border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="flex items-center gap-2 flex-wrap min-w-0">
               <button
                 type="button"
                 onClick={() => setViewMode(viewMode === 'overview' ? 'chapter' : 'overview')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all flex-shrink-0 ${
                   viewMode === 'overview'
                     ? 'bg-sky-500/20 text-sky-300 border-sky-500/40 font-bold shadow-sm'
                     : 'bg-slate-900/95 text-slate-400 hover:text-slate-200 border-white/10'
                 }`}
               >
                 <Home className="w-3.5 h-3.5" />
-                <span>{viewMode === 'overview' ? 'කියවීම් මාදිලියට' : 'පොත් පිවිසුම (Overview)'}</span>
+                <span>{viewMode === 'overview' ? 'කියවීම් මාදිලියට' : 'පොත් පිවිසුම'}</span>
               </button>
 
               {viewMode === 'chapter' && (
-                <div className="hidden sm:flex items-center gap-1.5 text-slate-400 text-[11px]">
-                  <ChevronRight className="w-3 h-3 text-slate-600" />
-                  <span className="truncate max-w-[200px] text-slate-300">
-                    {currentVolume.title}
-                  </span>
-                  <ChevronRight className="w-3 h-3 text-slate-600" />
-                  <span className="truncate max-w-[200px] text-sky-400 font-medium">
-                    {currentChapter.title}
-                  </span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {/* Quick Chapter Selector Dropdown */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] text-slate-400 font-mono hidden md:inline">Ch:</span>
+                    <select
+                      value={activeChapterId}
+                      onChange={(e) => handleSelectChapter(Number(e.target.value))}
+                      className="bg-slate-900 border border-sky-500/30 hover:border-sky-400 text-sky-300 rounded-xl px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-sky-500 max-w-[210px] sm:max-w-xs md:max-w-sm truncate cursor-pointer shadow-inner"
+                      title="පරිච්ඡේදය තෝරන්න"
+                    >
+                      {allChapters.map((ch) => (
+                        <option key={ch.id} value={ch.id} className="bg-slate-950 text-slate-200">
+                          Ch {ch.chapterNumber}: {ch.title} ({ch.sections.length} අනු කොටස්)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Direct Shortcut Pill to Chapter 12 */}
+                  {activeChapterId !== 12 && (
+                    <button
+                      type="button"
+                      onClick={() => handleSelectChapter(12)}
+                      className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border border-sky-500/40 text-[11px] font-bold transition-all shadow-sm"
+                      title="12 වන පරිච්ඡේදයේ 12.1 සිට 12.7 දක්වා සියලුම අනු කොටස් බලන්න"
+                    >
+                      <span>⭐ Ch 12 (12.1-12.7 අනු කොටස්)</span>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -223,6 +243,7 @@ export function App() {
               hasNext={!!nextChapter}
               previousChapter={prevChapter}
               nextChapter={nextChapter}
+              onSelectChapter={handleSelectChapter}
               onOpenPdfModal={() => setIsPdfModalOpen(true)}
             />
           )}

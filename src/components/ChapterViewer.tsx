@@ -35,6 +35,7 @@ interface ChapterViewerProps {
   hasNext: boolean;
   previousChapter?: Chapter;
   nextChapter?: Chapter;
+  onSelectChapter?: (chapterId: number) => void;
   onOpenPdfModal: () => void;
 }
 
@@ -50,6 +51,7 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
   hasNext,
   previousChapter,
   nextChapter,
+  onSelectChapter,
   onOpenPdfModal
 }) => {
   const [revealedAnswers, setRevealedAnswers] = useState<Record<number, boolean>>({});
@@ -217,6 +219,28 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
         </section>
       )}
 
+      {/* Quick Jump Banner to Chapter 12 with all 7 subtopics */}
+      {chapter.chapterNumber !== 12 && onSelectChapter && (
+        <div className="my-5 p-3.5 rounded-2xl bg-gradient-to-r from-sky-950/60 to-indigo-950/60 border border-sky-500/30 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="px-2 py-0.5 rounded-md bg-sky-500 text-slate-950 font-mono font-bold text-xs">
+              NEW
+            </span>
+            <p className="text-xs sm:text-sm text-slate-200">
+              <strong className="text-sky-300">12 වන පරිච්ඡේදයේ</strong> 12.1 සිට 12.7 දක්වා (Iframes, SVG, Canvas, Audio, Video, Custom Data) සියලුම අනු කොටස් කියවන්න:
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onSelectChapter(12)}
+            className="px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs transition-colors flex items-center gap-1.5 flex-shrink-0 shadow-md"
+          >
+            <span>12 වන පරිච්ඡේදයට පිවිසෙන්න</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
       {/* Table of Contents for Sub-sections */}
       {chapter.sections && chapter.sections.length > 0 && (
         <nav aria-label="Table of contents" className="my-6 p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg">
@@ -239,10 +263,10 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
-                className="group flex items-start gap-2.5 p-2 rounded-xl bg-slate-950/60 hover:bg-sky-500/10 border border-white/5 hover:border-sky-500/30 transition-all text-left"
+                className="group flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-950/60 hover:bg-sky-500/10 border border-white/5 hover:border-sky-500/30 transition-all text-left"
               >
-                <span className="w-5 h-5 rounded-md bg-sky-500/20 text-sky-300 font-mono text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-sky-500 group-hover:text-slate-950 transition-colors">
-                  {sIdx + 1}
+                <span className="px-1.5 py-0.5 rounded-md bg-sky-500/20 text-sky-300 font-mono text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-sky-500 group-hover:text-slate-950 transition-colors">
+                  {chapter.chapterNumber}.{sIdx + 1}
                 </span>
                 <span className="text-xs text-slate-300 group-hover:text-sky-200 transition-colors line-clamp-2 leading-relaxed">
                   {sec.title}
