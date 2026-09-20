@@ -61,7 +61,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="පරිච්ඡේද, සංකල්ප, HTML, React, Git ආදිය සොයන්න..."
-            className="w-full pl-11 pr-10 py-2.5 rounded-2xl bg-slate-900/90 border border-white/5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+            className="w-full pl-11 pr-10 py-2.5 rounded-2xl bg-slate-900/95 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500/50"
           />
           {query ? (
             <button
@@ -81,13 +81,13 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         {/* Results List */}
         <div className="mt-4 max-h-[60vh] overflow-y-auto space-y-2 custom-scrollbar">
           {query.trim() === '' ? (
-            <div className="py-12 text-center text-xs text-slate-400 space-y-2">
+            <div className="py-12 text-center text-xs text-slate-500 space-y-2">
               <BookOpen className="w-8 h-8 mx-auto text-slate-600 mb-2" />
               <p>පරිච්ඡේද 107න් ඕනෑම එකක් සෙවීමට අකුරු ටයිප් කරන්න.</p>
-              <p className="text-[11px] text-slate-400">උදා: Flexbox, useState, Git, DOM, TypeScript, SEO</p>
+              <p className="text-[11px] text-slate-600">උදා: Flexbox, useState, Git, DOM, TypeScript, SEO</p>
             </div>
           ) : results.length === 0 ? (
-            <div className="py-12 text-center text-xs text-slate-400">
+            <div className="py-12 text-center text-xs text-slate-500">
               "{query}" සඳහා ප්‍රතිඵල හමු නොවීය.
             </div>
           ) : (
@@ -99,18 +99,18 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   onSelectChapter(chapter.id);
                   onClose();
                 }}
-                className="w-full text-left p-3.5 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-white/5 hover:border-cyan-500/30 transition-all flex items-start justify-between gap-3 group"
+                className="w-full text-left p-3.5 rounded-2xl bg-slate-900/95 hover:bg-slate-900 border border-white/10 hover:border-sky-500/30 transition-all flex items-start justify-between gap-3 group"
               >
                 <div className="space-y-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
                       Vol {volume.volumeNumber} • Ch {chapter.chapterNumber}
                     </span>
                     <span className="text-[11px] text-slate-400 truncate font-sans">
                       {chapter.englishTitle}
                     </span>
                   </div>
-                  <h4 className="text-sm font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
+                  <h4 className="text-sm font-bold text-slate-200 group-hover:text-sky-300 transition-colors">
                     {chapter.title}
                   </h4>
                   <p className="text-xs text-slate-400 line-clamp-1">
@@ -119,7 +119,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 </div>
 
                 <div className="flex-shrink-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowRight className="w-4 h-4 text-cyan-400" />
+                  <ArrowRight className="w-4 h-4 text-sky-400" />
                 </div>
               </button>
             ))
@@ -127,7 +127,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Footer info */}
-        <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
+        <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
           <span>ප්‍රතිඵල {results.length} ක් හමු විය</span>
           <span>Enter ඔබා පිවිසෙන්න</span>
         </div>

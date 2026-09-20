@@ -44,8 +44,8 @@ export const LiveCodeRunner: React.FC<LiveCodeRunnerProps> = ({
                 margin: 0;
               }
               button {
-                background: #06b6d4;
-                color: #0f172a;
+                background: #0284c7;
+                color: #ffffff;
                 border: none;
                 padding: 8px 16px;
                 border-radius: 6px;
@@ -130,16 +130,16 @@ export const LiveCodeRunner: React.FC<LiveCodeRunnerProps> = ({
   };
 
   return (
-    <div className="my-6 rounded-2xl overflow-hidden border border-white/10 bg-slate-950/80 backdrop-blur-xl shadow-2xl transition-all duration-300">
+    <div className="my-6 rounded-2xl overflow-hidden border border-white/10 bg-slate-950/95 backdrop-blur-xl shadow-2xl transition-all duration-300">
       {/* Header bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-white/10">
+      <div className="flex items-center justify-between px-4 py-3 bg-slate-900/95 border-b border-white/10">
         <div className="flex items-center gap-2.5">
           <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-            <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-            <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+            <div className="w-3 h-3 rounded-full bg-slate-700" />
+            <div className="w-3 h-3 rounded-full bg-slate-700" />
+            <div className="w-3 h-3 rounded-full bg-slate-700" />
           </div>
-          <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase">
+          <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 uppercase">
             {language}
           </span>
           {title && (
@@ -151,13 +151,13 @@ export const LiveCodeRunner: React.FC<LiveCodeRunnerProps> = ({
 
         <div className="flex items-center gap-1.5">
           {isRunnable && (
-            <div className="flex p-0.5 bg-slate-800/80 rounded-lg border border-white/5 mr-2">
+            <div className="flex p-0.5 bg-slate-800/90 rounded-lg border border-white/5 mr-2">
               <button
                 type="button"
                 onClick={() => setActiveTab('code')}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
                   activeTab === 'code'
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                    ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -169,7 +169,7 @@ export const LiveCodeRunner: React.FC<LiveCodeRunnerProps> = ({
                 onClick={() => setActiveTab('preview')}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
                   activeTab === 'preview'
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                    ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -214,12 +214,12 @@ export const LiveCodeRunner: React.FC<LiveCodeRunnerProps> = ({
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="w-full bg-slate-950/90 text-slate-200 p-4 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-cyan-500/40 resize-y min-h-[140px] max-h-[420px] selection:bg-cyan-500/30"
+              className="w-full bg-slate-950/95 text-slate-200 p-4 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-sky-500/40 resize-y min-h-[140px] max-h-[420px] selection:bg-sky-500/30"
               spellCheck={false}
             />
           </div>
         ) : (
-          <div className="bg-slate-900/90 p-3 min-h-[160px] max-h-[360px] overflow-hidden">
+          <div className="bg-slate-900/95 p-3 min-h-[160px] max-h-[360px] overflow-hidden">
             <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-[11px] text-slate-400 font-mono">
               <span>සජීවී ප්‍රතිඵලය (Live Sandboxed Output)</span>
               <span className="flex items-center gap-1 text-emerald-400">
