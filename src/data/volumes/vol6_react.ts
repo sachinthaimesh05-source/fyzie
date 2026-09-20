@@ -37,18 +37,31 @@ export const volume6: Volume = {
             "Virtual DOM යනු මතකය තුළ තබා ගන්නා සැබෑ DOM එකේ සැහැල්ලු පිටපතකි. දත්ත වෙනස් වූ විට React මුලින්ම Virtual DOM එකේ වෙනස සලකුණු කර, පැරණි එක හා සසඳා (Diffing), වෙනස් විය යුතුම කොටස පමණක් සැබෑ DOM එකේ යාවත්කාලීන කරයි (Reconciliation)."
           ],
           asciiDiagram: `[ දත්ත (State) වෙනස් වීම ]
-            |
-            v
+            │
+            ▼
 [ අලුත් Virtual DOM එකක් සෑදේ ]
-            |
-            v
+            │
+            ▼
 [ පරණ සහ අලුත් සසඳයි (Diffing) ]
-            |
-            v
+            │
+            ▼
 [ වෙනස ඇති කොටස පමණක් සොයා ගනී ]
-            |
-            v
+            │
+            ▼
 [ සැබෑ DOM එක යාවත්කාලීන කරයි (Reconciliation) ]`
+        },
+        {
+          title: "61.2 Library vs Framework සහ React හි මූලික ගුණාංග",
+          content: [
+            "Angular හෝ Next.js යනු සම්පූර්ණ Frameworks වන අතර, ඒවායේ දැඩි නීති සහ සියල්ල සපයා ඇත. නමුත් React යනු Library එකකි; එනම් එය පරිශීලක අතුරුමුහුණත (UI) ඇඳීමට පමණක් අවධානය යොමු කරයි. Routing, State Management සඳහා ඔබට කැමති පුස්තකාල තෝරා ගැනීමේ පූර්ණ නිදහස ඇත.",
+            "Unidirectional Data Flow: රියැක්ට් හි දත්ත ගලා යන්නේ ඉහළ සිට පහළට (Parent සිට Child දක්වා) එක් දිශාවකට පමණි."
+          ]
+        },
+        {
+          title: "61.3 Single Page Applications (SPA) සහ සාම්ප්‍රදායික වෙබ් අඩවි",
+          content: [
+            "සාම්ප්‍රදායික වෙබ් අඩවි වල සෑම පිටු පෙරළීමකදීම සර්වර් එකෙන් මුළු HTML පිටුවම නැවත බාගත කර බ්‍රවුසරය සුදු වී Reload වේ. නමුත් Single Page Application (SPA) එකකදී පූරණය වන්නේ එකම index.html ගොනුවකි. ඉන්පසු පිටු පෙරළීම සිදු කරන්නේ JavaScript මඟින් DOM එක ක්ෂණිකව මාරු කිරීමෙනි."
+          ]
         }
       ],
       keyPoints: [
@@ -96,6 +109,21 @@ npm install
 npm run dev`
             }
           ]
+        },
+        {
+          title: "62.2 React Project Execution Flow (පණ ගැන්වීමේ අනුපිළිවෙල)",
+          content: [
+            "1. index.html: බ්‍රවුසරය මුලින්ම කියවන පිටුවයි. එහි <div id='root'></div> පවතී.",
+            "2. src/main.jsx: ReactDom.createRoot මඟින් 'root' ඩිව් එක අල්ලාගෙන ඒ තුළට App සංරචකය ඇතුළු කරයි.",
+            "3. src/App.jsx: අපේ යෙදුමේ ප්‍රධාන මව් සංරචකයයි (Root Component)."
+          ],
+          asciiDiagram: `index.html (<div id="root">)
+           ▲
+           │ ReactDOM.createRoot
+src/main.jsx
+           │ <App />
+           ▼
+src/App.jsx (මුළු වෙබ් අතුරුමුහුණත)`
         }
       ],
       keyPoints: [
@@ -146,6 +174,12 @@ npm run dev`
 }`
             }
           ]
+        },
+        {
+          title: "63.2 Babel Transpilation සහ React.createElement",
+          content: [
+            "බ්‍රවුසරවලට සෘජුවම JSX තේරුම් ගත නොහැක. Babel නම් Transpiler එක මඟින් JSX කේතය පිරිසිදු JavaScript බවට පත් කරයි: <h1>Hello</h1> යන්න React.createElement('h1', null, 'Hello') බවට පත්වන්නේ එබැවිනි."
+          ]
         }
       ],
       keyPoints: [
@@ -192,6 +226,12 @@ npm run dev`
   );
 }`
             }
+          ]
+        },
+        {
+          title: "64.2 Reusability සහ File Separation",
+          content: [
+            "සෑම සංරචකයක්ම තමන්ගේම වෙනම .jsx ගොනුවක තබා ගැනීම (උදා: Button.jsx, Navbar.jsx) මඟින් ව්‍යාපෘතිය පිරිසිදුව තබා ගැනීමටත් කණ්ඩායමක් ලෙස වැඩ කිරීමටත් පහසු වේ."
           ]
         }
       ],
@@ -240,6 +280,12 @@ function UserCard({ name, role, age }) {
   );
 }`
             }
+          ]
+        },
+        {
+          title: "65.2 Children Prop සහ Wrapper Components",
+          content: [
+            "විශේෂ prop එකක් වන children මඟින් සංරචකයේ ආරම්භක සහ අවසාන ටැග් අතර (<Card> ... </Card>) ලියන ඕනෑම JSX එකක් සංරචකය තුළට ලබා ගත හැක."
           ]
         }
       ],
@@ -290,6 +336,31 @@ export default function Counter() {
   );
 }`
             }
+          ]
+        },
+        {
+          title: "66.2 State Immutability සහ Objects/Arrays Update කිරීම",
+          content: [
+            "State එකක Object එකක් හෝ Array එකක් ඇති විට, එය කෙලින්ම user.name = 'Kamal' ලෙස වෙනස් කළ නොහැක. සැමවිටම Spread Operator (...) භාවිතයෙන් නව පිටපතක් සෑදිය යුතුය:"
+          ],
+          codeSnippets: [
+            {
+              language: "javascript",
+              title: "Updating Object State with Spread Operator",
+              code: `const [user, setUser] = useState({ name: "Nimal", age: 20 });
+
+// නිවැරදි ක්‍රමය:
+setUser(prevUser => ({
+  ...prevUser,
+  name: "Kamal"
+}));`
+            }
+          ]
+        },
+        {
+          title: "66.3 Previous State Callback (setCount(prev => prev + 1))",
+          content: [
+            "පෙර අගය මත පදනම්ව State වෙනස් වන විට, සෘජු අගය වෙනුවට Updater Function එකක් (prev => prev + 1) ලබා දීමෙන් React හි Asynchronous State Updates නිසා ඇති වන Race conditions සම්පූර්ණයෙන්ම වළක්වා ගත හැක."
           ]
         }
       ],
@@ -343,6 +414,12 @@ export default function SearchInput() {
 }`
             }
           ]
+        },
+        {
+          title: "67.2 SyntheticEvent සහ e.preventDefault()",
+          content: [
+            "HTML Forms submit වන විට මුළු පිටුවම Refresh වීම වැළැක්වීමට e.preventDefault() යොදයි. React විසින් බ්‍රවුසර අතර වෙනස්කම් ඉවත් කිරීම සඳහා සාමාන්‍ය බ්‍රවුසර සිදුවීම SyntheticEvent නමැති ආරක්ෂිත ආවරණයකින් ඔතා ලබා දෙයි."
+          ]
         }
       ],
       keyPoints: [
@@ -390,6 +467,12 @@ export default function SearchInput() {
   );
 }`
             }
+          ]
+        },
+        {
+          title: "68.2 Early Return Pattern (Guard Clauses)",
+          content: [
+            "සංරචකයක ප්‍රධාන JSX එක ඇඳීමට පෙර if (loading) return <Spinner />; හෝ if (error) return <ErrorMessage />; ලෙස කලින්ම පිටවීම Early Return නම් වේ. මෙය කේතය අතිශය පිරිසිදුව තබයි."
           ]
         }
       ],
@@ -444,6 +527,12 @@ export default function ProductList() {
 }`
             }
           ]
+        },
+        {
+          title: "69.2 Index as Key හි බරපතල අන්තරාය",
+          content: [
+            "අරාවක index එක (0, 1, 2) key එකක් ලෙස දුන් විට, ඔබ ලැයිස්තුවේ ඉහළින් අයිතමයක් මකා දැමුවහොත් හෝ අලුතින් එකක් දැමුවහොත් React විසින් වැරදි සංරචක නැවත Render කරයි. සැමවිටම අද්විතීය ID එකක් යොදන්න."
+          ]
         }
       ],
       keyPoints: [
@@ -496,6 +585,14 @@ export default function Timer() {
   return <div>ගත වූ තත්පර: {seconds}</div>;
 }`
             }
+          ]
+        },
+        {
+          title: "70.2 Component Lifecycle (Mounting, Updating, Unmounting)",
+          content: [
+            "1. Mounting: සංරචකය ප්‍රථම වරට DOM එකට ඇතුළු වීම.",
+            "2. Updating: Props හෝ State වෙනස් වී සංරචකය නැවත Render වීම.",
+            "3. Unmounting: සංරචකය තිරයෙන් ඉවත් වීම. මෙහිදී Cleanup Function ක්‍රියාත්මක වේ."
           ]
         }
       ],
@@ -559,6 +656,12 @@ export default function RegisterForm() {
 }`
             }
           ]
+        },
+        {
+          title: "71.2 Uncontrolled Components සහ useRef",
+          content: [
+            "සෑම අකුරකටම State Update නොකර, Form එක Submit කරන මොහොතේ පමණක් input එකේ අගය කියවීමට useRef Hook එක භාවිත කළ හැක (Uncontrolled Component)."
+          ]
         }
       ],
       keyPoints: [
@@ -611,6 +714,12 @@ function App() {
 }`
             }
           ]
+        },
+        {
+          title: "72.2 NavLink සහ Active Navigation Classes",
+          content: [
+            "<NavLink> භාවිතා කළ විට පරිශීලකයා දැනට සිටින පිටුවේ ලින්ක් එකට ස්වයංක්‍රීයව 'active' class එකක් ලැබෙන අතර, එමඟින් Menu එකේ සක්‍රීය පිටුව පහසුවෙන් පාට කළ හැක."
+          ]
         }
       ],
       keyPoints: [
@@ -640,6 +749,12 @@ function App() {
           content: [
             "Prop Drilling: ලියුමක් එක් අයෙකුගෙන් තවත් අයෙකුට අතින් අත යැවීම වැනිය (මැද සිටින අයට අදාළ නැතත් කරදරයකි).",
             "Context API: ගුවන්විදුලි මධ්‍යස්ථානයක් (Provider) වාතයට දත්ත මුදා හරියි (Broadcast). ඕනෑම කෙනෙකුට රේඩියෝව ඔන් කර (useContext) එයට සවන් දිය හැක."
+          ]
+        },
+        {
+          title: "73.2 Custom Provider Pattern",
+          content: [
+            "Context Logic එක වෙනම ThemeContext.jsx ගොනුවක තබා, useTheme() නමින් Custom Hook එකක් සකස් කිරීම රියැක්ට් ප්‍රමිතියයි."
           ]
         }
       ],
@@ -712,6 +827,12 @@ export default function UserDirectory() {
 }`
             }
           ]
+        },
+        {
+          title: "74.2 AbortController මඟින් Network Leak වැළැක්වීම",
+          content: [
+            "පරිශීලකයා පිටුවෙන් ඉක්මනින් පිටව ගියහොත්, පසුබිමේ සිදුවන fetch ඉල්ලීම අවලංගු කිරීමට AbortController සංඥාව (signal) භාවිතා කළ හැක."
+          ]
         }
       ],
       keyPoints: [
@@ -740,7 +861,13 @@ export default function UserDirectory() {
           title: "75.1 _redirects ගොනුව මඟින් 404 දෝෂය විසඳීම",
           content: [
             "ගැටලුව: ඔබ /about පිටුවට ගොස් Refresh කළ විට බ්‍රවුසරය සිතන්නේ /about.html කියා ගොනුවක් සර්වර් එකේ ඇතැයි කියාය. නමුත් React වල ඇත්තේ එකම index.html ගොනුවකි. එවිට 404 Not Found දෝෂය ලැබේ.",
-            "විසඳුම: public ਫෝල්ඩරය තුළ _redirects නමින් ගොනුවක් සාදා /* /index.html 200 ලෙස ලියන්න."
+            "විසඳුම: public ෆෝල්ඩරය තුළ _redirects නමින් ගොනුවක් සාදා /* /index.html 200 ලෙස ලියන්න."
+          ]
+        },
+        {
+          title: "75.2 npm run build සහ Production Optimization",
+          content: [
+            "npm run build විධානය මඟින් ඔබේ සියලු JSX, CSS සහ JS ගොනු කුඩා (Minified, Tree-shaken) ගොනු බවට පත් කර dist/ ෆෝල්ඩරය තුළ තැන්පත් කරයි."
           ]
         }
       ],
@@ -796,18 +923,15 @@ export default function UserDirectory() {
 const TaskContext = createContext();
 
 export function TaskProvider({ children }) {
-  // 1. Initial State එක LocalStorage වෙතින් ලබා ගැනීම
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem('taskmaster_pro_data');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // 2. tasks වෙනස් වන සෑම විටම LocalStorage එකට save කිරීම
   useEffect(() => {
     localStorage.setItem('taskmaster_pro_data', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Actions
   const addTask = (title) => {
     const newTask = { id: Date.now(), title, completed: false };
     setTasks(prev => [newTask, ...prev]);
@@ -877,8 +1001,7 @@ export default function TaskItem({ task }) {
         "වෘත්තීය මට්ටමේ React ඇප් එකක තර්කනය Context තුළ ද, පෙනුම Components තුළ ද වෙන්ව පවතී."
       ],
       exercises: [
-        { id: 1, question: "TaskMaster Pro හි LocalStorage persistence ක්‍රියාත්මක කරන useEffect එක ලියන්න." },
-        { id: 2, question: "Lazy initial state ක්‍රමය මඟින් කාර්යක්ෂමතාව වැඩි වන්නේ කෙසේද?" }
+        { id: 1, question: "TaskMaster Pro හි LocalStorage persistence ක්‍රියාත්මක කරන useEffect එක ලියන්න." }
       ]
     },
     {
@@ -898,10 +1021,27 @@ export default function TaskItem({ task }) {
       ],
       sections: [
         {
-          title: "77.1 useMemo, useCallback සහ Custom Hooks",
+          title: "77.1 useMemo සහ useCallback අතර වෙනස",
           content: [
-            "Memoization යනු යම් සංකීර්ණ ගණනය කිරීමක ප්‍රතිඵලය මතක තබාගෙන, දත්ත වෙනස් නොවන්නේ නම් නැවත ගණනය නොකර එම පැරණි අගයම ලබා දීමේ ක්‍රමයයි.",
-            "Custom Hook උදාහරණයක්:"
+            "• useMemo: සංකීර්ණ ගණනය කිරීමක ප්‍රතිඵල අගය මතක තබා ගනී (Caches a calculated value).",
+            "• useCallback: සංරචකය re-render වන විට ශ්‍රිතය අලුතින් සෑදීම වළක්වා මුල් ශ්‍රිතයම මතක තබා ගනී (Caches a function definition)."
+          ],
+          codeSnippets: [
+            {
+              language: "javascript",
+              title: "useMemo Example",
+              code: `import { useMemo } from 'react';
+
+const expensiveResult = useMemo(() => {
+  return performHeavyCalculation(data);
+}, [data]);`
+            }
+          ]
+        },
+        {
+          title: "77.2 useRef සහ Custom Hooks",
+          content: [
+            "useRef මඟින් සංරචකය re-render නොවී අගයක් මතක තබා ගැනීමට හෝ HTML input element එකකට focus කිරීමට ඉඩ ලබා දේ."
           ],
           codeSnippets: [
             {
@@ -1021,8 +1161,7 @@ export default function ReducerCounter() {
         "useState වෙනුවට useReducer භාවිතා කරන්නේ එකිනෙකට සම්බන්ධ ස්ටේට් කිහිපයක් එකවර වෙනස් වන විටය."
       ],
       exercises: [
-        { id: 1, question: "useState වෙනුවට useReducer භාවිතා කරන්නේ කුමන අවස්ථාවලදීද?" },
-        { id: 2, question: "Children prop එකක් මඟින් Component Composition සිදු වන්නේ කෙසේද?" }
+        { id: 1, question: "useState වෙනුවට useReducer භාවිතා කරන්නේ කුමන අවස්ථාවලදීද?" }
       ]
     },
     {
@@ -1061,6 +1200,12 @@ export default function ReducerCounter() {
   );
 }`
             }
+          ]
+        },
+        {
+          title: "79.2 Shadcn UI සහ Copy-Paste සංස්කෘතිය",
+          content: [
+            "MUI හෝ Bootstrap වැනි විශාල පැකේජ node_modules තුළට දමා සීමාවීමට වඩා, අද නූතන ප්‍රවණතාවය වන්නේ Shadcn UI හෝ 21st.dev මඟින් තමන්ට අවශ්‍ය සංරචකයේ කේතය සෘජුවම src/components තුළට Copy-Paste කර තමන්ට අවශ්‍ය පරිදි වෙනස් කර ගැනීමයි."
           ]
         }
       ],
@@ -1102,6 +1247,12 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }`
             }
+          ]
+        },
+        {
+          title: "80.2 Radix UI සහ Framer Motion ඒකාබද්ධතාවය",
+          content: [
+            "Headless UI Primitives (Radix UI) මඟින් Keyboard navigation, Focus trap, සහ Screen reader accessibility නොමිලයේ ලැබෙන අතර, Framer Motion මඟින් සුමට සජීවිකරණ (Animations) එක් කරයි."
           ]
         }
       ],
@@ -1184,8 +1335,7 @@ export function Button({ className, variant, size, ...props }) {
         "@apply පමණට වඩා භාවිතා නොකරන්න; Tailwind හි සැබෑ බලය ඇත්තේ JSX තුළ කෙලින්ම utility classes ලිවීම තුළය."
       ],
       exercises: [
-        { id: 1, question: "CVA භාවිතා කිරීමේ ප්‍රධාන වාසිය කුමක්ද?" },
-        { id: 2, question: "@layer base සහ @layer components අතර වෙනස කුමක්ද?" }
+        { id: 1, question: "CVA භාවිතා කිරීමේ ප්‍රධාන වාසිය කුමක්ද?" }
       ]
     },
     {

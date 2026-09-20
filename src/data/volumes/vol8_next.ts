@@ -30,16 +30,37 @@ export const volume8: Volume = {
         {
           title: "91.1 Next.js යනු කුමක්ද සහ මෝටර් රථ උපමාව",
           content: [
-            "රියැක්ට් යනු ඉතා හොඳ එන්ජිමක් වැනිය. නමුත් වාහනයක් පැදවීමට නම් අපට රෝද, බොඩිය, ලයිට් සහ සීට් අවශ්‍ය වේ. Next.js යනු එම සියලුම කොටස් එකතු කර සාදන ලද සම්පූර්ණ මෝටර් රථයකි.",
-            "SSR මඟින් බ්‍රවුසරයට හිස් පිටුවක් නොව, දත්ත පිරුණු සම්පූර්ණ HTML පිටුවක් ක්ෂණිකව ලැබේ. Google සෙවුම් යන්ත්‍රවලට සියල්ල පරිපූර්ණව කියවිය හැක."
+            "රියැක්ට් (React) යනු අතිශය ප්‍රබල එන්ජිමක් වැනිය. නමුත් වාහනයක් පාරේ ධාවනය කිරීමට නම් එන්ජිමට අමතරව රෝද, චැසිය, ලයිට්, සහ තිරිංග අවශ්‍ය වේ. Next.js යනු රියැක්ට් එන්ජිම වටා එම සියලු කොටස් (Routing, SSR, Optimization, Server Functions) එකතු කර සාදන ලද සම්පූර්ණ නවීන මෝටර් රථයයි.",
+            "Next.js නිර්මාණය කරන ලද්දේ Vercel සමාගම විසිනි. එය අද වන විට ලොව දැවැන්තම සමාගම් (Netflix, Twitch, TikTok, Nike) විසින් සිය ප්‍රමුඛ වෙබ් අඩවි සඳහා භාවිත කරනු ලබයි."
+          ]
+        },
+        {
+          title: "91.2 Client-Side Rendering (CSR) vs Server-Side Rendering (SSR)",
+          content: [
+            "• Client-Side Rendering (සාමාන්‍ය React): බ්‍රවුසරයට යවන්නේ හිස් HTML ගොනුවකි (<div id='root'></div>). බ්‍රවුසරය සියලු JS බාගත කර ධාවනය කරන තුරු පරිශීලකයාට සුදු තිරයක් දිස් වේ. මෙය Slow Internet වලදී දුර්වල UX එකක් සහ දුර්වල Google SEO ඇති කරයි.",
+            "• Server-Side Rendering (Next.js SSR): පරිශීලකයා පිටුව ඉල්ලූ සැණින් සර්වර් එක තුළදීම දත්ත සමඟ සම්පූර්ණ HTML පිටුව සූදානම් කර බ්‍රවුසරය වෙත ක්ෂණිකව එවයි. තත්පරයකින් පරිශීලකයාට තොරතුරු දැකගත හැක."
+          ],
+          asciiDiagram: `[ Client-Side Rendering (CSR) ]
+Browser ──> ඉල්ලීම ──> Server (හිස් HTML) ──> JS බාගත වේ ──> අවසානයේ පිටුව පෙනේ (ප්‍රමාදයි)
+
+[ Server-Side Rendering (SSR) ]
+Browser ──> ඉල්ලීම ──> Server (සම්පූර්ණ HTML සූදානම් කරයි) ──> ක්ෂණිකව පිටුව පෙනේ (අකුණු වේගය)`
+        },
+        {
+          title: "91.3 Static Site Generation (SSG) සහ SEO වාසි",
+          content: [
+            "Static Site Generation (SSG) හිදී Build කරන අවස්ථාවේදීම සියලු HTML පිටු සාදා සූදානම් කර CDN එකක තැන්පත් කරයි. පරිශීලකයින් මිලියන ගණනක් පැමිණියද සර්වර් බරකින් තොරව ක්ෂණිකව පිටු පෙන්විය හැක.",
+            "Google, Bing වැනි සෙවුම් යන්ත්‍රවල Crawlers වලට සම්පූර්ණ HTML එක සෘජුවම කියවිය හැකි බැවින් Next.js වෙබ් අඩවි වලට ඉහළම SEO ශ්‍රේණිගත කිරීමක් ලැබේ."
           ]
         }
       ],
       keyPoints: [
-        "Next.js යනු Frontend සහ Backend (Full-stack) යන දෙකම හැසිරවිය හැකි ප්‍රබල රාමුවකි."
+        "Next.js යනු Frontend සහ Backend (Full-stack) යන දෙකම හැසිරවිය හැකි ප්‍රබල රාමුවකි.",
+        "SSR මඟින් First Contentful Paint (FCP) කාලය අතිශයින් අඩු කර විශිෂ්ට SEO ලබා දේ."
       ],
       exercises: [
-        { id: 1, question: "Client-Side Rendering වලට වඩා Server-Side Rendering උසස් වන්නේ ඇයි?" }
+        { id: 1, question: "Client-Side Rendering වලට වඩා Server-Side Rendering උසස් වන්නේ ඇයි?" },
+        { id: 2, question: "SSG සහ SSR අතර ඇති ප්‍රධාන වෙනස කුමක්ද?" }
       ]
     },
     {
@@ -58,18 +79,55 @@ export const volume8: Volume = {
       ],
       sections: [
         {
-          title: "92.1 App Router Setup සහ ගොනු ව්‍යුහය",
+          title: "92.1 create-next-app සහ ස්ථාපනය",
           content: [
-            "App Router හිදී ෆෝල්ඩරයක් සැදූ සැණින් එය වෙබ් අඩවියේ පාරක් (URL Path) බවට පත් වේ. එම ෆෝල්ඩරය තුළ page.tsx තිබිය යුතුයි."
+            "Next.js ව්‍යාපෘතියක් ආරම්භ කිරීමට පහත විධානය ටර්මිනලයේ ධාවනය කරන්න:",
+            "npm run dev විධානයෙන් පසු http://localhost:3000 ඔස්සේ ඔබේ වෙබ් අඩවිය සජීවීව දැකගත හැක."
+          ],
+          codeSnippets: [
+            {
+              language: "bash",
+              title: "Create Next.js Project",
+              code: `npx create-next-app@latest my-next-app
+
+# අසන ප්‍රශ්න සඳහා:
+# ✔ Would you like to use TypeScript? Yes
+# ✔ Would you like to use ESLint? Yes
+# ✔ Would you like to use Tailwind CSS? Yes
+# ✔ Would you like your code inside a 'src/' directory? Yes
+# ✔ Would you like to use App Router? (recommended) Yes
+
+cd my-next-app
+npm run dev`
+            }
+          ]
+        },
+        {
+          title: "92.2 App Router නාමාවලි ව්‍යුහය සහ Special Files",
+          content: [
+            "Next.js හි App Router ක්‍රමයේදී src/app නාමාවලිය තුළ විශේෂ ගොනු කිහිපයක් පවතී:",
+            "• page.tsx: එම ෆෝල්ඩරයේ URL පාරට අදාළ වන පරිශීලක අතුරුමුහුණත (UI).",
+            "• layout.tsx: පිටු කිහිපයකට පොදු වන Navbars, Footers වැනි සැකිලි.",
+            "• loading.tsx: දත්ත ලෝඩ් වන අතරතුර ස්වයංක්‍රීයව පෙන්වන Loading UI.",
+            "• error.tsx: දෝෂයක් ඇති වූ විට පෙන්වන Error Boundary."
           ],
           asciiDiagram: `src/app/
-├── layout.tsx  (මුළු වෙබ් අඩවියටම පොදු සැකිල්ල)
-├── page.tsx    (මුල් පිටුව - /)
-└── globals.css (Tailwind CSS ඇතුළත්)`
+├── layout.tsx     <── Root Layout (html, body, Navbar)
+├── page.tsx       <── මුල් පිටුව (Home page - /)
+├── loading.tsx    <── Global Skeleton Loader
+├── error.tsx      <── Global Error Boundary
+└── globals.css    <── Tailwind & Base Styles`
+        },
+        {
+          title: "92.3 layout.tsx සහ page.tsx සංයෝජනය",
+          content: [
+            "layout.tsx සංරචකය තුළ children prop එකක් ඇති අතර, ඒ තුළට page.tsx හි ඇති අන්තර්ගතය ස්වයංක්‍රීයව ඇතුළු වේ. පිටු මාරු වන විට layout එක නැවත Render නොවී පවතින බැවින් state ආරක්ෂා වේ."
+          ]
         }
       ],
       keyPoints: [
-        "page.tsx ගොනුව නොමැතිව කිසිදු පිටුවක් බ්‍රවුසරයේ දිස් නොවේ."
+        "App Router හි සෑම ෆෝල්ඩරයක්ම URL Route එකක් විය හැක්කේ ඒ තුළ page.tsx ඇත්නම් පමණි.",
+        "Root Layout හි <html> සහ <body> අනිවාර්යයෙන්ම තිබිය යුතුය."
       ],
       exercises: [
         { id: 1, question: "layout.tsx සහ page.tsx අතර ඇති කාර්යභාරමය වෙනස කුමක්ද?" }
@@ -91,22 +149,57 @@ export const volume8: Volume = {
       ],
       sections: [
         {
-          title: "93.1 Dynamic Routes සහ next/link",
+          title: "93.1 File-based Routing සහ Nested Routes",
           content: [
-            "බ්ලොග් අඩවියක ලිපි සිය ගණනක් සඳහා ෆෝල්ඩරයේ නම [id] ලෙස වරහන් තුළ ලිවීමෙන් ගතික පිටු නිර්මාණය කළ හැක."
+            "Next.js හි වෙනම Routes ලියන්නට අවශ්‍ය නැත. ඔබ src/app තුළ ෆෝල්ඩරයක් සෑදූ විට, එම ෆෝල්ඩරයේ නම ස්වයංක්‍රීයව වෙබ් අඩවියේ URL පාර (Path) බවට පත් වේ:",
+            "• src/app/about/page.tsx ➔ yoursite.com/about",
+            "• src/app/dashboard/settings/page.tsx ➔ yoursite.com/dashboard/settings"
+          ]
+        },
+        {
+          title: "93.2 Dynamic Routes ([id], [slug])",
+          content: [
+            "බ්ලොග් අඩවියක ලිපි දහස් ගණනක් සඳහා වෙන වෙනම ෆෝල්ඩර සෑදිය නොහැක. ඒ වෙනුවට කොටු වරහන් [ ] යොදා Dynamic Route එකක් සෑදිය හැක:",
+            "src/app/blog/[slug]/page.tsx ➔ yoursite.com/blog/learn-react හෝ yoursite.com/blog/typescript-mastery"
           ],
           codeSnippets: [
             {
               language: "typescript",
-              title: "app/blog/[id]/page.tsx",
+              title: "app/blog/[slug]/page.tsx",
+              code: `interface PageProps {
+  params: { slug: string };
+}
+
+export default function BlogPost({ params }: PageProps) {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold">ලිපිය: {params.slug}</h1>
+      <p>මෙම පිටුව Next.js Dynamic Route මඟින් නිර්මාණය කරන ලද්දකි.</p>
+    </div>
+  );
+}`
+            }
+          ]
+        },
+        {
+          title: "93.3 next/link සංරචකය සහ Automatic Prefetching",
+          content: [
+            "සාමාන්‍ය HTML හි <a> ටැගය ක්ලික් කළ විට මුළු පිටුවම Refresh වේ. නමුත් Next.js හි <Link href='/about'> භාවිතා කළ විට බ්‍රවුසරය Refresh වන්නේ නැත.",
+            "Prefetching: Link එකක් පරිශීලකයාගේ තිරයේ දිස්වන මොහොතේදීම Next.js පසුබිමෙන් එම පිටුවේ දත්ත කලින්ම බාගත කර තබා ගනී. පරිශීලකයා ක්ලික් කළ සැණින් බිංදු තත්පරයකින් පිටුව මාරු වේ!"
+          ],
+          codeSnippets: [
+            {
+              language: "typescript",
+              title: "Using next/link",
               code: `import Link from 'next/link';
 
-export default function BlogPost({ params }: { params: { id: string } }) {
+export default function Navbar() {
   return (
-    <div>
-      <h1>ලිපියේ අංකය: {params.id}</h1>
-      <Link href="/blog">නැවත බ්ලොග් ලැයිස්තුවට</Link>
-    </div>
+    <nav className="flex gap-4 p-4 bg-slate-900 text-white">
+      <Link href="/" className="hover:text-sky-400">මුල් පිටුව</Link>
+      <Link href="/blog" className="hover:text-sky-400">බ්ලොග්</Link>
+      <Link href="/about" className="hover:text-sky-400">අප ගැන</Link>
+    </nav>
   );
 }`
             }
@@ -114,10 +207,11 @@ export default function BlogPost({ params }: { params: { id: string } }) {
         }
       ],
       keyPoints: [
-        "next/link භාවිතයෙන් පිටුව Refresh නොවී පසුබිමෙන් දත්ත ඩවුන්ලෝඩ් වේ (Prefetching)."
+        "කොටු වරහන් [param] මඟින් Dynamic Routes නිර්මාණය වේ.",
+        "<Link> සංරචකය මඟින් SPA ආකාරයෙන් Instant Page Transitions ලැබේ."
       ],
       exercises: [
-        { id: 1, question: "Next.js හි Dynamic Route එකක් සෑදීමට ෆෝල්ඩරයේ නම ලියන්නේ කෙසේද?" }
+        { id: 1, question: "next/link සහ සාමාන්‍ය <a> tag එක අතර ඇති වෙනස කුමක්ද?" }
       ]
     },
     {
@@ -138,8 +232,21 @@ export default function BlogPost({ params }: { params: { id: string } }) {
         {
           title: "94.1 කුස්සිය සහ කෑම මේසය උපමාව",
           content: [
-            "• Server Component (කුස්සිය): ආහාරය (HTML) පිසින ස්ථානයයි. සියලු අමුද්‍රව්‍ය එකතු කර පිළිස්සීම සිදු කරයි. පාරිභෝගිකයාට ලැබෙන්නේ සූදානම් ආහාරයයි.",
-            "• Client Component (මේසය): පීසා එක ලැබුණු පසු ලුණු හෝ සෝස් එකතු කිරීම වැනි පාරිභෝගිකයා විසින් සිදු කරන 'අන්තර්ක්‍රියාකාරී' (Interactive) වැඩ වේ."
+            "• Server Component (කුස්සිය): ආහාරය (HTML) පිසින ස්ථානයයි. සියලු අමුද්‍රව්‍ය (Database queries, Secret API Keys) එකතු කර පිළිස්සීම සිදු කරයි. පාරිභෝගිකයාට ලැබෙන්නේ සූදානම් ආහාරයයි. අමුද්‍රව්‍ය පාරිභෝගිකයාට නොපෙනේ.",
+            "• Client Component (මේසය): පීසා එක ලැබුණු පසු ලුණු හෝ සෝස් එකතු කිරීම වැනි පාරිභෝගිකයා විසින් සිදු කරන 'අන්තර්ක්‍රියාකාරී' (Interactive buttons, inputs) වැඩ වේ."
+          ]
+        },
+        {
+          title: "94.2 React Server Components (RSC) හි වාසි (Zero Bundle Size)",
+          content: [
+            "Server Components හි ඇති ප්‍රධානතම වාසිය නම් ඒවායේ JavaScript බ්‍රවුසරයට ඩවුන්ලෝඩ් නොවීමයි. එමඟින් වෙබ් අඩවියේ බර (Bundle Size) අතිශය සැහැල්ලු වී වෙබ් අඩවිය ක්ෂණිකව පැටවේ.",
+            "Server Components තුළ සෘජුවම Database Queries, File System access, සහ Secret Environment Variables (process.env.DB_PASSWORD) භාවිතා කළ හැක."
+          ]
+        },
+        {
+          title: "94.3 'use client' Directive සහ Client Components",
+          content: [
+            "ඔබට useState, useEffect, හෝ onClick, onChange වැනි Browser Event Listeners අවශ්‍ය නම් පමණක් ගොනුවේ ඉහළින්ම 'use client' යෙදිය යුතුය:"
           ],
           codeSnippets: [
             {
@@ -149,23 +256,34 @@ export default function BlogPost({ params }: { params: { id: string } }) {
 
 import { useState } from 'react';
 
-export default function LikeButton() {
-  const [likes, setLikes] = useState(0);
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
   return (
-    <button onClick={() => setLikes(likes + 1)}>
-      ❤️ {likes} Likes
+    <button 
+      onClick={() => setCount(count + 1)}
+      className="px-4 py-2 bg-sky-500 text-white rounded-lg"
+    >
+      ගණනය: {count}
     </button>
   );
 }`
             }
           ]
+        },
+        {
+          title: "94.4 Server සහ Client Components ඒකාබද්ධ කිරීමේ රන් නීතිය",
+          content: [
+            "හැකි සෑම විටම පිටුවේ විශාල කොටස Server Component එකක් ලෙස තබාගෙන, ක්ලික් කිරීමට හෝ State වෙනස් කිරීමට අවශ්‍ය කුඩා බොත්තම පමණක් Client Component එකක් ලෙස සදා එය ඇතුළු කරන්න (Push Client Components to the leaves)."
+          ]
         }
       ],
       keyPoints: [
-        "හැකි සෑම විටම සංරචක සර්වර් එකේ තබාගෙන, අන්තර්ක්‍රියාවක් ඇති කොටස පමණක් 'use client' කරන්න (Server-first approach)."
+        "Next.js App Router හි සියලු සංරචක පෙරනිමියෙන්ම Server Components වේ.",
+        "useState, useEffect අවශ්‍ය විට පමණක් 'use client' ලියන්න."
       ],
       exercises: [
-        { id: 1, question: "සංරචකයක 'use client' ලිවිය යුතු ප්‍රධාන අවස්ථා 3 මොනවාද?" }
+        { id: 1, question: "සංරචකයක 'use client' ලිවිය යුතු අවස්ථා 3ක් මොනවාද?" }
       ]
     },
     {
@@ -184,15 +302,43 @@ export default function LikeButton() {
       ],
       sections: [
         {
-          title: "95.1 Metadata API සහ Route Groups",
+          title: "95.1 Root Layout vs Nested Layouts",
           content: [
-            "Route Groups: app/(auth)/login/page.tsx ලෙස ලියූ විට URL එක example.com/login ලෙස පෙනේ (auth කොටස සැඟවේ).",
-            "Metadata API මඟින් Google සෙවුම් ප්‍රතිඵල සහ සමාජ මාධ්‍ය Share Cards අලංකාර කරයි."
+            "Root Layout මුළු අඩවියටම බලපාන අතර, කිසියම් උප-ෆෝල්ඩරයක (උදා: app/dashboard/layout.tsx) තවත් layout එකක් සෑදූ විට එය හැඳින්වෙන්නේ Nested Layout ලෙසයි. උප-පිටු වලට Dashboard Sidebar එකක් ලබා දීමට මෙය සුදුසුයි."
+          ]
+        },
+        {
+          title: "95.2 Route Groups ((groupName))",
+          content: [
+            "URL එකෙහි පාර වෙනස් නොකර ගොනු සංවිධානය කිරීමට වරහන් ( ) සහිත ෆෝල්ඩර යොදා ගනී. උදාහරණයක් ලෙස app/(auth)/login/page.tsx ගොනුව බ්‍රවුසරයේ දිස්වන්නේ /auth/login ලෙස නොව සෘජුවම /login ලෙසයි."
+          ]
+        },
+        {
+          title: "95.3 Metadata API (Static & Dynamic SEO)",
+          content: [
+            "Google සෙවුම් ප්‍රතිඵල සහ සමාජ මාධ්‍ය Share Cards සඳහා එක් එක් පිටුවට අදාළ Metadata පහසුවෙන් ලබා දිය හැක:"
+          ],
+          codeSnippets: [
+            {
+              language: "typescript",
+              title: "Metadata API in page.tsx",
+              code: `import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Frontend Mastery Pro - T. Sachintha Imesh",
+  description: "Learn modern Web Development with React, Next.js, and TypeScript.",
+  openGraph: {
+    title: "Frontend Mastery Course",
+    images: ["/og-image.png"],
+  }
+};`
+            }
           ]
         }
       ],
       keyPoints: [
-        "layout.tsx තුළ <html> සහ <body> තිබිය යුත්තේ Root Layout එකෙහි පමණි."
+        "Route Groups මඟින් URL එක වෙනස් නොවී පිරිසිදු ගොනු ව්‍යුහයක් නඩත්තු කළ හැක.",
+        "Next.js Metadata API මඟින් Head tags ස්වයංක්‍රීයව ජනනය වේ."
       ],
       exercises: [
         { id: 1, question: "Route Groups සඳහා වරහන් ( ) භාවිතා කරන්නේ කුමන හේතුවක් සඳහාද?" }
@@ -214,36 +360,45 @@ export default function LikeButton() {
       ],
       sections: [
         {
-          title: "96.1 සර්වර් මට්ටමේ Data Fetching",
+          title: "96.1 සර්වර් මට්ටමේ async/await Data Fetching",
           content: [
-            "සාමාන්‍ය React හිදී useEffect සහ useState අවශ්‍ය වුවද, Next.js Server Components තුළ සෘජුවම async/await fetch() කළ හැක:"
+            "සාමාන්‍ය React හිදී useEffect, useState සහ Loading Spinners අවශ්‍ය වුවද, Next.js Server Components තුළ සෘජුවම async/await මඟින් දත්ත ලබා ගත හැක. දත්ත ලැබෙන තුරු සර්වර් එක තුළ රැඳී සිට සම්පූර්ණ HTML එක බ්‍රවුසරයට එවයි."
           ],
           codeSnippets: [
             {
               language: "typescript",
-              title: "Server Component Data Fetching",
+              title: "Async Server Component",
               code: `async function getArticles() {
-  const res = await fetch('https://api.example.com/articles', {
-    next: { revalidate: 3600 } // පැයකට වරක් දත්ත අලුත් වේ
-  });
-  if (!res.ok) throw new Error("දත්ත ලබා ගැනීමට නොහැකි විය!");
+  const res = await fetch('https://api.example.com/posts');
+  if (!res.ok) throw new Error("දත්ත ලබා ගැනීමට අපොහොසත් විය!");
   return res.json();
 }
 
-export default async function ArticlesPage() {
-  const articles = await getArticles();
+export default async function BlogPage() {
+  const posts = await getArticles();
   return (
     <div>
-      {articles.map((a: any) => <h3 key={a.id}>{a.title}</h3>)}
+      {posts.map((post: any) => (
+        <h2 key={post.id}>{post.title}</h2>
+      ))}
     </div>
   );
 }`
             }
           ]
+        },
+        {
+          title: "96.2 Caching සහ Revalidation උපාය මාර්ග",
+          content: [
+            "Next.js හි fetch() ස්වයංක්‍රීයව Data Cache එකක් සාදයි. ඔබ නැවත නැවත එකම පිටුව ඉල්ලූ විට API එකට නොගොස් මතකයෙන් දත්ත ක්ෂණිකව ලබා දේ:",
+            "1. Time-based Revalidation: { next: { revalidate: 60 } } මඟින් තත්පර 60කට වරක් දත්ත අලුත් වේ.",
+            "2. No Store (Dynamic): { cache: 'no-store' } මඟින් හැම ඉල්ලීමකදීම සජීවී දත්ත ලබා ගනී (Stock prices, Crypto)."
+          ]
         }
       ],
       keyPoints: [
-        "force-cache මඟින් දත්ත ස්ථිරව තබා ගන්නා අතර no-store මඟින් සෑම විටම සජීවී දත්ත ලබා ගනී."
+        "Server Components හි දත්ත ලබා ගැනීම සරල සහ වේගවත්ය.",
+        "revalidate විධානය මඟින් Static Speed එක සහ Dynamic Data එකවර භුක්ති විඳිය හැක."
       ],
       exercises: [
         { id: 1, question: "Time-based Revalidation යනු කුමක්ද?" }
@@ -267,7 +422,34 @@ export default async function ArticlesPage() {
         {
           title: "97.1 Streaming සහ Skeleton Screens",
           content: [
-            "සාමාන්‍ය ක්‍රමයේදී සූපය, ප්‍රධාන කෑම සහ අතුරුපස සියල්ල සූදානම් වන තෙක් වේටර්වරයා කිසිවක් නොගෙන එයි. ස්ට්‍රීමිං ක්‍රමයේදී වතුර වීදුරුව ගෙන එයි, පසුව සුප් එක ගෙන එයි, අවසානයේ ප්‍රධාන කෑම ගෙන එයි. බලා සිටීම අපහසු නැත."
+            "සාමාන්‍ය ක්‍රමයේදී සූපය, ප්‍රධාන කෑම සහ අතුරුපස සියල්ල සූදානම් වන තෙක් වේටර්වරයා කිසිවක් නොගෙන එයි. ස්ට්‍රීමිං ක්‍රමයේදී වතුර වීදුරුව ගෙන එයි, පසුව සුප් එක ගෙන එයි, අවසානයේ ප්‍රධාන කෑම ගෙන එයි. බලා සිටීම අපහසු නැත.",
+            "Next.js හිදී පිටුවේ සූදානම් කොටස (Header, Navbar) ක්ෂණිකව බ්‍රවුසරයට යවා, දත්ත ප්‍රමාද වන කොටසට Skeleton එකක් පෙන්වා දත්ත ලැබුණු සැණින් එය Stream කර ප්‍රතිස්ථාපනය කරයි."
+          ]
+        },
+        {
+          title: "97.2 loading.tsx සහ React <Suspense>",
+          content: [
+            "යම් ෆෝල්ඩරයක loading.tsx ගොනුවක් සෑදූ විට, එම පිටුවේ Server Component එක දත්ත ලබා ගන්නා තුරු එම Loading UI එක ස්වයංක්‍රීයව දිස් වේ."
+          ],
+          codeSnippets: [
+            {
+              language: "typescript",
+              title: "Using Suspense with Fallback",
+              code: `import { Suspense } from 'react';
+import PostsList from './PostsList';
+import PostsSkeleton from './PostsSkeleton';
+
+export default function BlogSection() {
+  return (
+    <div>
+      <h1>නවතම ලිපි</h1>
+      <Suspense fallback={<PostsSkeleton />}>
+        <PostsList />
+      </Suspense>
+    </div>
+  );
+}`
+            }
           ]
         }
       ],
@@ -294,9 +476,37 @@ export default async function ArticlesPage() {
       ],
       sections: [
         {
-          title: "98.1 <Image /> සහ next/font භාවිතය",
+          title: "98.1 <Image /> සහ Cumulative Layout Shift (CLS) වැළැක්වීම",
           content: [
-            "Zero Layout Shift: සාමාන්‍ය පින්තූරයක් ලෝඩ් වන විට ඉඩ වෙන් කර නැති නිසා අකුරු පහළට පනියි (Bad UX). Next.js හි <Image width={...} height={...} /> මඟින් කලින්ම ඉඩ වෙන් කර තබයි."
+            "සාමාන්‍ය <img> ටැගයක් ලෝඩ් වන විට ඉඩ වෙන් කර නැති නිසා අකුරු පහළට පැන Layout එක කැඩී යයි (CLS Error). Next.js හි <Image width={800} height={400} /> මඟින් කලින්ම ඉඩ වෙන් කර තබයි.",
+            "එසේම සාමාන්‍ය JPEG පින්තූර ස්වයංක්‍රීයව කුඩා WebP හෝ AVIF ආකෘතියට සම්පීඩනය කර යවයි."
+          ],
+          codeSnippets: [
+            {
+              language: "typescript",
+              title: "Next.js <Image /> Component",
+              code: `import Image from 'next/image';
+
+export default function Hero() {
+  return (
+    <div>
+      <Image
+        src="/hero-banner.jpg"
+        alt="Frontend Development"
+        width={1200}
+        height={600}
+        priority // Hero banner ක්ෂණිකව පූරණය වීමට
+      />
+    </div>
+  );
+}`
+            }
+          ]
+        },
+        {
+          title: "98.2 next/font සහ Self-Hosting Google Fonts",
+          content: [
+            "පිටත Google CDN එකකට request යවනවා වෙනුවට, Next.js Build වන විටම Font එක බාගත කර සර්වර් එක තුළම රඳවා ගනී (Zero Layout Shift & Zero Network Delay)."
           ]
         }
       ],
@@ -325,30 +535,35 @@ export default async function ArticlesPage() {
         {
           title: "99.1 Server Actions සරල උදාහරණය",
           content: [
-            "තැපැල් ලියුමක් වෙනුවට සෘජු සංවාදය: පිටතින් API එකක් ලියා එයට JSON යවනවා වෙනුවට, සෘජුවම සර්වර් ශ්‍රිතය ඇමතීම සිදු වේ."
+            "වෙනම Node.js API එකක් ලියා එයට fetch() POST request එකක් යවනවා වෙනුවට, සෘජුවම සර්වර් ශ්‍රිතයක් <form action={createPost}> ලෙස ඇමතීමට Next.js Server Actions මඟින් ඉඩ ලබා දේ."
           ],
           codeSnippets: [
             {
               language: "typescript",
-              title: "Server Action with revalidatePath",
-              code: `// app/actions.ts
-'use server';
+              title: "app/actions.ts",
+              code: `'use server';
 
 import { revalidatePath } from 'next/cache';
 
 export async function createPost(formData: FormData) {
-  const title = formData.get('title');
-  console.log("Database එකට එකතු කරයි:", title);
-  
-  // පිටුවේ cache එක මකා අලුත් දත්ත පෙන්වයි
-  revalidatePath('/blog');
+  const title = formData.get('title') as string;
+  // Database එකට insert කිරීම
+  console.log("Database එකට එකතු කළා:", title);
+
+  revalidatePath('/blog'); // බ්ලොග් ලැයිස්තුව Refresh වේ
 }`
             }
+          ]
+        },
+        {
+          title: "99.2 Progressive Enhancement සහ Form Handling",
+          content: [
+            "Server Actions මඟින් සකසන පෝරම පරිශීලකයාගේ බ්‍රවුසරයේ JavaScript සම්පූර්ණයෙන්ම අක්‍රිය කර තිබුණද සාර්ථකව Submit වී ක්‍රියාත්මක වේ (Progressive Enhancement)."
           ]
         }
       ],
       keyPoints: [
-        "Server Actions මඟින් JavaScript නොමැති පරිසරයකදී පවා (Progressive Enhancement) පෝරම සාර්ථකව ක්‍රියාත්මක වේ."
+        "Server Actions මඟින් REST API boilerplate කේත අවශ්‍යතාවය මුළුමනින්ම ඉවත් වේ."
       ],
       exercises: [
         { id: 1, question: "revalidatePath() විධානය මඟින් කරන්නේ කුමක්ද?" }
@@ -382,10 +597,10 @@ export async function createPost(formData: FormData) {
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const session = request.cookies.get('session');
-  
-  // පරිශීලකයා ලොගින් වී නැත්නම් login පිටුවට යවමු
-  if (!session && request.nextUrl.pathname.startsWith('/dashboard')) {
+  const token = request.cookies.get('auth_token');
+
+  // Dashboard එකට යන පරිශීලකයා ලොගින් වී නැත්නම් login පිටුවට යවමු
+  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 }
@@ -394,6 +609,13 @@ export const config = {
   matcher: ['/dashboard/:path*'],
 };`
             }
+          ]
+        },
+        {
+          title: "100.2 Authentication vs Authorization",
+          content: [
+            "• Authentication (සත්‍යාපනය): ඔබ සැබවින්ම කවුරුන්දැයි හඳුනා ගැනීම (Login with Password / Google).",
+            "• Authorization (බලය පැවරීම): ඔබ හඳුනා ගත් පසු, ඔබට එම පිටුවට හෝ ක්‍රියාවට අවසර ඇත්දැයි බැලීම (Admin vs Regular User)."
           ]
         }
       ],
