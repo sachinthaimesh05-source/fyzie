@@ -16,7 +16,8 @@ import {
   Share2,
   Check,
   Award,
-  MessageCircle
+  MessageCircle,
+  ListTree
 } from 'lucide-react';
 import { Chapter, Volume } from '../types';
 import { LiveCodeRunner } from './LiveCodeRunner';
@@ -216,12 +217,49 @@ export const ChapterViewer: React.FC<ChapterViewerProps> = ({
         </section>
       )}
 
+      {/* Table of Contents for Sub-sections */}
+      {chapter.sections && chapter.sections.length > 0 && (
+        <nav aria-label="Table of contents" className="my-6 p-5 rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg">
+          <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-white/5">
+            <div className="flex items-center gap-2 text-xs font-bold text-sky-400 uppercase tracking-wider">
+              <ListTree className="w-4 h-4" />
+              <span>පරිච්ඡේදයේ සියලුම අනු කොටස් ({chapter.sections.length})</span>
+            </div>
+            <span className="text-[11px] text-slate-400 font-mono">Quick Jump</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {chapter.sections.map((sec, sIdx) => (
+              <a
+                key={sIdx}
+                href={`#section-${chapter.id}-${sIdx}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById(`section-${chapter.id}-${sIdx}`);
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                className="group flex items-start gap-2.5 p-2 rounded-xl bg-slate-950/60 hover:bg-sky-500/10 border border-white/5 hover:border-sky-500/30 transition-all text-left"
+              >
+                <span className="w-5 h-5 rounded-md bg-sky-500/20 text-sky-300 font-mono text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-sky-500 group-hover:text-slate-950 transition-colors">
+                  {sIdx + 1}
+                </span>
+                <span className="text-xs text-slate-300 group-hover:text-sky-200 transition-colors line-clamp-2 leading-relaxed">
+                  {sec.title}
+                </span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
+
       {/* Main Chapter Content Sections */}
       <div className={`space-y-10 text-slate-200 ${fontSizeClasses[fontSize]}`}>
         {chapter.sections.map((section, sIdx) => (
-          <section key={sIdx} className="space-y-4">
+          <section key={sIdx} id={`section-${chapter.id}-${sIdx}`} className="space-y-4 scroll-mt-24">
             <h3 className="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-2 pt-4 border-t border-white/5">
-              <span className="w-2 h-2 rounded-full bg-sky-400" />
+              <span className="w-2.5 h-2.5 rounded-full bg-sky-400 flex-shrink-0" />
+              <span className="text-sky-300/80 font-mono text-base mr-1">#{sIdx + 1}</span>
               {section.title}
             </h3>
 

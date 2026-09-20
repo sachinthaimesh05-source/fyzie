@@ -16,7 +16,8 @@ import {
   Briefcase,
   BookOpen,
   Filter,
-  X
+  X,
+  ListTree
 } from 'lucide-react';
 import { allVolumes } from '../data/volumes';
 import { Chapter, Volume } from '../types';
@@ -93,6 +94,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }));
   };
 
+  const [expandedChapterSections, setExpandedChapterSections] = useState<Record<number, boolean>>({});
+
+  const toggleChapterSections = (e: React.MouseEvent, chapterId: number) => {
+    e.stopPropagation();
+    setExpandedChapterSections(prev => ({
+      ...prev,
+      [chapterId]: !prev[chapterId]
+    }));
+  };
+
   const filteredVolumes = useMemo(() => {
     if (!searchQuery.trim()) return allVolumes;
     const q = searchQuery.toLowerCase().trim();
@@ -102,7 +113,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         chap.title.toLowerCase().includes(q) ||
         chap.englishTitle.toLowerCase().includes(q) ||
         chap.chapterNumber.toString().includes(q) ||
-        chap.description.toLowerCase().includes(q)
+        chap.description.toLowerCase().includes(q) ||
+        chap.sections.some(sec => sec.title.toLowerCase().includes(q))
       );
 
       return {
@@ -284,44 +296,89 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       {volume.chapters.map((chapter) => {
                         const isCurrent = chapter.id === currentChapterId;
                         const isRead = readChapterIds.includes(chapter.id);
+                        const isSectionsExpanded = expandedChapterSections[chapter.id] || (isCurrent && searchQuery.length > 0);
 
                         return (
-                          <button
-                            key={chapter.id}
-                            type="button"
-                            onClick={() => {
-                              onSelectChapter(chapter.id);
-                              if (window.innerWidth < 1024) {
-                                onClose();
-                              }
-                            }}
-                            className={`w-full text-left px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 transition-all duration-200 ${
-                              isCurrent
-                                ? 'bg-sky-500/20 text-sky-200 border border-sky-500/40 shadow-sm font-semibold'
-                                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 min-w-0">
-                              <span className={`w-5 h-5 rounded-md text-[10px] font-mono flex items-center justify-center flex-shrink-0 ${
-                                isCurrent 
-                                  ? 'bg-sky-500 text-slate-950 font-bold' 
-                                  : 'bg-slate-800 text-slate-400'
-                              }`}>
-                                {chapter.chapterNumber}
-                              </span>
-                              <span className="truncate leading-relaxed">
-                                {chapter.title}
-                              </span>
-                            </div>
+                          <div key={chapter.id} className="space-y-0.5">
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  onSelectChapter(chapter.id);
+                                  if (window.innerWidth < 1024) {
+                                    onClose();
+                                  }
+                                }}
+                                className={`flex-1 text-left px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 transition-all duration-200 ${
+                                  isCurrent
+                                    ? 'bg-sky-500/20 text-sky-200 border border-sky-500/40 shadow-sm font-semibold'
+                                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <span className={`w-5 h-5 rounded-md text-[10px] font-mono flex items-center justify-center flex-shrink-0 ${
+                                    isCurrent 
+                                      ? 'bg-sky-500 text-slate-950 font-bold' 
+                                      : 'bg-slate-800 text-slate-400'
+                                  }`}>
+                                    {chapter.chapterNumber}
+                                  </span>
+                                  <span className="truncate leading-relaxed">
+                                    {chapter.title}
+                                  </span>
+                                </div>
 
-                            <div className="flex items-center gap-1 flex-shrink-0">
-                              {isRead ? (
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                              ) : (
-                                <Circle className="w-3 h-3 text-slate-600" />
+                                <div className="flex items-center gap-1 flex-shrink-0">
+                                  {isRead ? (
+                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                                  ) : (
+                                    <Circle className="w-3 h-3 text-slate-600" />
+                                  )}
+                                </div>
+                              </button>
+
+                              {chapter.sections && chapter.sections.length > 0 && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => toggleChapterSections(e, chapter.id)}
+                                  title={`${chapter.sections.length} උප මාතෘකා පෙන්වන්න`}
+                                  className={`p-1.5 rounded-lg text-slate-400 hover:text-sky-300 hover:bg-slate-800 transition-colors flex-shrink-0 ${
+                                    isSectionsExpanded ? 'text-sky-400 bg-slate-900' : ''
+                                  }`}
+                                >
+                                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isSectionsExpanded ? 'rotate-180' : ''}`} />
+                                </button>
                               )}
                             </div>
-                          </button>
+
+                            {/* Nested Subtopics List */}
+                            {isSectionsExpanded && chapter.sections && chapter.sections.length > 0 && (
+                              <div className="pl-6 pr-1 py-1 space-y-0.5 border-l-2 border-sky-500/20 ml-3.5 my-1">
+                                {chapter.sections.map((sec, secIdx) => (
+                                  <button
+                                    key={secIdx}
+                                    type="button"
+                                    onClick={() => {
+                                      onSelectChapter(chapter.id);
+                                      if (window.innerWidth < 1024) {
+                                        onClose();
+                                      }
+                                      setTimeout(() => {
+                                        const el = document.getElementById(`section-${chapter.id}-${secIdx}`);
+                                        if (el) {
+                                          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }
+                                      }, 150);
+                                    }}
+                                    className="w-full text-left px-2 py-1 rounded text-[11px] text-slate-400 hover:text-sky-300 hover:bg-white/5 truncate block transition-colors font-mono"
+                                  >
+                                    <span className="text-sky-400/80 mr-1 font-semibold">•</span>
+                                    {sec.title}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         );
                       })}
                     </div>

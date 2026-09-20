@@ -186,6 +186,36 @@ export const volume1: Volume = {
           asciiDiagram: ` [ HTML ] ------> [ DOM Tree ] --\\
                                      > [ Render Tree ] ----> [ Layout ] ----> [ Painting ] ➔ වෙබ් පිටුව
  [ CSS ] ------> [ CSSOM Tree ] -/`
+        },
+        {
+          title: "3.2 DOM (Document Object Model) සහ CSSOM සංකල්පය",
+          content: [
+            "DOM (Document Object Model) යනු HTML ලියවිල්ල බ්‍රවුසරයේ මතකය (Memory) තුළ ගස් ආකාර ව්‍යුහයකට (Tree Structure) පරිවර්තනය වීමයි.",
+            "• Root Node එක වන්නේ <html> ටැගයයි.",
+            "• එයින් <head> සහ <body> යන ප්‍රධාන අතු දෙක බෙදී යයි.",
+            "• JavaScript මඟින් වෙබ් පිටුවේ ඕනෑම කොටසක් ක්ෂණිකව වෙනස් කරන්නේ මෙම DOM ගස හරහාය.",
+            "CSSOM (CSS Object Model) යනු ඔබ ලියූ CSS නීති රීති බ්‍රවුසරය විසින් ව්‍යුහගත කර තබා ගන්නා අනුරූප ගසයි."
+          ]
+        },
+        {
+          title: "3.3 Browser Developer Tools (Inspect Element) භාවිතය",
+          content: [
+            "ලොව සිටින සෑම Frontend ඉංජිනේරුවෙකුගේම ප්‍රධානතම ආයුධය වන්නේ බ්‍රවුසරයේ ඇති Developer Tools (DevTools) ය.",
+            "විවෘත කරගන්නා ආකාරය: යතුරුපුවරුවේ F12 ඔබන්න (හෝ Right Click ➔ Inspect).",
+            "ප්‍රධාන Tabs:",
+            "• Elements Tab: සජීවීව DOM එක සහ CSS මෝස්තර පරීක්ෂා කිරීමට හා එසැනින් සංස්කරණය කර බැලීමට.",
+            "• Console Tab: JavaScript දෝෂ (Errors) සහ console.log පණිවිඩ බැලීමට.",
+            "• Network Tab: පිටුවට බාගත වන ගොනු (Images, CSS, JS) සහ ඒවාට ගතවන කාලය නිරීක්ෂණය කිරීමට."
+          ]
+        },
+        {
+          title: "3.4 Browser Cache, Cookies සහ Local Storage හැඳින්වීම",
+          content: [
+            "බ්‍රවුසරයක් තොරතුරු මතක තබා ගන්නේ කෙසේද?",
+            "• Browser Cache: පින්තූර, CSS සහ JS ගොනු ඔබේ පරිගණකයේ සුරැකීමෙන් ඊළඟ වතාවේ පිටුව ක්ෂණිකව විවෘත වීමට මඟ පාදයි.",
+            "• Cookies: සර්වර් එක සහ බ්‍රවුසරය අතර හුවමාරු වන කුඩා දත්ත කොටස් (උදා: Session ID, Login තත්ත්වය).",
+            "• Local Storage: බ්‍රවුසරය තුළ 5MB - 10MB දක්වා පරිශීලක දත්ත (උදා: Dark Mode තේරීම) සදාකාලිකව ගබඩා කිරීමේ පහසුකම."
+          ]
         }
       ],
       keyPoints: [
@@ -1193,35 +1223,112 @@ export const volume1: Volume = {
           ]
         },
         {
-          title: "12.3 SVG Graphics, Favicon සහ data-* Attributes",
+          title: "12.3 SVG Graphics, Favicon සහ Scalable Icons",
           content: [
             "1. SVG (Scalable Vector Graphics): සාමාන්‍ය පින්තූර (JPG/PNG) පික්සල් වලින් හැදෙන බැවින් Zoom කරන විට බොඳ වී කැඩී යයි. නමුත් SVG සෑදෙන්නේ ගණිතමය දෛශික (XML කේත) මඟිනි. එම නිසා 4K හෝ Retina තිරයකදී පවා කිසිදා නොකැඩී අතිශය තියුණුව දිස්වේ. Logos සහ Icons සඳහා අංක 1 තේරීම SVG ය.",
-            "2. Favicon: බ්‍රවුසර් ටැබ් එකේ පිටුවේ මාතෘකාව අසල පෙන්වන කුඩා ලාංඡනයයි (<link rel='icon' type='image/x-icon' href='favicon.ico'>).",
-            "3. Custom Data Attributes (data-*): HTML ටැග් එකක් තුළ JavaScript මඟින් කියවිය හැකි අමතර රහස් දත්ත ගබඩා කිරීමට යොදයි (උදා: data-user-id='1024', data-role='admin')."
+            "2. Favicon: බ්‍රවුසර් ටැබ් එකේ පිටුවේ මාතෘකාව අසල පෙන්වන කුඩා ලාංඡනයයි (<link rel='icon' type='image/x-icon' href='favicon.ico'>)."
           ],
           codeSnippets: [
             {
               language: "html",
-              title: "SVG & Data Attributes in HTML",
+              title: "SVG Graphic Example",
               code: `<!-- Scalable Vector Graphic (SVG) Circle & Star -->
 <svg width="120" height="120" viewBox="0 0 100 100">
   <circle cx="50" cy="50" r="45" stroke="#38bdf8" stroke-width="4" fill="#0f172a" />
   <polygon points="50,15 61,38 85,42 68,59 72,83 50,72 28,83 32,59 15,42 39,38" fill="#f59e0b" />
-</svg>
-
-<!-- data-* Custom Data Storage -->
+</svg>`
+            }
+          ]
+        },
+        {
+          title: "12.4 Custom Data Attributes (data-*) සහ JavaScript සමඟ සම්බන්ධතාව",
+          content: [
+            "Custom Data Attributes (data-*): HTML5 හි හඳුන්වා දුන් අතිශය ප්‍රබල පහසුකමකි. HTML ටැග් එකක් තුළ JavaScript මඟින් කියවිය හැකි අමතර දත්ත (Metadata) ගබඩා කිරීමට යොදයි.",
+            "නීති සහ සම්මුති:",
+            "• නම ආරම්භ විය යුත්තේ 'data-' යන උපසර්ගයෙනි (උදා: data-user-id, data-category, data-price).",
+            "• JavaScript මඟින් element.dataset.userId ලෙස camelCase ආකාරයට පහසුවෙන්ම කියවිය හැක.",
+            "• CSS මඟින්ද [data-category='books'] ලෙස style තෝරා ගැනීමට (attribute selector) භාවිතා කළ හැක."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "data-* Attributes Example",
+              code: `<!-- Product Card with Custom Data Attributes -->
 <div class="product-item" data-product-id="9481" data-price="2500" data-category="books">
   <h4>HTML5 සම්පූර්ණ අත්පොත</h4>
   <p>මිල: රු. 2,500.00</p>
-</div>`
+</div>
+
+<!-- JavaScript එකෙන් කියවන ආකාරය: -->
+<!-- const item = document.querySelector('.product-item'); -->
+<!-- console.log(item.dataset.price); // '2500' -->`
             }
+          ]
+        },
+        {
+          title: "12.5 HTML Entities සහ විශේෂ අක්ෂර සංකේත (&copy;, &lt;, &gt;, &amp;)",
+          content: [
+            "HTML හි සමහර අක්ෂර (උදා: < සහ >) කේතයේ ටැග් හඳුනා ගැනීමට වෙන් කර ඇති බැවින්, සාමාන්‍ය අකුරක් ලෙස ඒවා ලියූ විට බ්‍රවුසරය නොමඟ යා හැක. ඒ සඳහා HTML Entities භාවිතා කරනු ලැබේ.",
+            "නිතර භාවිත වන ප්‍රධාන Entities:",
+            "• &lt; (Less than: <) සහ &gt; (Greater than: >)",
+            "• &amp; (Ampersand: &)",
+            "• &copy; (Copyright symbol: ©)",
+            "• &reg; (Registered trademark: ®)",
+            "• &nbsp; (Non-breaking space: කඩා නොවැටෙන හිස්තැනක්)"
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "HTML Entities Usage",
+              code: `<p>5 &lt; 10 සහ 20 &gt; 15 සත්‍ය ප්‍රකාශ වේ.</p>
+<p>කේතයක් ලිවීමේදී: &lt;div class="container"&gt; ලෙස ලියන්න.</p>
+<footer>
+  <p>&copy; 2026 Frontend Mastery Book. All Rights Reserved.</p>
+</footer>`
+            }
+          ]
+        },
+        {
+          title: "12.6 <canvas> මූලිකාංගය සහ වෙබ් ග්‍රැෆික්ස්",
+          content: [
+            "<canvas> ටැගය යනු JavaScript මඟින් 2D හෝ 3D චිත්‍ර, සජීවිකරණ (Animations), ප්‍රස්ථාර (Charts) සහ ක්‍රීඩා (HTML5 Games) ඇඳිය හැකි හිස් ඩිජිටල් කැන්වසයකි.",
+            "SVG සහ Canvas අතර වෙනස:",
+            "• SVG: Vector පාදක වේ, DOM මූලිකාංග ලෙස පවතී, Events (click, hover) ලබා දිය හැක. Icons, Logos, UI සඳහා සුදුසුය.",
+            "• Canvas: Pixel (Raster) පාදක වේ. වේගවත් ගණනය කිරීම් සහ තත්පරයකට Frames 60ක ධාවනය වන Game Development සඳහා අතිශය සුදුසුය."
+          ],
+          codeSnippets: [
+            {
+              language: "html",
+              title: "HTML5 Canvas Element",
+              code: `<canvas id="gameCanvas" width="400" height="200" style="border: 1px solid #38bdf8; background: #020617;">
+  ඔබේ බ්‍රවුසරය HTML5 Canvas සඳහා සහය නොදක්වයි.
+</canvas>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#38bdf8';
+  ctx.fillRect(20, 20, 100, 60); // නිල් පැහැති සෘජුකෝණාස්‍රයක් ඇඳීම
+</script>`
+            }
+          ]
+        },
+        {
+          title: "12.7 අනාගත වෙබ් සංවර්ධනය සහ HTML5 හොඳම පුරුදු (Best Practices)",
+          content: [
+            "පළමු වෙළුම අවසන් කරන විට ඔබ සැමවිටම සිහියේ තබාගත යුතු රන් නීති:",
+            "1. සැමවිටම <!DOCTYPE html> සහ UTF-8 charset භාවිතා කරන්න.",
+            "2. පින්තූර සඳහා නිවැරදි alt text සහ lazy-loading (loading='lazy') ලබා දෙන්න.",
+            "3. අර්ථවත් Semantic Tags (header, nav, main, article, section, footer) මුල් තැන තබන්න.",
+            "4. W3C HTML Validator (validator.w3.org) මඟින් ඔබේ කේතයේ දෝෂ පරීක්ෂා කර පිරිසිදුව තබාගන්න."
           ]
         }
       ],
       keyPoints: [
         "HTML5 native <video> සහ <audio> මඟින් බාහිර ප්ලගීන නොමැතිව මාධ්‍ය ධාවනය කළ හැක.",
         "SVG යනු කිසිදා නොකැඩෙන, සැහැල්ලු දෛශික රූප ආකෘතියකි.",
-        "data-* attributes මඟින් අමතර දත්ත ගබඩා කර JavaScript මඟින් කියවිය හැක."
+        "data-* attributes මඟින් අමතර දත්ත ගබඩා කර JavaScript මඟින් කියවිය හැක.",
+        "HTML Entities (&lt;, &gt;, &copy;) මඟින් ආරක්ෂිතව විශේෂ අක්ෂර වෙබ් පිටුවේ ප්‍රදර්ශනය කළ හැක."
       ],
       exercises: [
         { id: 1, question: "JPG/PNG සහ SVG අතර ඇති ප්‍රධාන වෙනස කුමක්ද?" },
