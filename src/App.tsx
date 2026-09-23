@@ -5,7 +5,6 @@ import { Sidebar } from './components/Sidebar';
 import { ReaderView } from './components/ReaderView';
 import { HomeHero } from './components/HomeHero';
 import { TableOfContents } from './components/TableOfContents';
-import { PdfViewerModal } from './components/PdfViewerModal';
 import { RoadmapView } from './components/RoadmapView';
 import { CodePlayground } from './components/CodePlayground';
 import { AuthorModal } from './components/AuthorModal';
@@ -45,7 +44,6 @@ const MainAppContent: React.FC = () => {
         )}
         {activeTab === 'roadmap' && <RoadmapView />}
         {activeTab === 'playground' && <CodePlayground />}
-        {activeTab === 'pdf' && <PdfViewerModal />}
         {activeTab === 'author' && <AuthorModal />}
       </main>
 

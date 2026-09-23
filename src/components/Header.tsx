@@ -8,7 +8,7 @@ import {
   Moon,
   Compass,
   Code2,
-  FileText,
+  Download,
   User,
   Menu,
   X,
@@ -18,6 +18,7 @@ import {
 import { useReader, TabType } from '../context/ReaderContext';
 import { getThemeClasses } from '../utils/themeStyles';
 import { ReaderTheme } from '../types/book';
+import { allChapters } from '../data/chapters/allChapters';
 
 interface HeaderProps {
   onOpenSearch: () => void;
@@ -47,7 +48,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
     { id: 'reader', label: 'කියවනය', enLabel: 'Reader', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'roadmap', label: 'මාර්ග සිතියම', enLabel: 'Roadmap', icon: <Compass className="w-4 h-4" /> },
     { id: 'playground', label: 'කේත වැඩබිම', enLabel: 'Playground', icon: <Code2 className="w-4 h-4" /> },
-    { id: 'pdf', label: 'PDF ග්‍රන්ථය', enLabel: 'PDF Book', icon: <FileText className="w-4 h-4" /> },
     { id: 'author', label: 'කර්තෘ', enLabel: 'Author', icon: <User className="w-4 h-4" /> },
   ];
 
@@ -235,14 +235,26 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               )}
             </div>
 
+            {/* Direct PDF Download Button */}
+            <a
+              href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
+              download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition-all hover:scale-105 active:scale-95"
+              title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න (Direct Download Book PDF)"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">PDF බාගත කරන්න</span>
+              <span className="text-[10px] hidden md:inline px-1 py-0.5 rounded bg-black/20 font-mono">PDF</span>
+            </a>
+
             {/* Quick Read Progress Badge */}
             <div
               onClick={() => setActiveTab('contents')}
-              title={`පරිච්ඡේද 98න් ${readChapterIds.length}ක් කියවා ඇත`}
+              title={`පරිච්ඡේද ${allChapters.length}න් ${readChapterIds.length}ක් කියවා ඇත`}
               className={`hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer border ${themeClasses.borderColor} ${themeClasses.badgeBg}`}
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>{Math.round((readChapterIds.length / 98) * 100)}%</span>
+              <span>{Math.round((readChapterIds.length / allChapters.length) * 100)}%</span>
             </div>
 
             {/* Mobile Menu Button */}
@@ -258,6 +270,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
         {/* Mobile Navigation Dropdown */}
         {mobileMenuOpen && (
           <div className={`xl:hidden py-3 px-2 border-t ${themeClasses.borderColor} animate-in slide-in-from-top-2 duration-150`}>
+            {/* Mobile Direct Download Banner */}
+            <a
+              href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
+              download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+              className="w-full flex items-center justify-center gap-2 p-3 mb-3 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition-all"
+            >
+              <Download className="w-4 h-4" />
+              <span>සම්පූර්ණ PDF ග්‍රන්ථය බාගත කරන්න (Direct Download)</span>
+            </a>
+
             <div className="grid grid-cols-2 gap-1.5 mb-3">
               {navItems.map((item) => (
                 <button
@@ -280,7 +302,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
 
             <div className={`p-2.5 rounded-lg ${themeClasses.cardBgSecondary} text-xs flex items-center justify-between`}>
               <span>කියවීමේ ප්‍රගතිය:</span>
-              <span className="font-bold">{readChapterIds.length} / 98 පරිච්ඡේද ({Math.round((readChapterIds.length / 98) * 100)}%)</span>
+              <span className="font-bold">{readChapterIds.length} / {allChapters.length} පරිච්ඡේද ({Math.round((readChapterIds.length / allChapters.length) * 100)}%)</span>
             </div>
           </div>
         )}

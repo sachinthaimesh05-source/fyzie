@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ReaderTheme, FontSize, FontFamily } from '../types/book';
 
-export type TabType = 'home' | 'reader' | 'contents' | 'roadmap' | 'playground' | 'pdf' | 'author';
+export type TabType = 'home' | 'reader' | 'contents' | 'roadmap' | 'playground' | 'author';
 
 interface ReaderContextType {
   theme: ReaderTheme;
@@ -42,7 +42,7 @@ export const ReaderProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   });
 
   const [currentChapterId, setCurrentChapterId] = useState<string>(() => {
-    return localStorage.getItem('book_current_chapter') || 'ch-01';
+    return localStorage.getItem('book_current_chapter') || 'ch-1';
   });
 
   const [activeTab, setActiveTab] = useState<TabType>('home');

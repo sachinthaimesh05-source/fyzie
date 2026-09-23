@@ -10,31 +10,57 @@ export const volume8Chapters: Chapter[] = [
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
     pageNumber: 275,
     learningObjectives: [
-      "Next.js යනු කුමක්ද සහ Vercel සමාගමෙහි දායකත්වය.",
-      "React සහ Next.js අතර ඇති ප්‍රධාන වෙනස (Library vs Full-stack Framework).",
-      "නිරූපණ උපාය මාර්ග (Rendering Strategies): CSR, SSR, SSG, ISR.",
-      "SEO (සෙවුම් යන්ත්‍ර ප්‍රශස්තකරණය) සහ Initial Page Load වේගය."
+      "Next.js යනු කුමක්ද සහ React පුස්තකාලය හා එහි ඇති වෙනස.",
+      "නිරූපණ උපාය මාර්ග (Rendering Strategies): CSR, SSR, SSG, සහ ISR ගැඹුරින් අවබෝධ කර ගැනීම.",
+      "සෙවුම් යන්ත්‍ර ප්‍රශස්තකරණය (SEO) සහ First Contentful Paint (FCP) වේගවත් වීම.",
+      "Vercel සමාගම සහ Next.js පරිසර පද්ධතියේ ඉතිහාසය."
     ],
     sections: [
       {
-        title: "90.1 Next.js යනු කුමක්ද සහ SSR එදිරිව CSR",
+        title: "90.1 Next.js යනු කුමක්ද?",
         content: [
-          "Next.js යනු Vercel විසින් නිර්මාණය කරන ලද, React සඳහා වන ලොව ජනප්‍රියම Full-Stack Web Framework එකයි.",
-          "React (CSR - Client-Side Rendering): බ්‍රවුසරයට යන්නේ හිස් HTML ගොනුවක් පමණි (<div id=\"root\"></div>). JS සියල්ල බාගත වන තෙක් තිරයේ කිසිවක් නොපෙනේ. SEO සඳහා අහිතකරය.",
-          "Next.js (SSR / SSG): සර්වර් එක තුළදීම සම්පූර්ණ HTML පිටුව සකස් කර බ්‍රවුසරයට එවයි. ක්ෂණිකව තිරය මත අකුරු සහ පින්තූර දිස්වේ. Google bots ලාට පහසුවෙන් කියවිය හැක.",
-          "• SSG (Static Site Generation): Build වන විටම පිටු සාදයි.",
-          "• SSR (Server-Side Rendering): පරිශීලකයා පිවිසෙන සෑම වාරයකම සර්වර් එකේදී පිටුව සකසයි.",
-          "• ISR (Incremental Static Regeneration): පිටු නිශ්චිත කාලයකට පසු සර්වර් එකේදී නැවත යාවත්කාලීන කරයි."
+          "Next.js යනු React මත පදනම්ව ගොඩනගන ලද, ලොව ප්‍රමුඛතම Full-Stack Web Application Framework එකයි. එය Vercel ආයතනය විසින් නඩත්තු කරනු ලබයි.",
+          "සාම්ප්‍රදායික React (Client-Side Rendering - CSR) යෙදුමකදී බ්‍රවුසරය වෙත ලැබෙන්නේ හිස් HTML සැකිල්ලක් පමණි (<div id=\"root\"></div>). ඉන්පසු මෙගාබයිට් ගණනක JavaScript බාගත වී ක්‍රියාත්මක වන තෙක් පරිශීලකයාට තිරයේ කිසිදු අන්තර්ගතයක් නොපෙනේ. මෙය ජංගම දුරකථන සහ දුර්වල අන්තර්ජාල සබඳතා ඇති අයට දැඩි අපහසුතාවයක් මෙන්ම Google Bots ලාට වෙබ් අඩවියේ අන්තර්ගතය කියවීමට (Indexing) බාධාවකි.",
+          "Next.js මෙම ගැටලුව මුළුමනින්ම විසඳයි. පරිශීලකයා වෙබ් පිටුව ඉල්ලූ සැණින්, සර්වර් එක තුළදීම අලංකාරව සකසන ලද සම්පූර්ණ HTML පිටුව ක්ෂණිකව බ්‍රවුසරයට එවයි. இதனால் පිටුව ක්ෂණිකව දිස්වන අතර, පසුබිමෙන් අවශ්‍ය JavaScript සක්‍රිය වේ (Hydration)."
+        ],
+        tips: [
+          "SEO අත්‍යවශ්‍ය Blog, E-commerce, හෝ Marketing වෙබ් අඩවි සඳහා නිතරම Next.js තෝරාගන්න.",
+          "React යනු UI Library එකක් වන අතර Next.js යනු Routing, Data Fetching, Optimizations ඇතුළත් Full-Stack Framework එකකි."
+        ],
+        mistakes: [
+          "Next.js ඉගෙන ගැනීමට පෙර මූලික React Hooks (useState, useEffect) නොදැන සිටීම."
         ]
+      },
+      {
+        title: "90.2 නිරූපණ උපාය මාර්ග 4 (Rendering Strategies)",
+        content: [
+          "Next.js සතුව ප්‍රධාන පිටු සැකසුම් ක්‍රමවේද 4ක් ඇත:",
+          "1. CSR (Client-Side Rendering): සම්පූර්ණ පිටුව බ්‍රවුසරයේදී Render වේ.",
+          "2. SSR (Server-Side Rendering): සෑම පරිශීලක ඉල්ලීමකදීම (Request) සර්වර් එක මගින් නැවුම්ව පිටුව සකසා එවයි. (නිතර වෙනස් වන පරිශීලක Dashboard සඳහා සුදුසුයි).",
+          "3. SSG (Static Site Generation): යෙදුම Build කරන අවස්ථාවේදීම සියලු පිටු HTML ලෙස තනා තබයි. (අකුණු වේගයෙන් ලෝඩ් වන බ්ලොග් සහ ලේඛන සඳහා අතිවිශිෂ්ටයි).",
+          "4. ISR (Incremental Static Regeneration): Static පිටුවක් වුවද, මුළු වෙබ් අඩවියම නැවත Build නොකර නිශ්චිත කාලයකට පසු (උදා: තත්පර 60කට වරක්) සර්වර් එකේදී පසුබිමෙන් යාවත්කාලීන කිරීමට ඉඩ සලසයි."
+        ],
+        asciiDiagram: `[User Request] 
+      │
+      ├──> (SSR): Server fetches DB -> Generates HTML -> Sends to Browser
+      ├──> (SSG): Pre-built HTML sent immediately from Edge CDN (< 50ms)
+      └──> (ISR): Pre-built HTML served + Background re-generation if stale`
       }
     ],
     keyPoints: [
-      "Next.js යනු React මත ගොඩනැගූ Full-Stack Framework එකකි.",
-      "SSR සහ SSG මගින් ඉහළ SEO සහ අධිවේගී පේජ් ලෝඩිං ලැබේ.",
-      "Vercel විසින් Next.js සත්කාරකත්වය (Hosting) අතිශය පහසු කර ඇත."
+      "Next.js යනු React සඳහා වන නිෂ්පාදන මට්ටමේ Full-Stack Framework එකකි.",
+      "SSR සහ SSG මගින් Core Web Vitals සහ Google Search Ranking ඉහළ නංවයි.",
+      "ISR මගින් Static වේගය සහ Dynamic දත්ත වල නැවුම් බව යන දෙකම එකවර ලැබේ."
     ],
     exercises: [
-      "CSR සහ SSR අතර වෙනස චිත්‍ර සටහනකින් පැහැදිලි කරන්න."
+      "CSR, SSR, SSG, සහ ISR අතර වෙනස සන්සන්දනාත්මක වගුවක් මගින් ලියන්න.",
+      "ඔබ තනන ව්‍යාපෘතිය ඊ-වාණිජ්‍ය නිෂ්පාදන පිටුවක් නම්, එයට වඩාත්ම ගැළපෙන Rendering Strategy එක තෝරා හේතු දක්වන්න."
+    ],
+    interviewQuestions: [
+      {
+        question: "Next.js හි Hydration යනු කුමක්ද?",
+        answer: "සර්වර් එකෙන් බ්‍රවුසරයට එවන ලද ස්ථිතික HTML සැකිල්ල මතට JavaScript Event Listeners සහ React State සම්බන්ධ කර එය අන්තර්ක්‍රියාකාරී පිටුවක් බවට පත් කිරීමේ ක්‍රියාවලිය Hydration ලෙස හැඳින්වේ."
+      }
     ]
   },
   {
@@ -44,34 +70,70 @@ export const volume8Chapters: Chapter[] = [
     englishTitle: "The App Router & File-based Routing",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 277,
+    pageNumber: 278,
     learningObjectives: [
-      "App Router (app/ directory) සංකල්පය.",
-      "විශේෂිත ගොනු: page.tsx, layout.tsx, loading.tsx, error.tsx, not-found.tsx.",
-      "ගොනු පද්ධතිය හරහා මාර්ග (Nested Routes) සෑදීම.",
-      "ගතික මාර්ග (Dynamic Routes: [slug] හෝ [id])."
+      "Next.js App Router (app directory) ගෘහ නිර්මාණ ශිල්පය.",
+      "විශේෂිත ගොනු (Special Files): layout.tsx, page.tsx, loading.tsx, error.tsx, not-found.tsx.",
+      "Nested Routes සහ Route Groups `(group)` නිර්මාණය කිරීම.",
+      "Dynamic Segments `[id]` සහ Catch-all Routes `[...slug]` හැසිරවීම."
     ],
     sections: [
       {
-        title: "91.1 File-based Routing සහ Special Files",
+        title: "91.1 File-system Routing සංකල්පය",
         content: [
-          "Next.js හි වෙනම route ගොනු ලිවිය යුතු නැත. app/ ෆෝල්ඩරය තුළ සාදන ෆෝල්ඩර අනුව URL එක ස්වයංක්‍රීයව නිර්මාණය වේ (උදා: app/blog/page.tsx -> /blog).",
-          "විශේෂිත ගොනු:",
-          "• layout.tsx: පිටු කිහිපයකට පොදු වන සැකිල්ල (Navbar, Footer).",
-          "• page.tsx: අදාළ URL එකේ ප්‍රධාන පිටුව.",
-          "• loading.tsx: දත්ත පූරණය වන විට ස්වයංක්‍රීයව පෙනෙන Skeleton/Loader එක.",
-          "• error.tsx: දෝෂයක් ආ විට පෙන්වන පිටුව.",
-          "• [id]/page.tsx: ගතික මාර්ග සඳහා (උදා: /products/123)."
+          "Next.js හි වෙනම Route ගොනු ලියමින් switch/case දැමිය යුතු නැත. `app/` ෆෝල්ඩරය තුළ ඔබ සාදන Folder ව්‍යුහය ස්වයංක්‍රීයව URL එක බවට පත්වේ.",
+          "උදාහරණයක් ලෙස:",
+          "• `app/page.tsx` -> `/` (මුල් පිටුව)",
+          "• `app/about/page.tsx` -> `/about`",
+          "• `app/blog/[slug]/page.tsx` -> `/blog/my-first-post`"
+        ],
+        codeSnippet: {
+          language: "tsx",
+          code: `// app/blog/[slug]/page.tsx
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params;
+  return (
+    <article className="p-8 max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold">ලිපිය: {slug}</h1>
+      <p className="mt-4 text-stone-600">නෙක්ස්ට් ඇප් රවුටරයේ ගතික පිටුවකි.</p>
+    </article>
+  );
+}`,
+          description: "Dynamic Route Component උදාහරණය"
+        }
+      },
+      {
+        title: "91.2 විශේෂිත ගොනු (Special Routing Files)",
+        content: [
+          "Next.js App Router හි සෑම ෆෝල්ඩරයක් තුළම භාවිත කළ හැකි නියමිත විශේෂ ගොනු කිහිපයක් ඇත:",
+          "1. `layout.tsx`: පිටු කිහිපයකට පොදු සැකිල්ල (Header, Footer). පිටු මාරු වන විට මෙය නැවත render නොවන බැවින් State සුරැකේ.",
+          "2. `page.tsx`: අදාළ URL එකේ ප්‍රධාන දෘශ්‍ය අතුරුමුහුණත.",
+          "3. `loading.tsx`: පිටුවේ දත්ත පූරණය වන තෙක් React Suspense ආධාරයෙන් ස්වයංක්‍රීයව දිස්වන Skeleton Loader එක.",
+          "4. `error.tsx`: දෝෂයක් හටගත් විට යෙදුම බිඳ නොවැටී පරිශීලකයාට පෙන්වන Error Boundary එක ('use client' විය යුතුය).",
+          "5. `not-found.tsx`: පිටුවක් හමු නොවූ විට පෙන්වන 404 අතුරුමුහුණත."
+        ],
+        tips: [
+          "URL එකට බලපෑමක් නොකර ගොනු සංවිධානය කිරීමට වරහන් සහිත Route Groups භාවිතා කරන්න: `app/(marketing)/about/page.tsx` -> `/about`."
         ]
       }
     ],
     keyPoints: [
-      "Next.js හි රවුටින් පදනම් වන්නේ Folder Structure එක මතය.",
-      "layout.tsx පිටු අතර මාරු වන විට නැවත render නොවේ (State ආරක්ෂා වේ).",
-      "loading.tsx මගින් Instant Loading States ලැබේ."
+      "App Router හි රවුටින් පදනම් වන්නේ Folder Hierarchy එක මතය.",
+      "layout.tsx මගින් අනවශ්‍ය Re-renders වළක්වා කාර්යක්ෂමතාව ඉහළ නංවයි.",
+      "loading.tsx සහ error.tsx මගින් ස්වයංක්‍රීයව User Experience වැඩිදියුණු වේ."
     ],
     exercises: [
-      "app/dashboard/settings/page.tsx මගින් නිර්මාණය වන URL එක කුමක්ද?"
+      "පරිශීලක Dashboard එකක් සඳහා `app/dashboard/settings/page.tsx` සහ `app/dashboard/layout.tsx` ගොනු සාදා පරීක්ෂා කරන්න."
+    ],
+    interviewQuestions: [
+      {
+        question: "Next.js හි Pages Router සහ App Router අතර ඇති ප්‍රධාන වෙනස කුමක්ද?",
+        answer: "Pages Router පදනම් වූයේ සාම්ප්‍රදායික Client Components මත වන අතර, App Router (Next.js 13+) පදනම් වන්නේ React Server Components (RSC), Nested Layouts සහ Streaming Architecture මතය."
+      }
     ]
   },
   {
@@ -81,247 +143,439 @@ export const volume8Chapters: Chapter[] = [
     englishTitle: "Server Components (RSC) vs Client Components",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 280,
+    pageNumber: 281,
     learningObjectives: [
-      "React Server Components (RSC) විප්ලවය.",
-      "Default Server Component සංකල්පය.",
-      "'use client' නියෝගය සහ එය යෙදිය යුතු අවස්ථා.",
-      "Bundle Size අඩු වීම: සර්වර් සංරචක වල JS බ්‍රවුසරයට නොයැවීම.",
-      "Server සහ Client සංරචක එකට මිශ්‍ර කරන ආකාරය."
+      "React Server Components (RSC) හි විප්ලවීය ක්‍රියාකාරීත්වය.",
+      "Default Server Component සංකල්පය සහ Zero Bundle Size ප්‍රතිලාභය.",
+      "'use client' නියෝගය යෙදිය යුතු නිවැරදි අවස්ථා.",
+      "Server සහ Client සංරචක නිවැරදිව එකට සංයුක්ත කිරීම (Composition Pattern)."
     ],
     sections: [
       {
-        title: "92.1 RSC vs 'use client' තේරීම",
+        title: "92.1 Server Components (RSC) යනු මොනවාද?",
         content: [
-          "Next.js App Router හි සෑම සංරචකයක්ම පෙරනිමියෙන් (Default) Server Component එකකි. ඒවා සර්වර් එකේදී පමණක් ක්‍රියාත්මක වන අතර කිසිදු JavaScript කේතයක් බ්‍රවුසරයට නොයවයි!",
-          "කවදාද 'use client' භාවිතා කරන්නේ?",
-          "• useState, useEffect, useReducer වැනි හුක්ස් අවශ්‍ය විට.",
-          "• onClick, onChange වැනි Event Listeners අවශ්‍ය විට.",
-          "• window, localStorage වැනි Browser APIs අවශ්‍ය විට.",
-          "කවදාද Server Components භාවිතා කරන්නේ?",
-          "• Database / API වෙතින් කෙලින්ම දත්ත ලබා ගන්නා විට.",
-          "• රහස්‍ය API Keys සහ Security අවශ්‍ය විට."
+          "Next.js App Router හි සාදන සෑම Component එකක්ම පෙරනිමියෙන් (Default) Server Component එකකි. ඒවා ක්‍රියාත්මක වන්නේ සර්වර් එක තුළ පමණි.",
+          "එහි වාසි:",
+          "• Zero Bundle Size: සංරචකය ක්‍රියාත්මක කිරීමට අවශ්‍ය බරැති JavaScript කේත හෝ npm පැකේජ බ්‍රවුසරයට නොයවයි.",
+          "• සෘජු Backend ප්‍රවේශය: API එකක් නොලියාම Component එක තුළදීම Database queries හෝ Server Secrets (API Keys) පරිහරණය කළ හැක.",
+          "• ස්වයංක්‍රීය Caching: දත්ත Fetch කිරීම් සර්වර් මට්ටමේදී Cache වේ."
+        ]
+      },
+      {
+        title: "92.2 කවදාද 'use client' යෙදිය යුත්තේ?",
+        content: [
+          "ගොනුවක මුදුනෙන්ම `'use client';` යන නියෝගය යෙදූ විට එය Client Component එකක් බවට පත්වේ.",
+          "එය අවශ්‍ය වන්නේ මෙම අවස්ථාවන්හිදී පමණි:",
+          "1. අන්තර්ක්‍රියාකාරී State අවශ්‍ය විට: `useState`, `useReducer`, `useContext`.",
+          "2. Lifecycle Effects අවශ්‍ය විට: `useEffect`, `useLayoutEffect`.",
+          "3. Event Listeners අවශ්‍ය විට: `onClick`, `onChange`, `onSubmit`.",
+          "4. Browser APIs අවශ්‍ය විට: `window`, `localStorage`, `navigator`, Geolocation."
         ],
         codeSnippet: {
           language: "tsx",
-          code: `// app/products/page.tsx (Server Component)
-import LikeButton from './LikeButton';
+          code: `'use client';
 
-export default async function ProductPage() {
-  const res = await fetch('https://api.example.com/product');
-  const product = await res.json();
+import { useState } from 'react';
+
+export function LikeButton({ initialLikes }: { initialLikes: number }) {
+  const [likes, setLikes] = useState(initialLikes);
 
   return (
-    <div>
-      <h1>{product.name}</h1>
-      <p>{product.price}</p>
-      {/* Client Component එකක් ඇතුළත් කිරීම */}
-      <LikeButton />
-    </div>
+    <button 
+      onClick={() => setLikes(likes + 1)}
+      className="px-4 py-2 bg-rose-500 text-white font-bold rounded-lg"
+    >
+      ❤️ කැමැත්ත ({likes})
+    </button>
   );
-}`
-        }
+}`,
+          description: "Client Component සඳහා නිදසුන"
+        },
+        tips: [
+          "'use client' ගස මුදුනට නොදමා, අන්තර්ක්‍රියාකාරීත්වය අවශ්‍ය කුඩාම බොත්තම හෝ input එක වැනි Leaf Components වලට පමණක් සීමා කරන්න (Push Client Components to the Leaves)."
+        ]
       }
     ],
     keyPoints: [
-      "සැමවිටම Server Components භාවිතා කරන්න, අත්‍යවශ්‍ය නම් පමණක් මුදුනේ 'use client' යොදන්න.",
-      "RSC මගින් පරිශීලකයාගේ බ්‍රවුසරය ඉතා සැහැල්ලු කරයි."
+      "App Router හි පෙරනිමි සියලු සංරචක Server Components වේ.",
+      "Server Components වලට Database වෙත කෙලින්ම සම්බන්ධ විය හැක.",
+      "'use client' අවශ්‍ය වන්නේ Browser events සහ State අවශ්‍ය සංරචක සඳහා පමණි."
     ],
     exercises: [
-      "useState අඩංගු සංරචකයක 'use client' නොලිව්වහොත් සිදුවන්නේ කුමක්ද?"
+      "පිටුවක Server Component එකක් තුළ Client Component එකක් Children ලෙස pass කරන Component Architecture එකක් සැලසුම් කරන්න."
     ]
   },
   {
     id: "ch-93",
     chapterNumber: 93,
-    title: "දත්ත ලබා ගැනීම, හැඹිලිකරණය සහ නැවත වලංගු කිරීම",
-    englishTitle: "Data Fetching, Caching and Revalidation",
+    title: "දත්ත ලබා ගැනීම සහ හැඹිලිය (Data Fetching & Caching)",
+    englishTitle: "Modern Data Fetching & Caching Architecture",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 283,
+    pageNumber: 284,
     learningObjectives: [
-      "Server Component එකක් තුළ සෘජුවම async/await මගින් දත්ත ගැනීම.",
-      "Next.js Extended Fetch API.",
-      "Static Fetching vs Dynamic Fetching.",
-      "Time-based Revalidation (revalidate: 60).",
-      "On-demand Revalidation (revalidatePath, revalidateTag)."
+      "Async/Await සෘජුවම Server Components තුළ භාවිතය.",
+      "Next.js Fetch API Caching විකල්ප (force-cache, no-store, revalidate).",
+      "Request Memoization සහ Data Cache ක්‍රියාකාරීත්වය.",
+      "React Suspense ආධාරයෙන් Streaming UI සකස් කිරීම."
     ],
     sections: [
       {
-        title: "93.1 Caching සහ ISR ක්‍රමවේද",
+        title: "93.1 Server Component තුළ සෘජු Data Fetching",
         content: [
-          "Next.js සර්වර් සංරචක තුළ useEffect නොමැතිව සෘජුවම fetch() කළ හැක:",
-          "1. Default (Static / Cached): fetch('url', { cache: 'force-cache' })",
-          "2. Dynamic (No Cache - SSR): fetch('url', { cache: 'no-store' })",
-          "3. Revalidation (ISR): fetch('url', { next: { revalidate: 3600 } }) - සෑම පැයකට වරක් සර්වර් එකේදී අලුත් දත්ත ලබා ගනී."
-        ]
+          "React හි මෙන් `useEffect` සහ `useState` ලියමින් Loader දැමීම වෙනුවට, Next.js Server Component එක `async function` එකක් බවට පත් කර සෘජුවම දත්ත ලබාගත හැක."
+        ],
+        codeSnippet: {
+          language: "tsx",
+          code: `// app/products/page.tsx
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
+export default async function ProductsPage() {
+  // සර්වර් එකේදී සෘජුවම fetch වේ
+  const res = await fetch('https://api.example.com/products', {
+    next: { revalidate: 3600 } // තත්පර 3600ක් (පැයක්) Cache වේ (ISR)
+  });
+  const products: Product[] = await res.json();
+
+  return (
+    <div className="grid grid-cols-3 gap-6 p-6">
+      {products.map((p) => (
+        <div key={p.id} className="p-4 border rounded-xl shadow-sm">
+          <h2 className="font-bold">{p.name}</h2>
+          <p className="text-amber-600 font-semibold">රු. {p.price}</p>
+        </div>
+      ))}
+    </div>
+  );
+}`,
+          description: "Server Component Data Fetching"
+        }
       }
     ],
     keyPoints: [
       "Server Components තුළ async/await සෘජුවම භාවිතා කළ හැක.",
-      "ISR මගින් අධිවේගී Static පිටු සහ Dynamic දත්ත යන දෙකෙහිම වාසි ලැබේ."
+      "Next.js fetch API එක පුළුල් කර Caching සහ Revalidation එක් කර ඇත.",
+      "Suspense මගින් මන්දගාමී දත්ත කොටස් වෙන වෙනම Stream කළ හැක."
     ],
     exercises: [
-      "තත්පර 30කට වරක් යාවත්කාලීන වන News Feed එකක් සඳහා fetch විධානය ලියන්න."
+      "`fetch` සඳහා `cache: 'no-store'` දැමූ විට සිදුවන්නේ කුමක්දැයි පැහැදිලි කරන්න."
     ]
   },
   {
     id: "ch-94",
     chapterNumber: 94,
-    title: "සර්වර් ක්‍රියාකාරකම් සහ දත්ත සමුදා සම්බන්ධතා",
-    englishTitle: "Server Actions & Database Integration",
+    title: "සර්වර් ඇක්ෂන්ස් - පෝරම සහ විකෘති කිරීම්",
+    englishTitle: "Server Actions & Form Mutations",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 285,
+    pageNumber: 287,
     learningObjectives: [
-      "Server Actions ('use server') යනු මොනවාද?",
-      "වෙනම API Routes නොලියා Form Submissions සෘජුවම සර්වර් එකට යැවීම.",
-      "Progressive Enhancement සංකල්පය.",
-      "Prisma ORM හෝ PostgreSQL සෘජුව සම්බන්ධ කිරීම."
+      "Server Actions යනු මොනවාද සහ 'use server' නියෝගය.",
+      "වෙනම API Routes නොලියා Form submission හැසිරවීම.",
+      "`revalidatePath` සහ `revalidateTag` මගින් Cache යාවත්කාලීන කිරීම.",
+      "React 19 Hooks: `useActionState` සහ `useFormStatus`."
     ],
     sections: [
       {
-        title: "94.1 Server Actions ('use server') භාවිතය",
+        title: "94.1 Server Actions ක්‍රියාකාරීත්වය",
         content: [
-          "අතීතයේදී Form එකක් Submit කිරීමට /api/create-user නමින් API Route එකක් ලියා, fetch() යැවිය යුතු විය.",
-          "Server Actions මගින් සෘජුවම ශ්‍රිතය තුළ 'use server' ලියා <form action={createPost}> ලබා දිය හැක. JavaScript ක්‍රියා විරහිත කර තිබුණද Form එක ක්‍රියා කරයි (Progressive Enhancement)."
+          "Server Actions යනු සර්වර් එක තුළ ආරක්ෂිතව ක්‍රියාත්මක වන Asynchronous Functions වේ. ඒවා Form actions ලෙස හෝ Event handlers ලෙස කෙලින්ම කැඳවිය හැක.",
+          "එහි ඇති විශිෂ්ටත්වය නම්, වෙනම `/api/submit` endpoint එකක් ලියා `fetch` කිරීමට අවශ්‍ය නොවීමයි."
         ],
         codeSnippet: {
           language: "tsx",
-          code: `// app/new-post/page.tsx
-export default function NewPostPage() {
-  async function createPost(formData: FormData) {
-    'use server';
-    const title = formData.get('title');
-    console.log("සර්වර් එකේ දත්ත සුරැකිණි:", title);
-  }
+          code: `// app/actions/createPost.ts
+'use server';
 
-  return (
-    <form action={createPost} className="p-4 space-y-4">
-      <input name="title" placeholder="ලිපියේ මාතෘකාව" className="border p-2" />
-      <button type="submit" className="bg-blue-600 text-white p-2">පළ කරන්න</button>
-    </form>
-  );
-}`
+import { revalidatePath } from 'next/cache';
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title') as string;
+  const content = formData.get('content') as string;
+
+  // මෙහිදී කෙලින්ම Database එකට insert කළ හැක
+  console.log("Saving to DB:", { title, content });
+
+  // පිටුවේ Cache එක ඉවත් කර නැවුම් දත්ත පෙන්වන්න
+  revalidatePath('/posts');
+}`,
+          description: "Server Action එකක් නිර්මාණය කිරීම"
         }
       }
     ],
     keyPoints: [
-      "Server Actions මගින් API Routes ලිවීමේ අවශ්‍යතාවය අවම කරයි.",
-      "'use server' මගින් කේතය සර්වර් එකේ පමණක් ධාවනය වන බව තහවුරු කරයි."
+      "Server Actions මගින් API boilerplates විශාල ලෙස අඩු කරයි.",
+      "`revalidatePath` මගින් දත්ත ඇතුළත් කළ සැණින් UI එක නැවුම් වේ.",
+      "CSRF ආරක්ෂාව Next.js මගින් ස්වයංක්‍රීයව සපයනු ලැබේ."
     ],
     exercises: [
-      "Server Action එකක් භාවිතා කර පරිශීලකයාගේ විද්‍යුත් තැපෑල සර්වර් කොන්සෝලයේ පෙන්වන Form එකක් සාදන්න."
+      "පරිශීලක නම සහ විද්‍යුත් තැපෑල ඇතුළත් කරන Form එකක් සඳහා Server Action එකක් ලියන්න."
     ]
   },
   {
     id: "ch-95",
     chapterNumber: 95,
-    title: "මහා ව්‍යාපෘතිය - සම්පූර්ණ Full-Stack ඊ-වාණිජ්‍ය පද්ධතියක්",
-    englishTitle: "Capstone Project - Full-Stack E-Commerce / Blog Engine",
+    title: "මෙටාඩේටා සහ සෙවුම් යන්ත්‍ර ප්‍රශස්තකරණය (SEO)",
+    englishTitle: "Metadata API, OpenGraph & Search Optimization",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 288,
+    pageNumber: 290,
     learningObjectives: [
-      "Next.js App Router, Server Components, Server Actions සහ Tailwind CSS එක් කර සැබෑ Full-Stack වෙබ් අඩවියක් නිර්මාණය.",
-      "ගතික නිෂ්පාදන පිටු ([id]), සෙවුම් (Search Params), සහ Shopping Cart.",
-      "Vercel මත තනි ක්ලික් කිරීමකින් සජීවීව ප්‍රසිද්ධ කිරීම."
+      "Next.js Metadata API (Static & Dynamic Metadata).",
+      "OpenGraph (OG) කාඩ්පත් සහ සමාජ මාධ්‍ය පෙරදසුන් (Social Share Cards).",
+      "ගතික sitemap.ts සහ robots.ts ස්වයංක්‍රීයව ජනනය කිරීම.",
+      "Google Search Console සඳහා Structured Data (JSON-LD) එක් කිරීම."
     ],
     sections: [
       {
-        title: "95.1 Full-Stack ව්‍යාපෘති ගෘහ නිර්මාණ ශිල්පය",
+        title: "95.1 Metadata API භාවිතය",
         content: [
-          "ගොනු ව්‍යුහය:",
-          "app/page.tsx: Hero section සහ Featured Products.",
-          "app/products/[id]/page.tsx: Server-side rendering සහිත භාණ්ඩ පිටුව.",
-          "app/actions/cart.ts: Server Actions මගින් Cart දත්ත පාලනය.",
-          "components/Navbar.tsx, components/ProductCard.tsx."
-        ]
+          "Next.js හි `<head>` ටැගය අතින් ලිවීම වෙනුවට `metadata` object එකක් export කිරීමෙන් title, description, favicon, සහ OpenGraph පින්තූර පහසුවෙන් සැකසිය හැක."
+        ],
+        codeSnippet: {
+          language: "tsx",
+          code: `import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Full Stack Web Development | සම්පූර්ණ පාඨමාලා පොත',
+  description: 'HTML, CSS, JS, React සහ Next.js සිංහලෙන් ඉගෙන ගන්න.',
+  openGraph: {
+    title: 'Full Stack Web Development',
+    description: 'T. Sachintha Imesh [FYZIE] ගේ නිල පාඨමාලා ග්‍රන්ථය',
+    url: 'https://example.com',
+    siteName: 'FullStackDev',
+    images: [{ url: '/og-cover.png', width: 1200, height: 630 }],
+    locale: 'si_LK',
+    type: 'website',
+  },
+};`,
+          description: "Static Metadata උදාහරණය"
+        }
       }
     ],
     keyPoints: [
-      "සම්පූර්ණ Full-stack කේතයම තනි Next.js ව්‍යාපෘතියක් තුළ ලිවිය හැක.",
-      "Vercel වෙත Deploy කළ සැණින් ගෝලීය CDN ජාලයක් හරහා ක්‍රියාත්මක වේ."
+      "Next.js Metadata API මගින් ඉහළම මට්ටමේ SEO සූදානමක් ලැබේ.",
+      "`generateMetadata` මගින් Dynamic පිටු සඳහා (Blog post titles) මෙටා දත්ත ජනනය කළ හැක."
     ],
     exercises: [
-      "ඔබේ Next.js ව්‍යාපෘතිය Vercel වෙත push කර සජීවී link එකක් ලබා ගන්න."
+      "ඔබගේ වෙබ් අඩවියට Dynamic OpenGraph Image එකක් ජනනය කරන කේතයක් ලියන්න."
     ]
   },
   {
     id: "ch-96",
     chapterNumber: 96,
-    title: "නෙක්ස්ට් ඉංජිනේරු විද්‍යාව, අතුරුමෘදුකාංග සහ ආරක්ෂාව (විශේෂ ප්‍රෝ-මට්ටම)",
-    englishTitle: "Next.js Middleware, Edge Runtime & Security",
+    title: "දත්ත සමුදාය සහ සත්‍යාපනය (Databases & Authentication)",
+    englishTitle: "Databases, ORMs (Prisma/Drizzle) & Auth.js",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 290,
+    pageNumber: 293,
     learningObjectives: [
-      "Middleware (middleware.ts): ඉල්ලීමක් පිටුවට යාමට පෙර අතරමගදී පරික්ෂා කිරීම.",
-      "Edge Runtime: ලොව පුරා විසිරී ඇති සර්වර් වල අතිවේගයෙන් ක්‍රියාත්මක වීම.",
-      "Route Handlers (app/api/route.ts): REST APIs නිර්මාණය.",
-      "වෙබ් ආරක්ෂාව: XSS, CSRF, සහ Content Security Policy (CSP)."
+      "Next.js සමග PostgreSQL, MySQL, හෝ SQLite සම්බන්ධ කිරීම.",
+      "Modern ORMs: Prisma සහ Drizzle ORM මගින් Type-safe Database Queries ලිවීම.",
+      "Auth.js (NextAuth v5) මගින් Google / GitHub OAuth සහ Credentials Login හැසිරවීම.",
+      "ආරක්ෂිත Session කළමනාකරණය සහ Middleware මගින් Route Protection."
     ],
     sections: [
       {
-        title: "96.1 Middleware සහ Route Handlers",
+        title: "96.1 Drizzle / Prisma ORM සහ Database Connection",
         content: [
-          "Middleware: ගුවන් තොටුපළක ආරක්ෂක නිලධාරියා මෙන්, පරිශීලකයා පිටුවට පිවිසීමට පෙර ටෝකනය (JWT Token) වලංගු දැයි පරීක්ෂා කර ආරක්ෂිත පිටුවට යවයි හෝ Login පිටුවට හරවා යවයි (Redirect).",
-          "Route Handlers: export async function GET() { return Response.json({ status: 'ok' }); }"
+          "Next.js Server Components සහ Server Actions තුළදී ORM එකක් හරහා දත්ත සමුදායට සම්බන්ධ වීම අතිශය සුමටය. Drizzle හෝ Prisma මගින් TypeScript Types ස්වයංක්‍රීයව ලැබෙන බැවින් SQL දෝෂ ඇති නොවේ."
         ],
         codeSnippet: {
-          language: "typescript",
-          code: `// middleware.ts
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+          language: "tsx",
+          code: `import { db } from '@/db';
+import { users } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get('auth-token');
-  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-  return NextResponse.next();
-}`
+export async function getUserProfile(userId: string) {
+  // Type-safe query සෘජුවම Server Component එක තුළ
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  });
+  return user;
+}`,
+          description: "Type-safe Database Query උදාහරණය"
         }
       }
     ],
     keyPoints: [
-      "Middleware මගින් ආරක්ෂිත Authentication Checks සිදු කරයි.",
-      "Route Handlers මගින් ජංගම දුරකථන යෙදුම් (Mobile Apps) සඳහාද API ලබා දිය හැක."
+      "Next.js හි Database Credentials බ්‍රවුසරයට නිරාවරණය නොවන සේ සර්වර් මට්ටමේදී පමණක් ක්‍රියාත්මක වේ.",
+      "Auth.js මගින් Social Logins සහ Passwordless Magic Links පහසුවෙන් ක්‍රියාත්මක කළ හැක."
     ],
     exercises: [
-      "ඇඩ්මින් පිටු (/admin/*) සඳහා පමණක් ක්‍රියාත්මක වන Middleware matcher එකක් ලියන්න."
+      "Next.js යෙදුමකට GitHub OAuth Login එකතු කිරීමේ පියවර ලැයිස්තුගත කරන්න."
     ]
   },
   {
     id: "ch-97",
     chapterNumber: 97,
-    title: "උසස් දත්ත සමුදායන්, ඔතීකරණය සහ ගෘහ නිර්මාණ ශිල්පය",
-    englishTitle: "Authentication (Auth.js), Database Pooling & Webhooks",
+    title: "ප්‍රායෝගික Full-Stack ව්‍යාපෘතිය - සම්පූර්ණ ඊ-වාණිජ්‍ය වෙළඳපොළ",
+    englishTitle: "Full-Stack E-Commerce Market Capstone Project",
     volumeId: 8,
     volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
-    pageNumber: 293,
+    pageNumber: 296,
     learningObjectives: [
-      "NextAuth.js / Auth.js මගින් Google/GitHub OAuth පිවිසුම් සැකසීම.",
-      "Connection Pooling (Neon / Supabase / Prisma Accelerate).",
-      "Webhooks: Stripe හෝ LemonSqueezy ගෙවීම් සාර්ථක වූ විට දත්ත යාවත්කාලීන කිරීම.",
-      "SWR සහ TanStack Query."
+      "සම්පූර්ණ Full-Stack යෙදුමක පද්ධති සැලසුම (System Architecture).",
+      "නිෂ්පාදන ලැයිස්තුව, පෙරහන් (Filters), සෙවීම් සහ Pagination.",
+      "Shopping Cart කළමනාකරණය (Server State + Client State).",
+      "Stripe / PayHere මගින් ආරක්ෂිත ගෙවීම් ද්වාරයක් (Payment Gateway) සම්බන්ධ කිරීම."
     ],
     sections: [
       {
-        title: "97.1 Auth.js, Database Pooling සහ Webhooks",
+        title: "97.1 ව්‍යාපෘති ගෘහ නිර්මාණ ශිල්පය",
         content: [
-          "Auth.js: මුරපද ගබඩා කරමින් වෙහෙස නොවී Google, GitHub හරහා එක ක්ලික් එකෙන් ආරක්ෂිතව පිවිසීමට ඉඩ සලසයි.",
-          "Connection Pooling: සර්වර්ලස් (Serverless) ක්‍රමයේදී එකවර දහස් ගණනක් දත්ත සමුදායට පිවිසෙන විට බිඳවැටීම වැළැක්වීමට Pooler එකක් භාවිතා කරයි.",
-          "Webhooks: මුදල් ගෙවූ සැණින් බැංකුව හෝ Stripe විසින් අපගේ සර්වර් එකට යවන රහසිගත පණිවිඩයයි."
+          "මෙම ව්‍යාපෘතියේදී අපි Next.js App Router, Tailwind CSS, Server Actions, PostgreSQL දත්ත සමුදාය, සහ Stripe Checkout ඒකාබද්ධ කර සම්පූර්ණ නිෂ්පාදන මට්ටමේ වෙළඳපොළක් ගොඩනගමු."
+        ],
+        asciiDiagram: `[Client Browser] 
+      │ (Browse & Add to Cart)
+[Next.js App Router] ──> (Server Components + Fast CDN)
+      │ (Checkout via Server Action)
+[PostgreSQL Database] + [Stripe Payment Gateway]
+      │
+[Order Confirmation & Email Notification]`
+      }
+    ],
+    practicalTask: {
+      title: "Full-Stack ඊ-වාණිජ්‍ය වෙබ් අඩවිය තැනීම",
+      steps: [
+        "Next.js App Router සහ Tailwind CSS මූලික ව්‍යාපෘතිය සකසන්න.",
+        "PostgreSQL දත්ත සමුදාය තුළ Products, Users, සහ Orders වගු සාදන්න.",
+        "Server Components මගින් නිෂ්පාදන කාඩ්පත් අධිවේගයෙන් Render කරන්න.",
+        "Server Actions මගින් Checkout ක්‍රියාවලිය සම්පූර්ණ කරන්න."
+      ]
+    },
+    keyPoints: [
+      "Full-Stack සංවර්ධනයේදී Frontend සහ Backend මනා ලෙස ඒකාබද්ධ විය යුතුය.",
+      "ගෙවීම් තොරතුරු හැසිරවීමේදී Webhooks මගින් සර්වර් මට්ටමේ තහවුරු කිරීම අනිවාර්ය වේ."
+    ],
+    exercises: [
+      "Stripe Webhook එකක් Next.js Route Handler එකක් තුළ සත්‍යාපනය කරන්නේ කෙසේදැයි ලියන්න."
+    ]
+  },
+  {
+    id: "ch-98",
+    chapterNumber: 98,
+    title: "Next.js Middleware, Route Handlers (APIs) සහ Caching Deep Dive",
+    englishTitle: "Middleware, Route Handlers & Advanced Caching",
+    volumeId: 8,
+    volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
+    pageNumber: 300,
+    learningObjectives: [
+      "Next.js Middleware ක්‍රියාකාරීත්වය සහ Edge Runtime හි එය ධාවනය වීම.",
+      "Route Handlers (app/api/.../route.ts) මගින් RESTful APIs ලිවීම.",
+      "Next.js Caching Layers 4: Request Memoization, Data Cache, Full Route Cache, Router Cache.",
+      "On-demand Revalidation (revalidatePath සහ revalidateTag)."
+    ],
+    sections: [
+      {
+        title: "98.1 Next.js Middleware භාවිතය",
+        content: [
+          "Middleware යනු ඉල්ලීමක් (Request) පිටුවකට හෝ API එකකට ළඟා වීමට පෙර, අතරමැදදී එය පරීක්ෂා කර වෙනස් කිරීමට හෝ Redirect කිරීමට හැකි බලවත් මෙවලමකි. එය ක්‍රියාත්මක වන්නේ ලොව පුරා විසිරුණු Edge Servers වල බැවින් මිලි තත්පර කිහිපයකින් ප්‍රතිචාර දක්වයි."
+        ],
+        codeSnippet: {
+          language: "ts",
+          code: `// middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('auth_token')?.value;
+
+  // ආරක්ෂිත පිටුවකට token නැතිව පිවිසීමට උත්සාහ කළහොත් login පිටුවට යවන්න
+  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*'],
+};`,
+          description: "Route Protection සඳහා Middleware භාවිතය"
+        }
+      }
+    ],
+    keyPoints: [
+      "Middleware මගින් Route Protection, Geolocation, සහ Bot Detection සිදු කළ හැක.",
+      "Route Handlers මගින් Third-party mobile apps හෝ Webhooks සඳහා REST APIs සකස් කළ හැක."
+    ],
+    exercises: [
+      "API එකක් සඳහා IP Rate Limiting යොදන Middleware එකක තර්කය පැහැදිලි කරන්න."
+    ]
+  },
+  {
+    id: "ch-99",
+    chapterNumber: 99,
+    title: "ජාත්‍යන්තරකරණය (i18n), ප්‍රවේශ්‍යතාව (a11y) සහ සම්පත් ප්‍රශස්තකරණය",
+    englishTitle: "Internationalization (i18n), Accessibility & Asset Optimization",
+    volumeId: 8,
+    volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
+    pageNumber: 304,
+    learningObjectives: [
+      "`next/image` සංරචකය සහ ස්වයංක්‍රීය WebP/AVIF පරිවර්තනය, Lazy Loading.",
+      "`next/font` මගින් Zero Layout Shift සමඟ Google Fonts සර්වර් මට්ටමේදී බාගත කර ගැනීම.",
+      "බහුභාෂා වෙබ් අඩවි (Internationalization - i18n: සිංහල, English, දෙමළ).",
+      "WCAG 2.1 ප්‍රවේශ්‍යතා (Accessibility) ප්‍රමිතීන් තහවුරු කිරීම."
+    ],
+    sections: [
+      {
+        title: "99.1 `next/image` සහ `next/font` ප්‍රශස්තකරණය",
+        content: [
+          "සාමාන්‍ය `<img>` ටැගයක් භාවිත කළ විට විශාල පින්තූර බාගත වී පිටුවේ පෙනුම සෙලවේ (Cumulative Layout Shift - CLS).",
+          "`next/image` මගින්:",
+          "1. පරිශීලකයාගේ තිරයේ ප්‍රමාණයට ගැළපෙන පරිදි පින්තූරයේ ප්‍රමාණය ස්වයංක්‍රීයව වෙනස් කරයි (Responsive sizes).",
+          "2. නවීන WebP හෝ AVIF ආකෘතියට සම්පීඩනය කරයි (80% වඩා කුඩා වේ).",
+          "3. තිරයට පැමිණෙන තෙක් පින්තූරය පූරණය නොකරයි (Lazy loading).",
+          "`next/font` මගින් බ්‍රවුසරය Google වෙතින් අකුරු බාගත කිරීම වෙනුවට, සර්වර් එක තුළදීම Fonts ගබඩා කර CSS එක සමඟම ක්ෂණිකව සපයයි."
         ]
       }
     ],
     keyPoints: [
-      "Auth.js යනු Next.js සඳහා සම්මත Authentication විසඳුමයි.",
-      "Serverless පරිසරයකදී Database Connection Pooling අනිවාර්ය වේ."
+      "`next/image` මගින් Core Web Vitals ලකුණු 100% දක්වා ඉහළ නංවයි.",
+      "i18n මගින් ලොව පුරා ඕනෑම භාෂාවක පරිශීලකයින්ට වෙබ් අඩවිය විවෘත වේ."
     ],
     exercises: [
-      "Webhooks ක්‍රියාත්මක වන ආකාරය සරලව විස්තර කරන්න."
+      "`next/font/google` භාවිතයෙන් Noto Sans Sinhala ෆොන්ට් එක Layout එකට එක් කරන ආකාරය ලියන්න."
+    ]
+  },
+  {
+    id: "ch-100",
+    chapterNumber: 100,
+    title: "Vercel Production Deployment, Monitoring සහ Edge Functions",
+    englishTitle: "Production Deployment, Observability & Edge Computing",
+    volumeId: 8,
+    volumeTitle: "නෙක්ස්ට් (Next.js) - පූර්ණ මෘදුකාංග සංවර්ධනය",
+    pageNumber: 308,
+    learningObjectives: [
+      "GitHub Repo එකක් Vercel වෙත සම්බන්ධ කර ස්වයංක්‍රීය CI/CD මගින් Production Deploy කිරීම.",
+      "පරිසර විචල්‍යයන් (Environment Variables) ආරක්ෂිතව කළමනාකරණය.",
+      "Vercel Analytics සහ Speed Insights මගින් සැබෑ පරිශීලක වේගය මැනීම.",
+      "Edge Functions සහ Serverless Cold Starts අවම කිරීම."
+    ],
+    sections: [
+      {
+        title: "100.1 Vercel සජීවී ප්‍රකාශනය සහ CI/CD",
+        content: [
+          "Next.js සකස් කළ Vercel ආයතනය විසින්ම සපයන Global Edge Network එක Next.js ධාවනය සඳහා ලොව හොඳම පරිසරයයි.",
+          "පියවර:",
+          "1. ඔබගේ Next.js ව්‍යාපෘතිය GitHub වෙත Push කරන්න.",
+          "2. Vercel.com වෙත ගොස් 'Add New Project' ක්ලික් කර එම Repo එක තෝරන්න.",
+          "3. Environment Variables (Database URL, Secret Keys) ඇතුළත් කරන්න.",
+          "4. 'Deploy' බොත්තම ක්ලික් කරන්න. තත්පර 60ක් තුළ ඔබගේ යෙදුම ලොව පුරා සජීවීව විවෘත වේ!"
+        ]
+      }
+    ],
+    keyPoints: [
+      "Vercel Preview Deployments මගින් සෑම Pull Request එකකටම සජීවී පරීක්ෂණ URL එකක් ලැබේ.",
+      "Serverless Architecture මගින් සර්වර් කළමනාකරණ බරකින් තොරව මිලියන ගණනක පරිශීලකයින් හැසිරවිය හැක."
+    ],
+    exercises: [
+      "ඔබගේ Next.js ව්‍යාපෘතිය Vercel වෙත Deploy කර එහි Performance Score එක Lighthouse මගින් පරීක්ෂා කරන්න."
     ]
   }
 ];

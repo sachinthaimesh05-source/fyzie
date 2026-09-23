@@ -3,7 +3,7 @@ import {
   BookOpen,
   Compass,
   Code2,
-  FileText,
+  Download,
   Sparkles,
   CheckCircle2,
   ArrowRight,
@@ -24,9 +24,9 @@ export const HomeHero: React.FC = () => {
 
   const stats = [
     { label: 'පරිමා (Volumes)', value: '09', desc: 'මූලික තත්වයේ සිට Full Stack දක්වා' },
-    { label: 'පරිච්ඡේද (Chapters)', value: '98', desc: 'සම්පූර්ණ ප්‍රායෝගික පාඩම්' },
-    { label: 'පිටු සංඛ්‍යාව (Pages)', value: '300+', desc: 'ගැඹුරු න්‍යාය සහ කේත විග්‍රහ' },
-    { label: 'ප්‍රායෝගික ව්‍යාපෘති', value: '15+', desc: 'කර්මාන්ත මට්ටමේ යෙදුම්' },
+    { label: 'පරිච්ඡේද (Chapters)', value: '107', desc: 'සම්පූර්ණ ප්‍රායෝගික පාඩම්' },
+    { label: 'පිටු සංඛ්‍යාව (Pages)', value: '340+', desc: 'ගැඹුරු න්‍යාය සහ කේත විග්‍රහ' },
+    { label: 'ප්‍රායෝගික ව්‍යාපෘති', value: '20+', desc: 'කර්මාන්ත මට්ටමේ යෙදුම්' },
   ];
 
   return (
@@ -66,7 +66,7 @@ export const HomeHero: React.FC = () => {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
               <button
-                onClick={() => openReaderWithChapter('ch-01')}
+                onClick={() => openReaderWithChapter('ch-1')}
                 className="px-6 py-3 rounded-xl font-bold text-sm sm:text-base bg-amber-600 hover:bg-amber-700 text-white shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
               >
                 <BookOpen className="w-5 h-5" />
@@ -78,16 +78,23 @@ export const HomeHero: React.FC = () => {
                 onClick={() => setActiveTab('contents')}
                 className={`px-5 py-3 rounded-xl font-semibold text-sm sm:text-base border transition-all hover:bg-black/5 dark:hover:bg-white/5 ${themeClasses.borderColor} ${themeClasses.textColor}`}
               >
-                <span>සම්පූර්ණ පටුන බලන්න (98 Chapters)</span>
+                <span>සම්පූර්ණ පටුන බලන්න (107 Chapters)</span>
               </button>
 
-              <button
-                onClick={() => setActiveTab('pdf')}
-                className={`px-4 py-3 rounded-xl font-semibold text-sm border transition-all text-amber-600 hover:bg-amber-500/10 ${themeClasses.borderColor}`}
+              <a
+                href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
+                download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+                className="px-5 py-3 rounded-xl font-bold text-sm sm:text-base border border-amber-500/50 bg-gradient-to-r from-amber-500/15 to-orange-500/15 hover:from-amber-500/25 hover:to-orange-500/25 text-amber-800 dark:text-amber-300 shadow-sm transition-all flex items-center gap-2.5 group"
+                title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න"
               >
-                <FileText className="w-4 h-4 inline mr-1.5" />
-                <span>PDF ග්‍රන්ථය / මුද්‍රණය</span>
-              </button>
+                <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
+                  <Download className="w-4 h-4" />
+                </div>
+                <div className="text-left">
+                  <div className="leading-tight">PDF එක බාගත කරන්න</div>
+                  <div className="text-[10px] font-normal text-amber-700 dark:text-amber-400 opacity-80">පරිච්ඡේද 107 • සම්පූර්ණ ග්‍රන්ථය (Direct Download)</div>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -138,7 +145,7 @@ export const HomeHero: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <span className="text-[9px] uppercase tracking-wider text-amber-400 block font-bold">පරිමා 9</span>
-                    <span className="text-white">පරිච්ඡේද 98</span>
+                    <span className="text-white">පරිච්ඡේද 107</span>
                   </div>
                 </div>
               </div>

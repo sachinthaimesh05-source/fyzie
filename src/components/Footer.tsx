@@ -3,7 +3,7 @@ import {
   BookOpen,
   Heart,
   ArrowUp,
-  FileText,
+  Download,
   Compass,
   Code2,
   User,
@@ -81,12 +81,14 @@ export const Footer: React.FC = () => {
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => { setActiveTab('pdf'); scrollToTop(); }}
-                  className={`hover:text-amber-600 transition-colors ${themeClasses.textMuted}`}
+                <a
+                  href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
+                  download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+                  className={`hover:text-amber-600 transition-colors flex items-center gap-1.5 ${themeClasses.textMuted}`}
                 >
-                  PDF ග්‍රන්ථය / මුද්‍රණය (PDF Hub)
-                </button>
+                  <Download className="w-3.5 h-3.5 text-amber-600" />
+                  <span>PDF ග්‍රන්ථය බාගත කරන්න (Direct Download)</span>
+                </a>
               </li>
             </ul>
           </div>

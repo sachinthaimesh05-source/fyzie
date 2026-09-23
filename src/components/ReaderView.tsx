@@ -6,7 +6,7 @@ import {
   ChevronRight,
   Copy,
   Check,
-  Printer,
+  Download,
   Share2,
   BookOpen,
   Sparkles,
@@ -15,6 +15,12 @@ import {
   ExternalLink,
   Code2,
   ListFilter,
+  Lightbulb,
+  AlertTriangle,
+  Briefcase,
+  Wrench,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { useReader } from '../context/ReaderContext';
 import { getChapterById, getNextChapter, getPrevChapter, allChapters } from '../data/chapters/allChapters';
@@ -48,6 +54,7 @@ export const ReaderView: React.FC<ReaderViewProps> = ({ onToggleSidebar, sidebar
 
   const [copiedCodeIndex, setCopiedCodeIndex] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [expandedInterviewIdx, setExpandedInterviewIdx] = useState<number | null>(null);
 
   const isRead = isChapterRead(chapter.id);
   const isBookmarked = isChapterBookmarked(chapter.id);
@@ -62,10 +69,6 @@ export const ReaderView: React.FC<ReaderViewProps> = ({ onToggleSidebar, sidebar
     navigator.clipboard.writeText(window.location.href);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   return (
@@ -119,14 +122,16 @@ export const ReaderView: React.FC<ReaderViewProps> = ({ onToggleSidebar, sidebar
             <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
           </button>
 
-          {/* Print / Save as PDF */}
-          <button
-            onClick={handlePrint}
-            title="මුද්‍රණය කරන්න හෝ PDF ලෙස සුරකින්න"
-            className={`p-2 rounded-lg border transition-all ${themeClasses.borderColor} ${themeClasses.textColor} hover:bg-black/5`}
+          {/* Direct Download Book PDF */}
+          <a
+            href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
+            download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+            title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න (Download Complete PDF Book)"
+            className={`p-2 rounded-lg border transition-all ${themeClasses.borderColor} text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 flex items-center gap-1 font-semibold text-xs`}
           >
-            <Printer className="w-4 h-4" />
-          </button>
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">PDF</span>
+          </a>
 
           {/* Share Button */}
           <button
@@ -146,7 +151,7 @@ export const ReaderView: React.FC<ReaderViewProps> = ({ onToggleSidebar, sidebar
             පරිච්ඡේදය {chapter.chapterNumber}
           </span>
           <span className={`text-xs font-medium ${themeClasses.textMuted}`}>
-            පිටුව {chapter.pageNumber} • මිනිත්තු 8-10ක කියවීමක්
+            පිටුව {chapter.pageNumber} • සම්පූර්ණ පාඩම
           </span>
         </div>
 
@@ -278,14 +283,125 @@ export const ReaderView: React.FC<ReaderViewProps> = ({ onToggleSidebar, sidebar
                 </pre>
               </div>
             )}
+
+            {/* Section Tips (ප්‍රවීණ ඉඟි) */}
+            {sec.tips && sec.tips.length > 0 && (
+              <div className="my-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <Lightbulb className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span className="text-xs font-bold text-amber-800 dark:text-amber-300">
+                    ප්‍රවීණ ඉඟි සහ උපදෙස් (Pro Tips)
+                  </span>
+                </div>
+                <ul className="space-y-1.5 text-xs text-amber-900 dark:text-amber-100">
+                  {sec.tips.map((tip, tIdx) => (
+                    <li key={tIdx} className="flex items-start gap-2">
+                      <span className="text-amber-600 font-bold">•</span>
+                      <span>{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Section Mistakes (සුලබ වැරදි) */}
+            {sec.mistakes && sec.mistakes.length > 0 && (
+              <div className="my-4 p-4 rounded-xl border border-rose-500/30 bg-rose-500/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                  <span className="text-xs font-bold text-rose-800 dark:text-rose-300">
+                    සුලබව සිදුවන වැරදි සහ ඒවා වළක්වා ගැනීම (Common Pitfalls)
+                  </span>
+                </div>
+                <ul className="space-y-1.5 text-xs text-rose-900 dark:text-rose-100">
+                  {sec.mistakes.map((m, mIdx) => (
+                    <li key={mIdx} className="flex items-start gap-2">
+                      <span className="text-rose-600 font-bold">⚠️</span>
+                      <span>{m}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </section>
         ))}
       </div>
 
+      {/* Practical Task (ප්‍රායෝගික ව්‍යාපෘති පැවරුම) */}
+      {chapter.practicalTask && (
+        <section
+          className={`mt-10 sm:mt-14 p-5 sm:p-6 rounded-2xl border shadow-sm ${themeClasses.cardBg} border-amber-500/40`}
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <Wrench className="w-5 h-5 text-amber-600" />
+            <h3 className={`text-base sm:text-lg font-bold font-sinhala-sans ${themeClasses.textColor}`}>
+              ප්‍රායෝගික ව්‍යාපෘති පැවරුම: {chapter.practicalTask.title}
+            </h3>
+          </div>
+          <div className="space-y-2">
+            <p className={`text-xs font-semibold ${themeClasses.textMuted}`}>අනුගමනය කළ යුතු පියවර (Step-by-step):</p>
+            <ol className="space-y-2 list-decimal list-inside text-xs sm:text-sm">
+              {chapter.practicalTask.steps.map((step, sIdx) => (
+                <li key={sIdx} className={`leading-relaxed ${themeClasses.textColor}`}>
+                  <span className="font-normal">{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      {/* Technical Interview Questions & Answers (සම්මුඛ පරීක්ෂණ ප්‍රශ්න) */}
+      {chapter.interviewQuestions && chapter.interviewQuestions.length > 0 && (
+        <section
+          className={`mt-8 p-5 sm:p-6 rounded-2xl border ${themeClasses.cardBgSecondary} ${themeClasses.borderColor}`}
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <Briefcase className="w-5 h-5 text-indigo-600" />
+            <h3 className={`text-base sm:text-lg font-bold font-sinhala-sans ${themeClasses.textColor}`}>
+              තාක්ෂණික සම්මුඛ පරීක්ෂණ ප්‍රශ්න සහ පිළිතුරු (Interview Q&A)
+            </h3>
+          </div>
+
+          <div className="space-y-3">
+            {chapter.interviewQuestions.map((qa, qIdx) => {
+              const isExpanded = expandedInterviewIdx === qIdx;
+              return (
+                <div
+                  key={qIdx}
+                  className={`rounded-xl border transition-all ${themeClasses.cardBg} ${themeClasses.borderColor}`}
+                >
+                  <button
+                    onClick={() => setExpandedInterviewIdx(isExpanded ? null : qIdx)}
+                    className="w-full p-3.5 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold"
+                  >
+                    <span className={themeClasses.textColor}>
+                      Q{qIdx + 1}: {qa.question}
+                    </span>
+                    {isExpanded ? (
+                      <ChevronUp className="w-4 h-4 text-stone-400 shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-stone-400 shrink-0" />
+                    )}
+                  </button>
+
+                  {isExpanded && (
+                    <div className="p-3.5 pt-0 border-t border-black/5 dark:border-white/5 text-xs leading-relaxed text-stone-600 dark:text-stone-300">
+                      <p className="font-semibold text-emerald-600 mb-1">පිළිතුර:</p>
+                      <p>{qa.answer}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {/* Key Takeaways Summary Banner */}
       {chapter.keyPoints && chapter.keyPoints.length > 0 && (
         <section
-          className={`mt-10 sm:mt-14 p-5 sm:p-6 rounded-2xl border ${themeClasses.cardBgSecondary} ${themeClasses.borderColor}`}
+          className={`mt-8 p-5 sm:p-6 rounded-2xl border ${themeClasses.cardBgSecondary} ${themeClasses.borderColor}`}
         >
           <div className="flex items-center gap-2 mb-3">
             <CheckCircle className="w-5 h-5 text-emerald-600" />

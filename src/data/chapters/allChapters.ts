@@ -22,15 +22,30 @@ export const allChapters: Chapter[] = [
 ].sort((a, b) => Number(a.chapterNumber) - Number(b.chapterNumber));
 
 export function getChapterById(id: string): Chapter | undefined {
-  return allChapters.find((ch) => ch.id === id);
+  if (!id) return allChapters[0];
+  
+  // Exact match on id
+  const exact = allChapters.find((ch) => ch.id === id);
+  if (exact) return exact;
+
+  // Try normalized id format (e.g. "ch-01" vs "ch-1")
+  const numericPart = parseInt(id.replace(/[^0-9]/g, ''), 10);
+  if (!isNaN(numericPart)) {
+    const numMatch = allChapters.find((ch) => Number(ch.chapterNumber) === numericPart);
+    if (numMatch) return numMatch;
+  }
+
+  return allChapters[0];
 }
 
 export function getChapterByNumber(num: number): Chapter | undefined {
-  return allChapters.find((ch) => ch.chapterNumber === num);
+  return allChapters.find((ch) => Number(ch.chapterNumber) === num);
 }
 
 export function getNextChapter(currentId: string): Chapter | undefined {
-  const index = allChapters.findIndex((ch) => ch.id === currentId);
+  const current = getChapterById(currentId);
+  if (!current) return undefined;
+  const index = allChapters.findIndex((ch) => ch.id === current.id);
   if (index >= 0 && index < allChapters.length - 1) {
     return allChapters[index + 1];
   }
@@ -38,7 +53,9 @@ export function getNextChapter(currentId: string): Chapter | undefined {
 }
 
 export function getPrevChapter(currentId: string): Chapter | undefined {
-  const index = allChapters.findIndex((ch) => ch.id === currentId);
+  const current = getChapterById(currentId);
+  if (!current) return undefined;
+  const index = allChapters.findIndex((ch) => ch.id === current.id);
   if (index > 0) {
     return allChapters[index - 1];
   }

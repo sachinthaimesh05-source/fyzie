@@ -9,6 +9,7 @@ import {
   Sparkles,
   ArrowRight,
   Filter,
+  Download,
 } from 'lucide-react';
 import { useReader } from '../context/ReaderContext';
 import { allChapters } from '../data/chapters/allChapters';
@@ -70,23 +71,35 @@ export const TableOfContents: React.FC = () => {
           ග්‍රන්ථ පටුන • TABLE OF CONTENTS
         </span>
         <h1 className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-1 font-sinhala-serif ${themeClasses.textColor}`}>
-          සම්පූර්ණ පරිච්ඡේද 98
+          සම්පූර්ණ පරිච්ඡේද {allChapters.length}
         </h1>
         <p className={`text-xs sm:text-sm mt-2 ${themeClasses.textMuted}`}>
-          පරිමා 9ක් යටතේ පෙළගස්වන ලද සියලුම පරිච්ඡේද, කේත නිදසුන් සහ ප්‍රායෝගික අභ්‍යාස.
+          පරිමා 9ක් යටතේ පෙළගස්වන ලද සියලුම පරිච්ඡේද 107, කේත නිදසුන් සහ ප්‍රායෝගික අභ්‍යාස.
         </p>
 
-        {/* Progress Tracker */}
-        <div className={`mt-5 p-3.5 rounded-xl border inline-flex items-center gap-4 text-xs ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
-          <div className="flex items-center gap-1.5 font-semibold text-emerald-600">
-            <CheckCircle className="w-4 h-4" />
-            <span>{readChapterIds.length} / 98 කියවා ඇත ({Math.round((readChapterIds.length / 98) * 100)}%)</span>
+        {/* Progress Tracker and PDF Download */}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+          <div className={`p-3 rounded-xl border inline-flex items-center gap-4 text-xs ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
+            <div className="flex items-center gap-1.5 font-semibold text-emerald-600">
+              <CheckCircle className="w-4 h-4" />
+              <span>{readChapterIds.length} / {allChapters.length} කියවා ඇත ({Math.round((readChapterIds.length / allChapters.length) * 100)}%)</span>
+            </div>
+            <span className="text-stone-300">|</span>
+            <div className="flex items-center gap-1.5 font-semibold text-amber-600">
+              <Bookmark className="w-4 h-4 fill-amber-500" />
+              <span>සුරැකි පිටු {bookmarkedChapterIds.length}</span>
+            </div>
           </div>
-          <span className="text-stone-300">|</span>
-          <div className="flex items-center gap-1.5 font-semibold text-amber-600">
-            <Bookmark className="w-4 h-4 fill-amber-500" />
-            <span>සුරැකි පිටු {bookmarkedChapterIds.length}</span>
-          </div>
+
+          <a
+            href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
+            download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+            className="p-3 rounded-xl border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 inline-flex items-center gap-2 text-xs font-bold transition-all shadow-xs"
+            title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න"
+          >
+            <Download className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+            <span>සම්පූර්ණ PDF ග්‍රන්ථය බාගත කරන්න (Direct Download)</span>
+          </a>
         </div>
       </div>
 
@@ -115,7 +128,7 @@ export const TableOfContents: React.FC = () => {
         {/* Filter Chips */}
         <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
           {[
-            { id: 'all', label: 'සියල්ල (98)' },
+            { id: 'all', label: `සියල්ල (${allChapters.length})` },
             { id: 'unread', label: 'නොකියවූ' },
             { id: 'read', label: 'කියවූ' },
             { id: 'bookmarked', label: '⭐ සුරැකි පිටු' },
