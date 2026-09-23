@@ -1,207 +1,72 @@
 @import "tailwindcss";
 
-/* ==========================================================================
-   FyZie — Premium Dark Glassmorphism Design System
-   ========================================================================== */
+@layer base {
+  :root {
+    --font-sinhala-sans: 'Noto Sans Sinhala', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-sinhala-serif: 'Noto Serif Sinhala', Georgia, serif;
+    --font-code: 'Fira Code', monospace;
+  }
 
-:root {
-  --fz-gold: 45 93% 58%;         /* amber/gold premium accent */
-  --fz-gold-soft: 38 92% 65%;
-  --fz-sky: 199 89% 58%;
-  --fz-violet: 262 83% 66%;
-  --fz-ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-html {
-  scroll-behavior: smooth;
+  body {
+    font-family: var(--font-sinhala-sans);
+  }
 }
 
-body {
-  font-feature-settings: "kern" 1, "liga" 1;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+/* Custom font utility classes */
+.font-sinhala-sans {
+  font-family: 'Noto Sans Sinhala', 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
-::selection {
-  background: hsl(var(--fz-gold) / 0.35);
-  color: #fff;
+.font-sinhala-serif {
+  font-family: 'Noto Serif Sinhala', Georgia, serif;
 }
 
-/* Subtle film-grain noise for depth on dark surfaces */
-.fz-noise {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/></svg>");
-  mix-blend-mode: overlay;
+.font-code {
+  font-family: 'Fira Code', monospace;
 }
 
-/* Radial vignette to focus attention toward the center column */
-.fz-vignette {
-  background: radial-gradient(120% 90% at 50% -10%, transparent 40%, rgba(2, 6, 23, 0.55) 100%);
-}
-
-/* Glass panel — the base premium surface used across cards/headers */
-.fz-glass {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.97));
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Hover-lift used for interactive cards */
-.fz-lift {
-  transition: transform 0.45s var(--fz-ease), box-shadow 0.45s var(--fz-ease), border-color 0.3s ease;
-}
-.fz-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
-}
-
-/* Gold gradient text for premium emphasis */
-.fz-gold-text {
-  background: linear-gradient(90deg, hsl(var(--fz-gold-soft)), hsl(var(--fz-gold)) 45%, hsl(38 96% 72%) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Animated gradient ring wrapper (wrap an element, gives it a glowing premium border) */
-.fz-ring {
-  position: relative;
-  isolation: isolate;
-}
-.fz-ring::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--fz-angle, 0deg),
-    hsl(var(--fz-gold) / 0.9),
-    hsl(var(--fz-violet) / 0.7),
-    hsl(var(--fz-sky) / 0.8),
-    hsl(var(--fz-gold) / 0.9)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: fz-spin 6s linear infinite;
-  z-index: -1;
-  opacity: 0.85;
-}
-
-@property --fz-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes fz-spin {
-  to { --fz-angle: 360deg; }
-}
-
-@keyframes fz-float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(0.4deg); }
-}
-.fz-float {
-  animation: fz-float 6s ease-in-out infinite;
-}
-
-@keyframes fz-shimmer {
-  0% { transform: translateX(-120%); }
-  100% { transform: translateX(120%); }
-}
-.fz-shimmer-sweep {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.14) 50%, transparent 70%);
-  animation: fz-shimmer 3.2s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes fz-pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--fz-gold) / 0.35); }
-  50% { box-shadow: 0 0 0 6px hsl(var(--fz-gold) / 0); }
-}
-.fz-pulse {
-  animation: fz-pulse-glow 2.4s ease-out infinite;
-}
-
-@keyframes fz-fade-up {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fz-fade-up {
-  animation: fz-fade-up 0.6s var(--fz-ease) both;
-}
-
-/* Top gradient accent bar shown on hoverable cards */
-.fz-accent-bar {
-  height: 3px;
-  background: linear-gradient(90deg, hsl(var(--fz-gold)), hsl(var(--fz-violet)), hsl(var(--fz-sky)));
-  background-size: 200% 100%;
-  transition: background-position 0.6s var(--fz-ease);
-  background-position: 0% 0%;
-}
-.group:hover .fz-accent-bar {
-  background-position: 100% 0%;
-}
-
-/* Reading-friendly prose refinements inside chapter content */
-.fz-prose p {
-  letter-spacing: 0.005em;
-}
-.fz-prose ::selection {
-  background: hsl(var(--fz-sky) / 0.3);
-}
-
-/* Custom Scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
+/* Custom scrollbars */
+::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, hsl(var(--fz-gold) / 0.55), hsl(var(--fz-sky) / 0.35));
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
   border-radius: 9999px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, hsl(var(--fz-gold) / 0.85), hsl(var(--fz-sky) / 0.6));
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.5);
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Anti-Print / Anti-Piracy Protection */
+/* Print Styles for Direct "Export as PDF" or Book Printing */
 @media print {
-  body * {
-    visibility: hidden !important;
+  header, nav, aside, .no-print, button:not(.print-include) {
+    display: none !important;
   }
-  body::before {
-    visibility: visible !important;
-    position: fixed;
-    top: 50px;
-    left: 40px;
-    right: 40px;
-    content: "FULL STACK WEB DEVELOPMENT by T. Sachintha Imesh [FYZIE]. This book is protected by copyright law. Free PDF printing or unauthorized redistribution is strictly forbidden. To get the official complete 315-page high-resolution e-book PDF edition, please purchase via the official portal or contact fyzie44@gmail.com.";
-    font-family: sans-serif;
-    font-size: 18pt;
-    line-height: 1.6;
-    color: #0f172a;
-    text-align: center;
-    border: 3pt solid #f59e0b;
-    padding: 30pt;
-    border-radius: 12pt;
-    background: #fffbeb;
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+    line-height: 1.6 !important;
+  }
+
+  .print-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .page-break {
+    page-break-after: always;
+    break-after: page;
   }
 }

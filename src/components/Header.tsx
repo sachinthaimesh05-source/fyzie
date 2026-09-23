@@ -1,199 +1,289 @@
-import React from 'react';
-import { 
-  BookOpen, 
-  Search, 
-  Download, 
-  Menu, 
-  X, 
-  Sparkles, 
-  UserCheck, 
-  Type, 
-  BookmarkCheck,
-  ShieldAlert,
-  MessageCircle
+import React, { useState } from 'react';
+import {
+  BookOpen,
+  Search,
+  Sliders,
+  Type,
+  Sun,
+  Moon,
+  Compass,
+  Code2,
+  FileText,
+  User,
+  Menu,
+  X,
+  CheckCircle2,
+  Palette,
 } from 'lucide-react';
-import { bookMeta, getWhatsAppBuyUrl } from '../data/bookMeta';
+import { useReader, TabType } from '../context/ReaderContext';
+import { getThemeClasses } from '../utils/themeStyles';
+import { ReaderTheme } from '../types/book';
 
 interface HeaderProps {
   onOpenSearch: () => void;
-  onOpenPdfModal: () => void;
-  onOpenAuthorModal: () => void;
-  onToggleSidebar: () => void;
-  isSidebarOpen: boolean;
-  readingProgress: number; // 0 to 100
-  fontSize: 'sm' | 'md' | 'lg';
-  onChangeFontSize: (size: 'sm' | 'md' | 'lg') => void;
-  readCount: number;
-  totalChapters: number;
+  onOpenCustomizer?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  onOpenSearch,
-  onOpenPdfModal,
-  onOpenAuthorModal,
-  onToggleSidebar,
-  isSidebarOpen,
-  readingProgress,
-  fontSize,
-  onChangeFontSize,
-  readCount,
-  totalChapters
-}) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
+  const {
+    theme,
+    setTheme,
+    fontSize,
+    setFontSize,
+    fontFamily,
+    setFontFamily,
+    activeTab,
+    setActiveTab,
+    readChapterIds,
+  } = useReader();
+
+  const themeClasses = getThemeClasses(theme);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
+
+  const navItems: { id: TabType; label: string; enLabel: string; icon: React.ReactNode }[] = [
+    { id: 'home', label: 'මුල් පිටුව', enLabel: 'Home', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'contents', label: 'පටුන', enLabel: 'Contents', icon: <Menu className="w-4 h-4" /> },
+    { id: 'reader', label: 'කියවනය', enLabel: 'Reader', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'roadmap', label: 'මාර්ග සිතියම', enLabel: 'Roadmap', icon: <Compass className="w-4 h-4" /> },
+    { id: 'playground', label: 'කේත වැඩබිම', enLabel: 'Playground', icon: <Code2 className="w-4 h-4" /> },
+    { id: 'pdf', label: 'PDF ග්‍රන්ථය', enLabel: 'PDF Book', icon: <FileText className="w-4 h-4" /> },
+    { id: 'author', label: 'කර්තෘ', enLabel: 'Author', icon: <User className="w-4 h-4" /> },
+  ];
+
+  const themeOptions: { id: ReaderTheme; name: string; desc: string; bg: string; border: string }[] = [
+    { id: 'sepia', name: 'සුවපහසු කහට (Sepia)', desc: 'ඇස් වලට පහසු උණුසුම් කහට තේමාව', bg: '#F9F6F0', border: '#D97706' },
+    { id: 'paper', name: 'සුදු පැපිරස් (Parchment)', desc: 'පොතක සැබෑ කඩදාසි පෙනුම', bg: '#FAF8F5', border: '#0D9488' },
+    { id: 'modern', name: 'නවීන සුදු (Modern Light)', desc: 'පිරිසිදු අධි-විභේදන සුදු ආලෝකය', bg: '#FFFFFF', border: '#2563EB' },
+    { id: 'dark', name: 'රාත්‍රී අඳුර (Midnight Dark)', desc: 'අඳුරු පරිසරයක කියවීමට සුදුසුයි', bg: '#0B0F19', border: '#38BDF8' },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 w-full fz-glass border-b shadow-lg shadow-black/30">
-      {/* Top Reading Progress Bar */}
-      <div className="w-full h-1 bg-slate-900 overflow-hidden">
-        <div 
-          className="h-full bg-gradient-to-r from-sky-500 to-violet-500 transition-all duration-300 ease-out"
-          style={{ width: `${Math.min(100, Math.max(0, readingProgress))}%` }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-        {/* Left: Mobile Menu + Branding */}
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={onToggleSidebar}
-            className="lg:hidden p-2 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl border border-white/10 transition-colors"
-            aria-label="Toggle Navigation"
+    <header className={`sticky top-0 z-40 backdrop-blur-md transition-colors duration-200 ${themeClasses.navBg}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Brand Logo & Title */}
+          <div
+            onClick={() => setActiveTab('home')}
+            className="flex items-center gap-3 cursor-pointer group"
           >
-            {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-
-          <div className="flex items-center gap-3 group cursor-pointer" onClick={onOpenAuthorModal}>
-            <div className="fz-ring rounded-xl">
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500/20 to-violet-500/20 border border-white/10 flex items-center justify-center p-1 shadow-inner shadow-sky-500/10 group-hover:scale-105 transition-all duration-300">
-                <BookOpen className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400" />
-              </div>
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold shadow-sm transition-transform group-hover:scale-105 ${themeClasses.accentBg} text-white`}>
+              <BookOpen className="w-5 h-5" />
             </div>
-
-            <div className="flex flex-col">
+            <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-black fz-gold-text tracking-tight transition-colors">
-                  FyZie
+                <span className={`font-bold text-base sm:text-lg tracking-tight font-sinhala-sans ${themeClasses.textColor}`}>
+                  සම්පූර්ණ වෙබ් සංවර්ධනය
                 </span>
-                <span className="hidden sm:inline-flex text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 font-bold">
-                  Full Stack Web Development
+                <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase rounded bg-amber-500/10 text-amber-600 border border-amber-500/20">
+                  Full Stack
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                <span>By T. Sachintha Imesh</span>
-                <span className="text-slate-600">•</span>
-                <span className="text-sky-400 font-semibold font-mono">107 Chapters</span>
-              </div>
+              <p className={`text-xs ${themeClasses.textMuted} hidden sm:block`}>
+                T. Sachintha Imesh [FYZIE] • සංස්කරණය 2026
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Center: Quick Search Trigger */}
-        <div className="hidden md:flex items-center flex-1 max-w-sm mx-4">
-          <button
-            type="button"
-            onClick={onOpenSearch}
-            className="w-full flex items-center justify-between px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-white/10 hover:border-sky-500/40 text-slate-400 hover:text-slate-200 text-xs transition-all duration-200 shadow-inner group"
-          >
-            <div className="flex items-center gap-2">
-              <Search className="w-4 h-4 text-slate-400 group-hover:text-sky-400 transition-colors" />
-              <span>පරිච්ඡේද සහ මාතෘකා සොයන්න...</span>
+          {/* Desktop Nav Items */}
+          <nav className="hidden xl:flex items-center gap-1">
+            {navItems.map((item) => {
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                    isActive
+                      ? `${themeClasses.badgeBg} font-semibold shadow-xs`
+                      : `${themeClasses.textMuted} hover:${themeClasses.textColor} hover:bg-black/5 dark:hover:bg-white/5`
+                  }`}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Action Tools: Search, Theme Selector, Font Size */}
+          <div className="flex items-center gap-2">
+            {/* Global Search Button */}
+            <button
+              onClick={onOpenSearch}
+              aria-label="සොයන්න"
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm border transition-all ${themeClasses.borderColor} ${themeClasses.textMuted} hover:${themeClasses.textColor} bg-black/5 dark:bg-white/5`}
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">සොයන්න...</span>
+              <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] rounded bg-black/10 dark:bg-white/10 font-mono">
+                ⌘K
+              </kbd>
+            </button>
+
+            {/* Reading Theme Selector */}
+            <div className="relative">
+              <button
+                onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
+                title="වර්ණ තේමාව තෝරන්න (Choose Reading Theme)"
+                className={`p-2 rounded-lg border transition-all ${themeClasses.borderColor} ${themeClasses.textMuted} hover:${themeClasses.textColor} bg-black/5 dark:bg-white/5 flex items-center gap-1.5`}
+              >
+                <Palette className="w-4 h-4" />
+                <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: themeOptions.find(t => t.id === theme)?.border }} />
+              </button>
+
+              {themeDropdownOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setThemeDropdownOpen(false)}
+                  />
+                  <div className={`absolute right-0 mt-2 w-72 p-2 rounded-xl shadow-xl border z-50 animate-in fade-in zoom-in-95 duration-100 ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
+                    <div className="px-3 py-2 border-b border-black/5 dark:border-white/5 mb-1.5">
+                      <p className={`text-xs font-semibold ${themeClasses.textColor}`}>කියවීමේ වර්ණ තේමාව (Theme)</p>
+                      <p className={`text-[11px] ${themeClasses.textMuted}`}>ඔබගේ ඇස් වලට වඩාත් පහසු තේමාව තෝරන්න</p>
+                    </div>
+
+                    <div className="space-y-1">
+                      {themeOptions.map((opt) => (
+                        <button
+                          key={opt.id}
+                          onClick={() => {
+                            setTheme(opt.id);
+                            setThemeDropdownOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-all ${
+                            theme === opt.id
+                              ? `${themeClasses.badgeBg} font-medium`
+                              : `hover:bg-black/5 dark:hover:bg-white/5 ${themeClasses.textColor}`
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <span
+                              className="w-4 h-4 rounded-full border shadow-xs"
+                              style={{ backgroundColor: opt.bg, borderColor: opt.border }}
+                            />
+                            <div>
+                              <p className="text-xs font-semibold">{opt.name}</p>
+                              <p className={`text-[10px] ${themeClasses.textMuted}`}>{opt.desc}</p>
+                            </div>
+                          </div>
+                          {theme === opt.id && <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Font Family Switcher */}
+                    <div className="mt-2 pt-2 border-t border-black/5 dark:border-white/5 px-2">
+                      <p className={`text-[11px] font-semibold mb-1.5 ${themeClasses.textColor}`}>අකුරු හැඩතලය (Typography)</p>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        <button
+                          onClick={() => setFontFamily('serif')}
+                          className={`px-2 py-1.5 rounded text-xs text-center border font-sinhala-serif ${
+                            fontFamily === 'serif'
+                              ? 'border-amber-500 bg-amber-500/10 font-bold'
+                              : 'border-transparent hover:bg-black/5'
+                          }`}
+                        >
+                          පොත් අකුරු (Serif)
+                        </button>
+                        <button
+                          onClick={() => setFontFamily('sans')}
+                          className={`px-2 py-1.5 rounded text-xs text-center border font-sinhala-sans ${
+                            fontFamily === 'sans'
+                              ? 'border-amber-500 bg-amber-500/10 font-bold'
+                              : 'border-transparent hover:bg-black/5'
+                          }`}
+                        >
+                          නවීන (Sans)
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Font Size Adjuster */}
+                    <div className="mt-2 pt-2 border-t border-black/5 dark:border-white/5 px-2">
+                      <p className={`text-[11px] font-semibold mb-1.5 ${themeClasses.textColor}`}>අකුරු ප්‍රමාණය (Size)</p>
+                      <div className="grid grid-cols-3 gap-1">
+                        <button
+                          onClick={() => setFontSize('normal')}
+                          className={`px-2 py-1 rounded text-xs text-center border ${
+                            fontSize === 'normal' ? 'border-amber-500 bg-amber-500/10 font-bold' : 'border-transparent'
+                          }`}
+                        >
+                          සාමාන්‍ය
+                        </button>
+                        <button
+                          onClick={() => setFontSize('large')}
+                          className={`px-2 py-1 rounded text-sm text-center border ${
+                            fontSize === 'large' ? 'border-amber-500 bg-amber-500/10 font-bold' : 'border-transparent'
+                          }`}
+                        >
+                          විශාල
+                        </button>
+                        <button
+                          onClick={() => setFontSize('xlarge')}
+                          className={`px-2 py-1 rounded text-base text-center border ${
+                            fontSize === 'xlarge' ? 'border-amber-500 bg-amber-500/10 font-bold' : 'border-transparent'
+                          }`}
+                        >
+                          ඉතා විශාල
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 border border-white/10 text-slate-300">
-              ⌘K
-            </kbd>
-          </button>
-        </div>
 
-        {/* Right Action Icons & PDF Purchase Button */}
-        <div className="flex items-center gap-2">
-          {/* Mobile Search Icon */}
-          <button
-            type="button"
-            onClick={onOpenSearch}
-            className="md:hidden p-2 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl border border-white/10"
-            aria-label="Search"
-          >
-            <Search className="w-4 h-4 text-slate-300" />
-          </button>
+            {/* Quick Read Progress Badge */}
+            <div
+              onClick={() => setActiveTab('contents')}
+              title={`පරිච්ඡේද 98න් ${readChapterIds.length}ක් කියවා ඇත`}
+              className={`hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer border ${themeClasses.borderColor} ${themeClasses.badgeBg}`}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{Math.round((readChapterIds.length / 98) * 100)}%</span>
+            </div>
 
-          {/* Read counter badge */}
-          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/95 border border-white/10 text-xs text-slate-300">
-            <BookmarkCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="font-mono text-emerald-400 font-bold">{readCount}/{totalChapters}</span>
-            <span className="text-slate-500 text-[10px]">කියවා ඇත</span>
-          </div>
-
-          {/* Font Size Adjuster */}
-          <div className="hidden sm:flex items-center bg-slate-900/95 p-1 rounded-xl border border-white/10">
+            {/* Mobile Menu Button */}
             <button
-              type="button"
-              onClick={() => onChangeFontSize('sm')}
-              title="Small text"
-              className={`px-2 py-0.5 text-xs font-mono rounded-lg transition-all ${
-                fontSize === 'sm' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-slate-200'
-              }`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`xl:hidden p-2 rounded-lg border ${themeClasses.borderColor} ${themeClasses.textMuted}`}
             >
-              A-
-            </button>
-            <button
-              type="button"
-              onClick={() => onChangeFontSize('md')}
-              title="Default text"
-              className={`px-2 py-0.5 text-xs font-mono rounded-lg transition-all ${
-                fontSize === 'md' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              A
-            </button>
-            <button
-              type="button"
-              onClick={() => onChangeFontSize('lg')}
-              title="Large text"
-              className={`px-2 py-0.5 text-xs font-mono rounded-lg transition-all ${
-                fontSize === 'lg' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              A+
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-
-          {/* Author Bio Button */}
-          <button
-            type="button"
-            onClick={onOpenAuthorModal}
-            className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 bg-slate-900/95 hover:bg-slate-900 border border-white/10 hover:border-sky-500/30 transition-all duration-200"
-          >
-            <UserCheck className="w-3.5 h-3.5 text-sky-400" />
-            <span>කර්තෘ විස්තර</span>
-          </button>
-
-          {/* Quick WhatsApp Direct Link */}
-          <a
-            href={getWhatsAppBuyUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="WhatsApp මඟින් මිලදී ගන්න"
-            className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 hover:border-emerald-400 transition-all shadow-md shadow-emerald-500/10"
-          >
-            <MessageCircle className="w-3.5 h-3.5 text-emerald-400 fill-current" />
-            <span>WhatsApp Chat</span>
-          </a>
-
-          {/* Official Full PDF CTA Button with High-End Glassmorphic Gradient */}
-          <button
-            type="button"
-            onClick={onOpenPdfModal}
-            className="relative group overflow-hidden flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl font-medium text-xs sm:text-sm bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-200 shadow-lg shadow-amber-500/20 fz-pulse hover:scale-[1.03] transition-all duration-300"
-          >
-            <span className="fz-shimmer-sweep" />
-            <Download className="w-4 h-4 text-amber-300 group-hover:translate-y-0.5 transition-transform" />
-            <span className="font-semibold tracking-wide">සම්පූර්ණ PDF</span>
-            <span className="hidden md:inline text-[10px] px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 font-mono font-bold">
-              PRO
-            </span>
-          </button>
         </div>
+
+        {/* Mobile Navigation Dropdown */}
+        {mobileMenuOpen && (
+          <div className={`xl:hidden py-3 px-2 border-t ${themeClasses.borderColor} animate-in slide-in-from-top-2 duration-150`}>
+            <div className="grid grid-cols-2 gap-1.5 mb-3">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center gap-2 p-2.5 rounded-lg text-sm text-left transition-all ${
+                    activeTab === item.id
+                      ? `${themeClasses.badgeBg} font-bold`
+                      : `${themeClasses.textMuted} hover:${themeClasses.textColor}`
+                  }`}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className={`p-2.5 rounded-lg ${themeClasses.cardBgSecondary} text-xs flex items-center justify-between`}>
+              <span>කියවීමේ ප්‍රගතිය:</span>
+              <span className="font-bold">{readChapterIds.length} / 98 පරිච්ඡේද ({Math.round((readChapterIds.length / 98) * 100)}%)</span>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

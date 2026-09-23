@@ -1,423 +1,264 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  ChevronDown, 
-  ChevronRight, 
-  CheckCircle2, 
-  Circle, 
-  Search, 
-  Code, 
-  Palette, 
-  Cpu, 
-  Sparkles, 
-  Terminal, 
-  Atom, 
-  ShieldCheck, 
-  Layers, 
-  Briefcase,
+import {
   BookOpen,
+  Bookmark,
+  CheckCircle,
+  Search,
   Filter,
+  ChevronRight,
+  BookmarkCheck,
+  Layers,
+  Sparkles,
   X,
-  ListTree
 } from 'lucide-react';
-import { allVolumes } from '../data/volumes';
-import { Chapter, Volume } from '../types';
+import { useReader } from '../context/ReaderContext';
+import { allChapters } from '../data/chapters/allChapters';
+import { bookVolumes } from '../data/bookInfo';
+import { getThemeClasses } from '../utils/themeStyles';
 
 interface SidebarProps {
-  currentChapterId: number;
-  onSelectChapter: (chapterId: number) => void;
   isOpen: boolean;
   onClose: () => void;
-  readChapterIds: number[];
 }
 
-const volumeIcons: Record<number, React.ReactNode> = {
-  1: <Code className="w-4 h-4 text-sky-400" />,
-  2: <Palette className="w-4 h-4 text-sky-400" />,
-  3: <Cpu className="w-4 h-4 text-sky-400" />,
-  4: <Sparkles className="w-4 h-4 text-sky-400" />,
-  5: <Terminal className="w-4 h-4 text-sky-400" />,
-  6: <Atom className="w-4 h-4 text-sky-400" />,
-  7: <ShieldCheck className="w-4 h-4 text-sky-400" />,
-  8: <Layers className="w-4 h-4 text-sky-400" />,
-  9: <Briefcase className="w-4 h-4 text-sky-400" />
-};
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const {
+    theme,
+    currentChapterId,
+    setCurrentChapterId,
+    readChapterIds,
+    bookmarkedChapterIds,
+    toggleBookmarkChapter,
+    isChapterRead,
+    isChapterBookmarked,
+  } = useReader();
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  currentChapterId,
-  onSelectChapter,
-  isOpen,
-  onClose,
-  readChapterIds
-}) => {
-  // Find which volume the current chapter belongs to and keep it expanded by default
-  const activeVolumeId = useMemo(() => {
-    for (const vol of allVolumes) {
-      if (vol.chapters.some(c => c.id === currentChapterId)) {
-        return vol.id;
+  const themeClasses = getThemeClasses(theme);
+  const [sidebarSearch, setSidebarSearch] = useState('');
+  const [selectedVolume, setSelectedVolume] = useState<number | 'all'>('all');
+  const [filterMode, setFilterMode] = useState<'all' | 'bookmarked' | 'unread'>('all');
+
+  // Filter chapters based on search query, volume, and filterMode
+  const filteredChapters = useMemo(() => {
+    return allChapters.filter((ch) => {
+      // Volume filter
+      if (selectedVolume !== 'all' && ch.volumeId !== selectedVolume) {
+        return false;
       }
-    }
-    return 1;
-  }, [currentChapterId]);
+      // Filter mode
+      if (filterMode === 'bookmarked' && !bookmarkedChapterIds.includes(ch.id)) {
+        return false;
+      }
+      if (filterMode === 'unread' && readChapterIds.includes(ch.id)) {
+        return false;
+      }
+      // Search
+      if (sidebarSearch.trim() !== '') {
+        const q = sidebarSearch.toLowerCase();
+        const matchesTitle = ch.title.toLowerCase().includes(q);
+        const matchesEn = ch.englishTitle.toLowerCase().includes(q);
+        const matchesNum = ch.chapterNumber.toString() === q;
+        return matchesTitle || matchesEn || matchesNum;
+      }
+      return true;
+    });
+  }, [sidebarSearch, selectedVolume, filterMode, bookmarkedChapterIds, readChapterIds]);
 
-  const [expandedVolumes, setExpandedVolumes] = useState<Record<number, boolean>>({
-    [activeVolumeId]: true
-  });
-
-  // Automatically expand volume when navigating across volume boundaries
-  React.useEffect(() => {
-    setExpandedVolumes(prev => ({
-      ...prev,
-      [activeVolumeId]: true
-    }));
-  }, [activeVolumeId]);
-
-  const areAllExpanded = useMemo(() => {
-    return allVolumes.every(vol => !!expandedVolumes[vol.id]);
-  }, [expandedVolumes]);
-
-  const toggleExpandAll = () => {
-    if (areAllExpanded) {
-      setExpandedVolumes({ [activeVolumeId]: true });
-    } else {
-      const all: Record<number, boolean> = {};
-      allVolumes.forEach(v => { all[v.id] = true; });
-      setExpandedVolumes(all);
-    }
-  };
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const toggleVolume = (volumeId: number) => {
-    setExpandedVolumes(prev => ({
-      ...prev,
-      [volumeId]: !prev[volumeId]
-    }));
-  };
-
-  const [expandedChapterSections, setExpandedChapterSections] = useState<Record<number, boolean>>({});
-  const [areAllSectionsExpanded, setAreAllSectionsExpanded] = useState(false);
-
-  const toggleAllSections = () => {
-    setAreAllSectionsExpanded(prev => !prev);
-  };
-
-  const toggleChapterSections = (e: React.MouseEvent, chapterId: number) => {
-    e.stopPropagation();
-    setExpandedChapterSections(prev => ({
-      ...prev,
-      [chapterId]: prev[chapterId] !== undefined ? !prev[chapterId] : false
-    }));
-  };
-
-  const filteredVolumes = useMemo(() => {
-    if (!searchQuery.trim()) return allVolumes;
-    const q = searchQuery.toLowerCase().trim();
-
-    return allVolumes.map(vol => {
-      const matchingChapters = vol.chapters.filter(chap => 
-        chap.title.toLowerCase().includes(q) ||
-        chap.englishTitle.toLowerCase().includes(q) ||
-        chap.chapterNumber.toString().includes(q) ||
-        chap.description.toLowerCase().includes(q) ||
-        chap.sections.some(sec => sec.title.toLowerCase().includes(q))
-      );
-
-      return {
-        ...vol,
-        chapters: matchingChapters
-      };
-    }).filter(vol => vol.chapters.length > 0);
-  }, [searchQuery]);
+  const progressPercent = Math.round((readChapterIds.length / allChapters.length) * 100);
 
   return (
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
-        <div 
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs z-30 lg:hidden"
           onClick={onClose}
-          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden transition-opacity"
         />
       )}
 
-      {/* Main Sidebar Container */}
-      <aside 
-        className={`fixed lg:sticky top-0 lg:top-16 z-50 lg:z-30 h-screen lg:h-[calc(100vh-4rem)] w-80 sm:w-88 flex-shrink-0 fz-glass border-r flex flex-col transition-transform duration-300 ease-in-out ${
+      <aside
+        className={`fixed lg:sticky top-16 left-0 h-[calc(100vh-4rem)] w-80 sm:w-96 flex flex-col z-35 transition-transform duration-300 border-r ${
+          themeClasses.sidebarBg
+        } ${themeClasses.borderColor} ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        {/* Sidebar Header & Search */}
-        <div className="p-4 border-b border-white/10 flex flex-col gap-3">
-          <div className="flex items-center justify-between">
+        {/* Top Header of Sidebar */}
+        <div className={`p-3.5 border-b ${themeClasses.borderColor}`}>
+          <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="text-base font-black fz-gold-text">
-                FyZie
+              <Layers className="w-4 h-4 text-amber-600" />
+              <span className={`text-xs font-bold uppercase tracking-wider ${themeClasses.textColor}`}>
+                පටුන සහ පරිච්ඡේද
               </span>
-              <span className="text-slate-600 text-xs">/</span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                පටුන (Index)
-              </h2>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-white/5">
-                9 Volumes • 107 Ch
+              <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${themeClasses.badgeBg}`}>
+                {readChapterIds.length}/{allChapters.length} කියවා ඇත
               </span>
               <button
-                type="button"
                 onClick={onClose}
-                className="lg:hidden p-1 text-slate-400 hover:text-white rounded-lg"
+                className="lg:hidden p-1 rounded hover:bg-black/5 dark:hover:bg-white/5"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          {/* Quick filter input */}
-          <div className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+          {/* Quick Search */}
+          <div className="relative mb-2">
+            <Search className={`w-3.5 h-3.5 absolute left-2.5 top-2.5 ${themeClasses.textMuted}`} />
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="පරිච්ඡේද සොයන්න..."
-              className="w-full pl-9 pr-8 py-1.5 rounded-xl bg-slate-900/95 border border-white/10 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500/50"
+              value={sidebarSearch}
+              onChange={(e) => setSidebarSearch(e.target.value)}
+              placeholder="පරිච්ඡේද සොයන්න (Search)..."
+              className={`w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border outline-none transition-all ${
+                themeClasses.borderColor
+              } ${themeClasses.cardBg} ${themeClasses.textColor} focus:ring-1 focus:ring-amber-500`}
             />
-            {searchQuery && (
+            {sidebarSearch && (
               <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                onClick={() => setSidebarSearch('')}
+                className="absolute right-2.5 top-2 text-xs text-stone-400 hover:text-stone-600"
               >
-                <X className="w-3 h-3" />
+                ✕
               </button>
             )}
           </div>
 
-          {/* Quick Controls: Expand All & Volume Jump Pills */}
-          <div className="flex items-center justify-between gap-2 pt-1">
-            <button
-              type="button"
-              onClick={toggleExpandAll}
-              className="text-[11px] font-medium text-sky-400 hover:text-sky-300 flex items-center gap-1 transition-colors px-1 py-0.5 rounded"
+          {/* Volume Dropdown / Selector */}
+          <div className="grid grid-cols-2 gap-1.5">
+            <select
+              value={selectedVolume}
+              onChange={(e) => setSelectedVolume(e.target.value === 'all' ? 'all' : Number(e.target.value))}
+              className={`text-xs py-1 px-2 rounded-md border ${themeClasses.borderColor} ${themeClasses.cardBg} ${themeClasses.textColor}`}
             >
-              {areAllExpanded ? 'පරිමාවන් හකුළන්න' : 'පරිමාවන් සියල්ල (1-9)'}
-            </button>
-            <button
-              type="button"
-              onClick={toggleAllSections}
-              className={`text-[11px] font-medium px-2 py-0.5 rounded-lg border transition-colors flex items-center gap-1 ${
-                areAllSectionsExpanded
-                  ? 'bg-sky-500/20 text-sky-300 border-sky-500/40 font-bold'
-                  : 'text-slate-400 hover:text-sky-300 border-white/10 hover:border-sky-500/20'
-              }`}
-            >
-              <ListTree className="w-3 h-3" />
-              <span>{areAllSectionsExpanded ? 'අනු කොටස් හකුළන්න' : 'අනු කොටස් සියල්ල (12.1...)'}</span>
-            </button>
-          </div>
+              <option value="all">සියලුම පරිමා (9)</option>
+              {bookVolumes.map((vol) => (
+                <option key={vol.id} value={vol.id}>
+                  පරිමාව {vol.id}: {vol.title}
+                </option>
+              ))}
+            </select>
 
-          {/* Quick Volume Navigator Pills */}
-          <div className="flex items-center gap-1 overflow-x-auto pb-1 no-scrollbar text-[10px] font-mono">
-            {allVolumes.map(v => {
-              const isCurrentVol = v.chapters.some(c => c.id === currentChapterId);
-              return (
-                <button
-                  key={v.id}
-                  type="button"
-                  onClick={() => {
-                    setExpandedVolumes(prev => ({ ...prev, [v.id]: true }));
-                    if (v.chapters.length > 0) {
-                      onSelectChapter(v.chapters[0].id);
-                    }
-                  }}
-                  title={`Volume ${v.volumeNumber}: ${v.title} (Chapters ${v.chapters[0]?.chapterNumber} - ${v.chapters[v.chapters.length - 1]?.chapterNumber})`}
-                  className={`px-2 py-0.5 rounded-md flex-shrink-0 transition-all ${
-                    isCurrentVol
-                      ? 'bg-sky-500 text-slate-950 font-bold'
-                      : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-white/5'
-                  }`}
-                >
-                  V{v.volumeNumber} ({v.chapters[0]?.chapterNumber}-{v.chapters[v.chapters.length - 1]?.chapterNumber})
-                </button>
-              );
-            })}
+            <select
+              value={filterMode}
+              onChange={(e) => setFilterMode(e.target.value as any)}
+              className={`text-xs py-1 px-2 rounded-md border ${themeClasses.borderColor} ${themeClasses.cardBg} ${themeClasses.textColor}`}
+            >
+              <option value="all">සියල්ල පෙන්වන්න</option>
+              <option value="bookmarked">⭐ සුරැකි පිටු ({bookmarkedChapterIds.length})</option>
+              <option value="unread">නොකියවූ පරිච්ඡේද</option>
+            </select>
           </div>
         </div>
 
-        {/* Scrollable Volume & Chapter List */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3 custom-scrollbar">
-          {filteredVolumes.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-xs">
-              කිසිදු පරිච්ඡේදයක් හමු නොවීය.
+        {/* Scrollable Chapter List */}
+        <div className="flex-1 overflow-y-auto px-2 py-2 space-y-1">
+          {filteredChapters.length === 0 ? (
+            <div className="text-center py-10 px-4">
+              <p className={`text-xs ${themeClasses.textMuted}`}>කිසිදු පරිච්ඡේදයක් හමු නොවීය.</p>
+              <button
+                onClick={() => {
+                  setSidebarSearch('');
+                  setSelectedVolume('all');
+                  setFilterMode('all');
+                }}
+                className="mt-2 text-xs text-amber-600 hover:underline font-medium"
+              >
+                පෙරහන් ඉවත් කරන්න
+              </button>
             </div>
           ) : (
-            filteredVolumes.map((volume) => {
-              const isExpanded = expandedVolumes[volume.id] || searchQuery.length > 0;
-              const hasActiveChapter = volume.chapters.some(c => c.id === currentChapterId);
-              const readInVolume = volume.chapters.filter(c => readChapterIds.includes(c.id)).length;
+            filteredChapters.map((ch) => {
+              const isActive = ch.id === currentChapterId;
+              const isRead = isChapterRead(ch.id);
+              const isBookmarked = isChapterBookmarked(ch.id);
 
               return (
-                <div 
-                  key={volume.id}
-                  className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
-                    hasActiveChapter 
-                      ? 'bg-slate-900/95 border-sky-500/40 shadow-md shadow-sky-500/5' 
-                      : 'bg-slate-900/95 border-white/5 hover:border-white/10'
+                <div
+                  key={ch.id}
+                  onClick={() => {
+                    setCurrentChapterId(ch.id);
+                    if (window.innerWidth < 1024) onClose();
+                  }}
+                  className={`group relative flex items-start gap-2.5 p-2 rounded-xl text-left cursor-pointer transition-all ${
+                    isActive
+                      ? `${themeClasses.cardBg} shadow-xs font-semibold border ${themeClasses.borderColor}`
+                      : `hover:bg-black/5 dark:hover:bg-white/5`
                   }`}
                 >
-                  {/* Volume Accordion Header */}
-                  <button
-                    type="button"
-                    onClick={() => toggleVolume(volume.id)}
-                    className="w-full text-left p-3 flex items-start justify-between gap-2.5 group transition-colors"
-                  >
-                    <div className="flex items-start gap-2.5">
-                      <div className="mt-0.5 p-1.5 rounded-lg bg-slate-800/80 border border-white/5 group-hover:border-sky-500/30 transition-colors">
-                        {volumeIcons[volume.id] || <BookOpen className="w-4 h-4 text-sky-400" />}
-                      </div>
-                      <div className="flex flex-col">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono uppercase text-sky-400 font-bold">
-                            පරිමාව 0{volume.volumeNumber}
-                          </span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-white/5 text-slate-400 border border-white/5">
-                            {volume.pageRange}
-                          </span>
-                        </div>
-                        <h3 className="text-xs font-bold text-slate-200 group-hover:text-sky-300 transition-colors line-clamp-1 leading-snug">
-                          {volume.title}
-                        </h3>
-                        <p className="text-[11px] text-slate-400 line-clamp-1 font-sans">
-                          {volume.englishTitle}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 flex-shrink-0 mt-1">
-                      <span className="text-[10px] font-mono text-slate-400">
-                        {readInVolume}/{volume.chapters.length}
-                      </span>
-                      {isExpanded ? (
-                        <ChevronDown className="w-4 h-4 text-slate-400" />
-                      ) : (
-                        <ChevronRight className="w-4 h-4 text-slate-400" />
-                      )}
-                    </div>
-                  </button>
-
-                  {/* Volume Chapters List */}
-                  {isExpanded && (
-                    <div className="px-2 pb-2.5 pt-1 space-y-1 border-t border-white/5 bg-slate-950/95">
-                      {volume.chapters.map((chapter) => {
-                        const isCurrent = chapter.id === currentChapterId;
-                        const isRead = readChapterIds.includes(chapter.id);
-                        const isSectionsExpanded = areAllSectionsExpanded || (expandedChapterSections[chapter.id] !== undefined ? expandedChapterSections[chapter.id] : isCurrent);
-
-                        return (
-                          <div key={chapter.id} className="space-y-0.5">
-                            <div className="flex items-center gap-1">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  onSelectChapter(chapter.id);
-                                  if (window.innerWidth < 1024) {
-                                    onClose();
-                                  }
-                                }}
-                                className={`flex-1 text-left px-2.5 py-2 rounded-xl text-xs flex items-center justify-between gap-2 transition-all duration-200 ${
-                                  isCurrent
-                                    ? 'bg-amber-500/15 text-amber-100 border border-amber-500/40 shadow-sm font-semibold'
-                                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
-                                }`}
-                              >
-                                <div className="flex items-center gap-2 min-w-0">
-                                  <span className={`w-5 h-5 rounded-md text-[10px] font-mono flex items-center justify-center flex-shrink-0 ${
-                                    isCurrent 
-                                      ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-slate-950 font-bold' 
-                                      : 'bg-slate-800 text-slate-400'
-                                  }`}>
-                                    {chapter.chapterNumber}
-                                  </span>
-                                  <div className="min-w-0 flex-1">
-                                    <span className="truncate leading-relaxed block font-medium">
-                                      {chapter.title}
-                                    </span>
-                                    {chapter.sections && chapter.sections.length > 0 && (
-                                      <span className="text-[10px] font-mono text-sky-400/90 block">
-                                        {chapter.sections.length} අනු කොටස් ({chapter.chapterNumber}.1 - {chapter.chapterNumber}.{chapter.sections.length})
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-
-                                <div className="flex items-center gap-1 flex-shrink-0">
-                                  {isRead ? (
-                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                                  ) : (
-                                    <Circle className="w-3 h-3 text-slate-600" />
-                                  )}
-                                </div>
-                              </button>
-
-                              {chapter.sections && chapter.sections.length > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={(e) => toggleChapterSections(e, chapter.id)}
-                                  title={`${chapter.sections.length} උප මාතෘකා පෙන්වන්න`}
-                                  className={`p-1.5 rounded-lg text-slate-400 hover:text-sky-300 hover:bg-slate-800 transition-colors flex-shrink-0 ${
-                                    isSectionsExpanded ? 'text-sky-400 bg-slate-900' : ''
-                                  }`}
-                                >
-                                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isSectionsExpanded ? 'rotate-180' : ''}`} />
-                                </button>
-                              )}
-                            </div>
-
-                            {/* Nested Subtopics List */}
-                            {isSectionsExpanded && chapter.sections && chapter.sections.length > 0 && (
-                              <div className="pl-6 pr-1 py-1 space-y-0.5 border-l-2 border-sky-500/20 ml-3.5 my-1">
-                                {chapter.sections.map((sec, secIdx) => (
-                                  <button
-                                    key={secIdx}
-                                    type="button"
-                                    onClick={() => {
-                                      onSelectChapter(chapter.id);
-                                      if (window.innerWidth < 1024) {
-                                        onClose();
-                                      }
-                                      setTimeout(() => {
-                                        const el = document.getElementById(`section-${chapter.id}-${secIdx}`);
-                                        if (el) {
-                                          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                        }
-                                      }, 150);
-                                    }}
-                                    className="w-full text-left px-2 py-1 rounded text-[11px] text-slate-400 hover:text-sky-300 hover:bg-white/5 truncate block transition-colors font-mono"
-                                  >
-                                    <span className="text-sky-400/80 mr-1 font-semibold">•</span>
-                                    {sec.title}
-                                  </button>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
+                  {/* Left Active Indicator Bar */}
+                  {isActive && (
+                    <div className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-amber-500" />
                   )}
+
+                  {/* Chapter Number Badge */}
+                  <div
+                    className={`shrink-0 w-7 h-7 rounded-lg text-xs font-bold flex items-center justify-center transition-colors ${
+                      isActive
+                        ? 'bg-amber-500 text-white shadow-xs'
+                        : isRead
+                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                        : `${themeClasses.cardBgSecondary} ${themeClasses.textMuted}`
+                    }`}
+                  >
+                    {isRead ? <CheckCircle className="w-3.5 h-3.5" /> : ch.chapterNumber}
+                  </div>
+
+                  {/* Chapter Info */}
+                  <div className="flex-1 min-w-0 pr-6">
+                    <div className="flex items-center gap-1.5">
+                      <span className={`text-[10px] uppercase tracking-wider font-semibold opacity-70 ${themeClasses.textMuted}`}>
+                        පරිමාව {ch.volumeId} • පි. {ch.pageNumber}
+                      </span>
+                    </div>
+                    <p
+                      className={`text-xs line-clamp-1 font-sinhala-sans ${
+                        isActive ? 'text-amber-600 dark:text-amber-400 font-bold' : themeClasses.textColor
+                      }`}
+                    >
+                      {ch.title}
+                    </p>
+                    <p className={`text-[11px] line-clamp-1 truncate ${themeClasses.textMuted}`}>
+                      {ch.englishTitle}
+                    </p>
+                  </div>
+
+                  {/* Bookmark Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleBookmarkChapter(ch.id);
+                    }}
+                    title={isBookmarked ? 'සුරැකි බව ඉවත් කරන්න' : 'පිටුව සුරකින්න'}
+                    className={`absolute right-2 top-2 p-1 rounded transition-opacity ${
+                      isBookmarked
+                        ? 'text-amber-500 opacity-100'
+                        : 'opacity-0 group-hover:opacity-60 text-stone-400 hover:text-amber-500'
+                    }`}
+                  >
+                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
+                  </button>
                 </div>
               );
             })
           )}
         </div>
 
-        {/* Sidebar Footer: Copyright & Security Note */}
-        <div className="p-3 border-t border-white/10 bg-slate-900/95 text-center">
-          <p className="text-[10px] text-slate-400">
-            © {new Date().getFullYear()} T. Sachintha Imesh [FYZIE].
-          </p>
-          <p className="text-[9px] text-slate-500">
-            සියලුම හිමිකම් ඇවිරිණි. Digital Watermarked.
-          </p>
+        {/* Bottom Progress Footer */}
+        <div className={`p-3 border-t ${themeClasses.borderColor} ${themeClasses.cardBgSecondary}`}>
+          <div className="flex items-center justify-between text-xs mb-1.5">
+            <span className={`font-medium ${themeClasses.textColor}`}>මුළු කියවීම් ප්‍රගතිය</span>
+            <span className="font-bold text-amber-600 dark:text-amber-400">{progressPercent}%</span>
+          </div>
+          <div className="w-full h-1.5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
+            <div
+              className="h-full bg-amber-500 rounded-full transition-all duration-300"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
         </div>
       </aside>
     </>

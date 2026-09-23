@@ -1,113 +1,110 @@
 import React from 'react';
-import { X, Mail, Award, BookOpen, ShieldCheck, Heart, Sparkles, ExternalLink, MessageCircle } from 'lucide-react';
-import { bookMeta, getWhatsAppBuyUrl } from '../data/bookMeta';
+import {
+  User,
+  Heart,
+  Award,
+  BookOpen,
+  Mail,
+  ShieldCheck,
+  CheckCircle,
+} from 'lucide-react';
+import { useReader } from '../context/ReaderContext';
+import { bookMetadata, bookPreface, bookDedication } from '../data/bookInfo';
+import { getThemeClasses } from '../utils/themeStyles';
 
-interface AuthorModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpenPdfModal: () => void;
-}
-
-export const AuthorModal: React.FC<AuthorModalProps> = ({
-  isOpen,
-  onClose,
-  onOpenPdfModal
-}) => {
-  if (!isOpen) return null;
+export const AuthorModal: React.FC = () => {
+  const { theme, openReaderWithChapter } = useReader();
+  const themeClasses = getThemeClasses(theme);
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
-      onClick={onClose}
-    >
-      <div 
-        className="relative w-full max-w-xl rounded-3xl bg-slate-950/95 border border-sky-500/30 shadow-2xl p-6 sm:p-8 my-8 text-slate-200"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-white border border-white/10 transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        <div className="space-y-6">
-          {/* Author Banner & Avatar */}
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-500 via-sky-600 to-violet-600 flex items-center justify-center text-slate-950 font-black text-2xl shadow-xl shadow-sky-500/20">
-              FY
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-xl sm:text-2xl font-black text-white">
-                  {bookMeta.author.name}
-                </h3>
-                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30">
-                  [{bookMeta.author.alias}]
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 mt-0.5">
-                {bookMeta.author.title}
-              </p>
-            </div>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+      {/* Author Profile Card */}
+      <section className={`p-6 sm:p-8 rounded-3xl border shadow-sm ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+          {/* Avatar */}
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-amber-500 shadow-md bg-amber-100 flex items-center justify-center shrink-0">
+            <span className="text-3xl font-extrabold text-amber-800">FY</span>
           </div>
 
-          {/* Author Quote */}
-          <blockquote className="p-4 rounded-2xl bg-violet-950/30 border-l-4 border-violet-400 text-violet-200 text-xs sm:text-sm italic leading-relaxed">
-            "{bookMeta.author.quote}"
-          </blockquote>
+          {/* Details */}
+          <div className="space-y-2 flex-1">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              <h1 className={`text-2xl sm:text-3xl font-extrabold font-sinhala-serif ${themeClasses.textColor}`}>
+                {bookMetadata.author}
+              </h1>
+              <span className="px-2 py-0.5 rounded text-xs font-bold uppercase bg-amber-500/10 text-amber-600 border border-amber-500/20">
+                FYZIE
+              </span>
+            </div>
 
-          {/* Bio */}
-          <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
-            <p>{bookMeta.author.bio}</p>
-            <p>
-              ශ්‍රී ලාංකික තාරුණ්‍යය ගෝලීය මෘදුකාංග ඉංජිනේරු ක්ෂේත්‍රයේ දැවැන්තයන් බවට පත් කිරීම මෙම ග්‍රන්ථයේ මූලිකම පරමාර්ථයයි.
+            <p className="text-xs sm:text-sm font-semibold text-amber-600 dark:text-amber-400">
+              {bookMetadata.authorRole}
             </p>
-          </div>
 
-          {/* Quick info boxes */}
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <div className="p-3 rounded-xl bg-slate-900/95 border border-white/10 space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase font-mono">ග්‍රන්ථ අනුවාදය</span>
-              <p className="text-xs font-bold text-white">{bookMeta.edition}</p>
+            <p className={`text-xs sm:text-sm leading-relaxed ${themeClasses.textMuted}`}>
+              ශ්‍රී ලංකාවේ තාක්ෂණික අධ්‍යාපන ක්ෂේත්‍රයේ නව පිබිදීමක් ඇති කරමින්, ජාත්‍යන්තර මෘදුකාංග ඉංජිනේරු සම්මුතීන් සිංහල භාෂාවෙන් තරුණ පරපුර වෙත ගෙන ඒම වෙනුවෙන් කැප වූ ප්‍රවීණ මෘදුකාංග නිර්මාණකරුවෙකි.
+            </p>
+
+            <div className="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs font-medium text-stone-500">
+              <span className="flex items-center gap-1.5">
+                <BookOpen className="w-4 h-4 text-amber-500" />
+                පරිමා 9ක සම්පූර්ණ කර්තෘත්වය
+              </span>
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                පළමු සංස්කරණය (2026)
+              </span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/95 border border-white/10 space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase font-mono">සෘජු විමසීම්</span>
-              <p className="text-xs font-mono text-sky-400 truncate">{bookMeta.author.email}</p>
-            </div>
-          </div>
-
-          {/* Dedication */}
-          <div className="p-4 rounded-2xl bg-slate-900/95 border border-white/10 text-xs text-slate-400 flex items-start gap-2.5">
-            <Heart className="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5" />
-            <p>{bookMeta.dedication}</p>
-          </div>
-
-          {/* Actions */}
-          <div className="pt-2 flex flex-col sm:flex-row gap-3">
-            <a
-              href={getWhatsAppBuyUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 text-center flex items-center justify-center gap-2 transition-all"
-            >
-              <MessageCircle className="w-4 h-4 fill-current" />
-              <span>WhatsApp මඟින් සම්බන්ධ වන්න</span>
-            </a>
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                onOpenPdfModal();
-              }}
-              className="px-4 py-3 rounded-xl bg-slate-900/95 hover:bg-slate-800 text-amber-300 border border-amber-500/40 text-xs font-semibold text-center transition-all"
-            >
-              ගෙවීම් තොරතුරු (PDF)
-            </button>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Dedication Card (පිදුම) */}
+      <section className={`p-6 sm:p-8 rounded-3xl border ${themeClasses.cardBgSecondary} ${themeClasses.borderColor}`}>
+        <div className="flex items-center gap-2 mb-3">
+          <Heart className="w-5 h-5 text-rose-500 fill-rose-500" />
+          <h2 className={`text-base sm:text-lg font-bold font-sinhala-sans ${themeClasses.textColor}`}>
+            පිදුම (Dedication)
+          </h2>
+        </div>
+
+        <p className={`text-sm sm:text-base leading-relaxed italic ${themeClasses.textColor} font-sinhala-serif`}>
+          "{bookDedication.text}"
+        </p>
+
+        <p className="mt-3 text-xs font-semibold text-amber-600">
+          - {bookDedication.authorSign}
+        </p>
+      </section>
+
+      {/* Preface (පෙරවදන) */}
+      <section className={`p-6 sm:p-8 rounded-3xl border shadow-xs space-y-4 ${themeClasses.cardBg} ${themeClasses.borderColor}`}>
+        <div className="flex items-center gap-2 mb-2">
+          <Award className="w-5 h-5 text-amber-600" />
+          <h2 className={`text-xl font-bold font-sinhala-sans ${themeClasses.textColor}`}>
+            {bookPreface.title}
+          </h2>
+        </div>
+
+        <div className={`space-y-4 text-xs sm:text-sm leading-relaxed ${themeClasses.textColor} font-sinhala-serif`}>
+          {bookPreface.paragraphs.map((p, idx) => (
+            <p key={idx}>{p}</p>
+          ))}
+        </div>
+
+        <div className="pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs">
+          <span className={themeClasses.textMuted}>කොළඹ, ශ්‍රී ලංකාව • 2026 ජනවාරි</span>
+          <span className="font-bold text-amber-600">T. Sachintha Imesh [FYZIE]</span>
+        </div>
+      </section>
+
+      {/* Copyright & License Note */}
+      <section className="text-center text-xs space-y-2 text-stone-400">
+        <p>© 2026 T. Sachintha Imesh [FYZIE]. All Rights Reserved.</p>
+        <p className="max-w-xl mx-auto leading-normal">
+          මෙම ග්‍රන්ථයේ හෝ එහි කොටස් කර්තෘගේ පූර්ව ලිඛිත අවසරයකින් තොරව කිසිදු ආකාරයකින් වාණිජමය අරමුණු සඳහා ප්‍රතිනිෂ්පාදනය කිරීම නීතියෙන් තහනම් වේ. අධ්‍යාපනික කටයුතු සඳහා පමණක් පරිශීලනය කරන්න.
+        </p>
+      </section>
     </div>
   );
 };

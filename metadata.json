@@ -1,7 +1,6 @@
 {
-  "name": "FyZie",
-  "description": "FyZie - The official learning platform and complete Full Stack Web Development course book by T. Sachintha Imesh [FYZIE]. 9 Volumes, 107 Chapters, 315 Pages in Sinhala.",
+  "name": "Full Stack Web Development - Complete Course Book",
+  "description": "T. Sachintha Imesh [FYZIE] විසින් රචිත සම්පූර්ණ Full Stack Web Development (HTML, CSS, JavaScript, React, Next.js) පාඨමාලා පොත සහ ඩිජිටල් කියවීම් වේදිකාව.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
-
