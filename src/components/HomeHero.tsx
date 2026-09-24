@@ -17,6 +17,7 @@ import {
 import { useReader } from '../context/ReaderContext';
 import { bookVolumes, bookRoadmap } from '../data/bookInfo';
 import { getThemeClasses } from '../utils/themeStyles';
+import { downloadBookPdf } from '../utils/downloadPdf';
 
 export const HomeHero: React.FC = () => {
   const { theme, setActiveTab, openReaderWithChapter, readChapterIds } = useReader();
@@ -81,10 +82,9 @@ export const HomeHero: React.FC = () => {
                 <span>සම්පූර්ණ පටුන බලන්න (107 Chapters)</span>
               </button>
 
-              <a
-                href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
-                download="Full_Stack_Web_Development_Book_FYZIE.pdf"
-                className="px-5 py-3 rounded-xl font-bold text-sm sm:text-base border border-amber-500/50 bg-gradient-to-r from-amber-500/15 to-orange-500/15 hover:from-amber-500/25 hover:to-orange-500/25 text-amber-800 dark:text-amber-300 shadow-sm transition-all flex items-center gap-2.5 group"
+              <button
+                onClick={() => downloadBookPdf()}
+                className="px-5 py-3 rounded-xl font-bold text-sm sm:text-base border border-amber-500/50 bg-gradient-to-r from-amber-500/15 to-orange-500/15 hover:from-amber-500/25 hover:to-orange-500/25 text-amber-800 dark:text-amber-300 shadow-sm transition-all flex items-center gap-2.5 group cursor-pointer"
                 title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න"
               >
                 <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
@@ -94,7 +94,7 @@ export const HomeHero: React.FC = () => {
                   <div className="leading-tight">PDF එක බාගත කරන්න</div>
                   <div className="text-[10px] font-normal text-amber-700 dark:text-amber-400 opacity-80">පරිච්ඡේද 107 • සම්පූර්ණ ග්‍රන්ථය (Direct Download)</div>
                 </div>
-              </a>
+              </button>
             </div>
           </div>
 

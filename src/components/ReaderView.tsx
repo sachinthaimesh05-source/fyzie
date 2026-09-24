@@ -25,6 +25,7 @@ import {
 import { useReader } from '../context/ReaderContext';
 import { getChapterById, getNextChapter, getPrevChapter, allChapters } from '../data/chapters/allChapters';
 import { getThemeClasses, getFontClasses } from '../utils/themeStyles';
+import { downloadBookPdf } from '../utils/downloadPdf';
 
 interface ReaderViewProps {
   onToggleSidebar: () => void;
@@ -123,15 +124,14 @@ export const ReaderView: React.FC<ReaderViewProps> = ({ onToggleSidebar, sidebar
           </button>
 
           {/* Direct Download Book PDF */}
-          <a
-            href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
-            download="Full_Stack_Web_Development_Book_FYZIE.pdf"
+          <button
+            onClick={() => downloadBookPdf()}
             title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න (Download Complete PDF Book)"
-            className={`p-2 rounded-lg border transition-all ${themeClasses.borderColor} text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 flex items-center gap-1 font-semibold text-xs`}
+            className={`p-2 rounded-lg border transition-all ${themeClasses.borderColor} text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 flex items-center gap-1 font-semibold text-xs cursor-pointer`}
           >
             <Download className="w-4 h-4" />
             <span className="hidden sm:inline">PDF</span>
-          </a>
+          </button>
 
           {/* Share Button */}
           <button

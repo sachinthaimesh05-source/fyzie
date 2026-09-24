@@ -19,6 +19,7 @@ import { useReader, TabType } from '../context/ReaderContext';
 import { getThemeClasses } from '../utils/themeStyles';
 import { ReaderTheme } from '../types/book';
 import { allChapters } from '../data/chapters/allChapters';
+import { downloadBookPdf } from '../utils/downloadPdf';
 
 interface HeaderProps {
   onOpenSearch: () => void;
@@ -236,16 +237,15 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             </div>
 
             {/* Direct PDF Download Button */}
-            <a
-              href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
-              download="Full_Stack_Web_Development_Book_FYZIE.pdf"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition-all hover:scale-105 active:scale-95"
+            <button
+              onClick={() => downloadBookPdf()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
               title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න (Direct Download Book PDF)"
             >
               <Download className="w-4 h-4" />
               <span className="hidden sm:inline">PDF බාගත කරන්න</span>
               <span className="text-[10px] hidden md:inline px-1 py-0.5 rounded bg-black/20 font-mono">PDF</span>
-            </a>
+            </button>
 
             {/* Quick Read Progress Badge */}
             <div
@@ -271,14 +271,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
         {mobileMenuOpen && (
           <div className={`xl:hidden py-3 px-2 border-t ${themeClasses.borderColor} animate-in slide-in-from-top-2 duration-150`}>
             {/* Mobile Direct Download Banner */}
-            <a
-              href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
-              download="Full_Stack_Web_Development_Book_FYZIE.pdf"
-              className="w-full flex items-center justify-center gap-2 p-3 mb-3 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition-all"
+            <button
+              onClick={() => {
+                downloadBookPdf();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 p-3 mb-3 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition-all cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>සම්පූර්ණ PDF ග්‍රන්ථය බාගත කරන්න (Direct Download)</span>
-            </a>
+            </button>
 
             <div className="grid grid-cols-2 gap-1.5 mb-3">
               {navItems.map((item) => (

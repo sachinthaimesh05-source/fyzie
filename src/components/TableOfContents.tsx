@@ -15,6 +15,7 @@ import { useReader } from '../context/ReaderContext';
 import { allChapters } from '../data/chapters/allChapters';
 import { bookVolumes } from '../data/bookInfo';
 import { getThemeClasses } from '../utils/themeStyles';
+import { downloadBookPdf } from '../utils/downloadPdf';
 
 export const TableOfContents: React.FC = () => {
   const {
@@ -91,15 +92,14 @@ export const TableOfContents: React.FC = () => {
             </div>
           </div>
 
-          <a
-            href="/Full_Stack_Web_Development_Book_FYZIE.pdf"
-            download="Full_Stack_Web_Development_Book_FYZIE.pdf"
-            className="p-3 rounded-xl border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 inline-flex items-center gap-2 text-xs font-bold transition-all shadow-xs"
+          <button
+            onClick={() => downloadBookPdf()}
+            className="p-3 rounded-xl border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 inline-flex items-center gap-2 text-xs font-bold transition-all shadow-xs cursor-pointer"
             title="සම්පූර්ණ PDF ග්‍රන්ථය සෘජුවම බාගත කරන්න"
           >
             <Download className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>සම්පූර්ණ PDF ග්‍රන්ථය බාගත කරන්න (Direct Download)</span>
-          </a>
+          </button>
         </div>
       </div>
 
